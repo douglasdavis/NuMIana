@@ -40,8 +40,26 @@ public:
   NuMIana(std::string file_name);
   virtual ~NuMIana();
 
-  inline std::vector<double> wgt()  const { return fwgt;  }
-  inline std::vector<double> vtxx() const { return fvtxx; }
-  inline std::vector<double> vtxy() const { return fvtxy; }
-  inline std::vector<double> vtxz() const { return fvtxz; }
+  inline std::vector<double> wgt()      const { return fwgt;      }
+  inline std::vector<double> vtxx()     const { return fvtxx;     }
+  inline std::vector<double> vtxy()     const { return fvtxy;     }
+  inline std::vector<double> vtxz()     const { return fvtxz;     }
+  inline std::vector<double> dist()     const { return fdist;     }
+  inline std::vector<double> px()       const { return fpx;       }
+  inline std::vector<double> py()       const { return fpy;       }
+  inline std::vector<double> pz()       const { return fpz;       }
+  inline std::vector<double> E()        const { return fE;        }  
+  inline std::vector<double> tpx()      const { return ftpx;      }
+  inline std::vector<double> tpy()      const { return ftpy;      }
+  inline std::vector<double> tpz()      const { return ftpz;      }
+  inline std::vector<double> vx()       const { return fvx;       }
+  inline std::vector<double> vy()       const { return fvy;       }
+  inline std::vector<double> vz()       const { return fvz;       }
+  inline std::vector<int>    ndecay()   const { return fndecay;   }
+  inline std::vector<int>    ppmedium() const { return fppmedium; }
+  inline std::vector<int>    tptype()   const { return ftptype;   }
+  inline std::vector<int>    run()      const { return frun;      }
+  inline std::vector<int>    evtno()    const { return fevtno;    }
+  inline std::vector<int>    entryno()  const { return fentryno;  }
+
 };
