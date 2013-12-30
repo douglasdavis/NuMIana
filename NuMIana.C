@@ -68,4 +68,9 @@ NuMIana::NuMIana(std::string file_name)
 
 }
 
-NuMIana::~NuMIana() {}
+NuMIana::~NuMIana()
+{
+  delete fFile;
+  delete fNuMI_Tree;
+  delete fEntryTree;
+}

@@ -1,10 +1,14 @@
 TARGET := example_run
+CSTUFF = $(shell root-config --cflags)
+CSTUFF += -I$(HOME)/Desktop/window_plots/NuMIana
+LSTUFF = $(shell root-config --ldflags --glibs)
+LSTUFF += -L$(HOME)/Desktop/window_plots/NuMIana/lib -lNuMIana
 
 $(TARGET): ex.o
-	$(CXX) -o $@ $< `root-config --ldflags --glibs` -L$(HOME)/Desktop/window_plots/NuMIana/lib -lNuMIana
+	$(CXX) -o $@ $< $(LSTUFF)
 
 ex.o: ex.cpp
-	$(CXX) -c $< `root-config --cflags` -I$(HOME)/Desktop/window_plots/NuMIana
+	$(CXX) -c $< $(CSTUFF)
 
 .PHONY: clean
 
