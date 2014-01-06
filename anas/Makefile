@@ -1,8 +1,8 @@
 TARGET := example_run
 CSTUFF = $(shell root-config --cflags)
-CSTUFF += -I$(HOME)/Desktop/window_plots/NuMIana
+CSTUFF += -I$(HOME)/window_plots/NuMIana
 LSTUFF = $(shell root-config --ldflags --glibs)
-LSTUFF += -L$(HOME)/Desktop/window_plots/NuMIana/lib -lNuMIana
+LSTUFF += -L$(HOME)/window_plots/NuMIana/lib -lNuMIana
 
 $(TARGET): ex.o
 	$(CXX) -o $@ $< $(LSTUFF)
