@@ -51,6 +51,7 @@ NuMIana::NuMIana(std::string file_name)
     fpy.push_back(py);
     fpz.push_back(pz);
     fE.push_back(E);
+    fpdg.push_back(pdg);
   }
   for ( int i = 0; i < fNuMI_Tree->GetEntries(); i++ ) {
     fNuMI_Tree->GetEntry(i);
@@ -120,4 +121,24 @@ void NuMIana::PrintDecays()
 	    << "12  mu- -> numu nuebar e-  : " << d12 << std::endl
 	    << "13  pi+ -> numu mu+        : " << d13 << std::endl
 	    << "14  pi- -> numubar mu-     : " << d14 << std::endl;
+}
+
+void NuMIana::PrintNeutrinos()
+{
+  int numu = 0, numubar = 0, nue = 0, nuebar = 0;
+  for ( int n : fpdg ) {
+    switch(n) {
+    case 14:  numu++;    break;
+    case -14: numubar++; break;
+    case 12:  nue++;     break;
+    case -12: nuebar++;  break;
+    default:
+      std::cout << "Warning in NuMIana::PrintNeutrinos(): Unkown pdg code: " << n << std::endl;
+      break;
+    }
+  }
+  std::cout << " numu    : " << numu    << std::endl;
+  std::cout << " numubar : " << numubar << std::endl;
+  std::cout << " nue     : " << nue     << std::endl;
+  std::cout << " nuebar  : " << nuebar  << std::endl;
 }

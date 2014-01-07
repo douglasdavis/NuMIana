@@ -42,6 +42,7 @@ public:
   virtual ~NuMIana();
 
   void PrintDecays();
+  void PrintNeutrinos();
 
   inline std::vector<double> wgt()      const { return fwgt;      }
   inline std::vector<double> vtxx()     const { return fvtxx;     }
