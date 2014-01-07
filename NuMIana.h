@@ -19,7 +19,8 @@ private:
   std::vector<double> fpy;       ///< lab momentum y
   std::vector<double> fpz;       ///< lab momentum z
   std::vector<double> fE;        ///< lab energy
-    
+  std::vector<int>    fpdg;      ///< pdg code for neutrino
+
   TTree *fNuMI_Tree;
   std::vector<double> ftpx;      ///< parent momentum at target exit x
   std::vector<double> ftpy;      ///< parent momentum at target exit y
@@ -40,6 +41,8 @@ public:
   NuMIana(std::string file_name);
   virtual ~NuMIana();
 
+  void PrintDecays();
+
   inline std::vector<double> wgt()      const { return fwgt;      }
   inline std::vector<double> vtxx()     const { return fvtxx;     }
   inline std::vector<double> vtxy()     const { return fvtxy;     }
@@ -49,6 +52,7 @@ public:
   inline std::vector<double> py()       const { return fpy;       }
   inline std::vector<double> pz()       const { return fpz;       }
   inline std::vector<double> E()        const { return fE;        }  
+  inline std::vector<int>    pdg()      const { return fpdg;      }
   inline std::vector<double> tpx()      const { return ftpx;      }
   inline std::vector<double> tpy()      const { return ftpy;      }
   inline std::vector<double> tpz()      const { return ftpz;      }
