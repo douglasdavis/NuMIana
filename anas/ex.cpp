@@ -1,5 +1,5 @@
 #include <iostream>
-#include "NuMIana.h"
+#include "NuMIana.hh"
 #include "TH3D.h"
 #include "TApplication.h"
 #include "TCanvas.h"
