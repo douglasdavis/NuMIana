@@ -1,3 +1,6 @@
+#ifndef NUMIANA_HH
+#define NUMIANA_HH
+
 #include <iostream>
 #include <vector>
 #include "TFile.h"
@@ -68,3 +71,5 @@ public:
   inline std::vector<int>    entryno()  const { return fentryno;  }
 
 };
+
+#endif

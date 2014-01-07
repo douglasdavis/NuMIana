@@ -1,4 +1,4 @@
-#include "NuMIana.h"
+#include "NuMIana.hh"
 
 NuMIana::NuMIana() {}
 
