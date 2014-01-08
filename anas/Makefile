@@ -1,5 +1,5 @@
 TARGET := ex
-CSTUFF = $(shell root-config --cflags)
+CSTUFF = -std=c++1y $(shell root-config --cflags)
 CSTUFF += -I$(HOME)/window_work/NuMIana
 LSTUFF = $(shell root-config --ldflags --glibs)
 LSTUFF += -L$(HOME)/window_work/NuMIana/lib -lNuMIana
