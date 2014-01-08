@@ -86,7 +86,9 @@ void NuMIana::PrintDecays()
 
   int d1 = 0, d2 = 0, d3 = 0, d4 = 0, d5 = 0, d6 = 0, d7 = 0,
     d8 = 0, d9 = 0, d10 = 0, d11 = 0, d12 = 0, d13 = 0, d14 = 0;
+  int counter = 0; int unk = 0;
   for ( int n : fndecay ) {
+    counter++;
     switch(n) {
     case 1:  d1++;  break;
     case 2:  d2++;  break;
@@ -104,29 +106,34 @@ void NuMIana::PrintDecays()
     case 14: d14++; break;
     default:
       std::cout << "Warning in NuMIana::PrintDecays() unkown decay number: " << n << std::endl;
+      unk++;
       break;
     }
   }
-  std::cout << "1   K0L -> nue pi- e+      : " << d1  << std::endl
-	    << "2   K0L -> nuebar pi+ e-   : " << d2  << std::endl 
-	    << "3   K0L -> numu pi- mu+    : " << d3  << std::endl
-	    << "4   K0L -> numubar pi+ mu- : " << d4  << std::endl
-	    << "5   K+  -> numu mu+        : " << d5  << std::endl
-	    << "6   K+  -> nue pi0 e+      : " << d6  << std::endl
-	    << "7   K+  -> numu pi0 mu+    : " << d7  << std::endl
-	    << "8   K-  -> numubar mu-     : " << d8  << std::endl
-	    << "9   K-  -> nuebar pi0 e-   : " << d9  << std::endl
-	    << "10  K-  -> numubar pi0 mu- : " << d10 << std::endl
-	    << "11  mu+ -> numubar nue e+  : " << d11 << std::endl
-	    << "12  mu- -> numu nuebar e-  : " << d12 << std::endl
-	    << "13  pi+ -> numu mu+        : " << d13 << std::endl
-	    << "14  pi- -> numubar mu-     : " << d14 << std::endl;
+  std::cout << "1   K0L -> nue pi- e+      : " << d1  << "  ::  " << 100*(double)d1/(double)counter  << std::endl
+	    << "2   K0L -> nuebar pi+ e-   : " << d2  << "  ::  " << 100*(double)d2/(double)counter  << std::endl 
+	    << "3   K0L -> numu pi- mu+    : " << d3  << "  ::  " << 100*(double)d3/(double)counter  << std::endl
+	    << "4   K0L -> numubar pi+ mu- : " << d4  << "  ::  " << 100*(double)d4/(double)counter  << std::endl
+	    << "5   K+  -> numu mu+        : " << d5  << "  ::  " << 100*(double)d5/(double)counter  << std::endl
+	    << "6   K+  -> nue pi0 e+      : " << d6  << "  ::  " << 100*(double)d6/(double)counter  << std::endl
+	    << "7   K+  -> numu pi0 mu+    : " << d7  << "  ::  " << 100*(double)d7/(double)counter  << std::endl
+	    << "8   K-  -> numubar mu-     : " << d8  << "  ::  " << 100*(double)d8/(double)counter  << std::endl
+	    << "9   K-  -> nuebar pi0 e-   : " << d9  << "  ::  " << 100*(double)d9/(double)counter  << std::endl
+	    << "10  K-  -> numubar pi0 mu- : " << d10 << "  ::  " << 100*(double)d10/(double)counter << std::endl
+	    << "11  mu+ -> numubar nue e+  : " << d11 << "  ::  " << 100*(double)d11/(double)counter << std::endl
+	    << "12  mu- -> numu nuebar e-  : " << d12 << "  ::  " << 100*(double)d12/(double)counter << std::endl
+	    << "13  pi+ -> numu mu+        : " << d13 << "  ::  " << 100*(double)d13/(double)counter << std::endl
+	    << "14  pi- -> numubar mu-     : " << d14 << "  ::  " << 100*(double)d14/(double)counter << std::endl
+	    << "999 unkown                 : " << unk << "  ::  " << 100*(double)unk/(double)counter << std::endl;
 }
 
 void NuMIana::PrintNeutrinos()
 {
+  std::cout << " ** NEUTRINOS ** " << std::endl;
   int numu = 0, numubar = 0, nue = 0, nuebar = 0;
+  int counter = 0;
   for ( int n : fpdg ) {
+    counter++;
     switch(n) {
     case 14:  numu++;    break;
     case -14: numubar++; break;
@@ -137,8 +144,8 @@ void NuMIana::PrintNeutrinos()
       break;
     }
   }
-  std::cout << " numu    : " << numu    << std::endl;
-  std::cout << " numubar : " << numubar << std::endl;
-  std::cout << " nue     : " << nue     << std::endl;
-  std::cout << " nuebar  : " << nuebar  << std::endl;
+  std::cout << " numu    : " << numu    << "  ::  " << 100*(double)numu/(double)counter    << std::endl;
+  std::cout << " numubar : " << numubar << "  ::  " << 100*(double)numubar/(double)counter << std::endl;
+  std::cout << " nue     : " << nue     << "  ::  " << 100*(double)nue/(double)counter     << std::endl;
+  std::cout << " nuebar  : " << nuebar  << "  ::  " << 100*(double)nuebar/(double)counter  << std::endl;
 }
