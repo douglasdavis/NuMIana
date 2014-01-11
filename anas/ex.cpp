@@ -13,18 +13,19 @@ int main(int argc, char *argv[])
 {
   looks();
   gStyle->SetOptStat(0);
-  /*
+
   if ( argc < 4 )
     return 0;
     
   std::string file_name1 = argv[1];
   std::string file_name2 = argv[2];
   std::string file_name3 = argv[3];
-  */
 
+  /*
   std::string file_name1 = "files/bott/combined.root";
   std::string file_name2 = "files/long/combined.root";
   std::string file_name3 = "files/norm/combined.root";
+  */
 
   NuMIana *bott_ana = new NuMIana(file_name1.c_str());
   NuMIana *long_ana = new NuMIana(file_name2.c_str());
