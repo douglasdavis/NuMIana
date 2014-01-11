@@ -46,6 +46,7 @@ public:
 
   void PrintDecays();
   void PrintNeutrinos();
+  void PrintDecayLocations();
 
   inline std::vector<double> wgt()      const { return fwgt;      }
   inline std::vector<double> vtxx()     const { return fvtxx;     }

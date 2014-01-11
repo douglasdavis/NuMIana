@@ -12,7 +12,7 @@
 int main(int argc, char *argv[])
 {
   looks();
-
+  gStyle->SetOptStat(0);
   /*
   if ( argc < 4 )
     return 0;
@@ -33,15 +33,13 @@ int main(int argc, char *argv[])
   std::cout << "*************** LONG ************" << std::endl;
   long_ana->PrintDecays();
   long_ana->PrintNeutrinos();
-
   std::cout << "*************** BOTT ************" << std::endl;
   bott_ana->PrintDecays();
   bott_ana->PrintNeutrinos();
-
   std::cout << "*************** NORM ************" << std::endl;
   norm_ana->PrintDecays();
   norm_ana->PrintNeutrinos();
-  
+
   TH1D *h_bott_vx = new TH1D("h_bott_vx",";x decay vertex;#nu/10^{9} POT",500,1,0);
   TH1D *h_bott_vy = new TH1D("h_bott_vy",";y decay vertex;#nu/10^{9} POT",500,1,0);
   TH1D *h_bott_vz = new TH1D("h_bott_vz",";z decay vertex;#nu/10^{9} POT",500,1,0);
