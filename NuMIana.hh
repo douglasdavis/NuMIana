@@ -48,28 +48,28 @@ public:
   void PrintNeutrinos();
   void PrintDecayLocations();
 
-  inline std::vector<double> wgt()      const { return fwgt;      }
-  inline std::vector<double> vtxx()     const { return fvtxx;     }
-  inline std::vector<double> vtxy()     const { return fvtxy;     }
-  inline std::vector<double> vtxz()     const { return fvtxz;     }
-  inline std::vector<double> dist()     const { return fdist;     }
-  inline std::vector<double> px()       const { return fpx;       }
-  inline std::vector<double> py()       const { return fpy;       }
-  inline std::vector<double> pz()       const { return fpz;       }
-  inline std::vector<double> E()        const { return fE;        }  
-  inline std::vector<int>    pdg()      const { return fpdg;      }
-  inline std::vector<double> tpx()      const { return ftpx;      }
-  inline std::vector<double> tpy()      const { return ftpy;      }
-  inline std::vector<double> tpz()      const { return ftpz;      }
-  inline std::vector<double> vx()       const { return fvx;       }
-  inline std::vector<double> vy()       const { return fvy;       }
-  inline std::vector<double> vz()       const { return fvz;       }
-  inline std::vector<int>    ndecay()   const { return fndecay;   }
-  inline std::vector<int>    ppmedium() const { return fppmedium; }
-  inline std::vector<int>    tptype()   const { return ftptype;   }
-  inline std::vector<int>    run()      const { return frun;      }
-  inline std::vector<int>    evtno()    const { return fevtno;    }
-  inline std::vector<int>    entryno()  const { return fentryno;  }
+  const std::vector<double>& wgt()      const { return fwgt;      }
+  const std::vector<double>& vtxx()     const { return fvtxx;     }
+  const std::vector<double>& vtxy()     const { return fvtxy;     }
+  const std::vector<double>& vtxz()     const { return fvtxz;     }
+  const std::vector<double>& dist()     const { return fdist;     }
+  const std::vector<double>& px()       const { return fpx;       }
+  const std::vector<double>& py()       const { return fpy;       }
+  const std::vector<double>& pz()       const { return fpz;       }
+  const std::vector<double>& E()        const { return fE;        }  
+  const std::vector<int>&    pdg()      const { return fpdg;      }
+  const std::vector<double>& tpx()      const { return ftpx;      }
+  const std::vector<double>& tpy()      const { return ftpy;      }
+  const std::vector<double>& tpz()      const { return ftpz;      }
+  const std::vector<double>& vx()       const { return fvx;       }
+  const std::vector<double>& vy()       const { return fvy;       }
+  const std::vector<double>& vz()       const { return fvz;       }
+  const std::vector<int>&    ndecay()   const { return fndecay;   }
+  const std::vector<int>&    ppmedium() const { return fppmedium; }
+  const std::vector<int>&    tptype()   const { return ftptype;   }
+  const std::vector<int>&    run()      const { return frun;      }
+  const std::vector<int>&    evtno()    const { return fevtno;    }
+  const std::vector<int>&    entryno()  const { return fentryno;  }
 
 };
 
