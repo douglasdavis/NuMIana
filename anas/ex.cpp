@@ -117,17 +117,25 @@ int main(int argc, char *argv[])
     if ( pz_n[i] >= 0 )
       h_norm_vz->Fill(vz_n[i]);
   }
+
+  long_ana->fPlotTitle->AddText("Long Window");
+  norm_ana->fPlotTitle->AddText("Normal Window");
+  bott_ana->fPlotTitle->AddText("Bottom Window");
+
   
   TApplication *app = new TApplication("app",&argc,argv);
   TCanvas      *can1 = new TCanvas();
   can1->SetLogy();
   h_bott_vz->Draw();
+  bott_ana->fPlotTitle->Draw("same");
   TCanvas      *can2 = new TCanvas();
   can2->SetLogy();
   h_long_vz->Draw();
+  long_ana->fPlotTitle->Draw("same");
   TCanvas      *can3 = new TCanvas();
   can3->SetLogy();
   h_norm_vz->Draw();
+  norm_ana->fPlotTitle->Draw("same");
 
   app->Run();
 

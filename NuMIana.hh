@@ -5,6 +5,7 @@
 #include <vector>
 #include "TFile.h"
 #include "TTree.h"
+#include "TPaveText.h"
 
 class NuMIana {
     
@@ -41,12 +42,12 @@ private:
 public:
     
   NuMIana();
-  NuMIana(std::string file_name);
+  NuMIana(const std::string& file_name);
   virtual ~NuMIana();
 
-  void PrintDecays();
-  void PrintNeutrinos();
-  void PrintDecayLocations();
+  virtual void PrintDecays();
+  virtual void PrintNeutrinos();
+  virtual void PrintDecayLocations();
 
   const std::vector<double>& wgt()      const { return fwgt;      }
   const std::vector<double>& vtxx()     const { return fvtxx;     }
@@ -70,6 +71,8 @@ public:
   const std::vector<int>&    run()      const { return frun;      }
   const std::vector<int>&    evtno()    const { return fevtno;    }
   const std::vector<int>&    entryno()  const { return fentryno;  }
+  
+  TPaveText *fPlotTitle;
 
 };
 
