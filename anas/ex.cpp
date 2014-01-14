@@ -106,15 +106,15 @@ int main(int argc, char *argv[])
   std::vector<double> pz_n = norm_ana->pz();
   
   for ( int i = 0; i < vz_l.size(); i++ ) {
-    if ( pz_l[i] >= 0 )
+    if ( pz_l[i] <= 0 )
       h_long_vz->Fill(vz_l[i]);
   }
   for ( int i = 0; i < vz_b.size(); i++ ) {
-    if ( pz_b[i] >= 0 )
+    if ( pz_b[i] <= 0 )
       h_bott_vz->Fill(vz_b[i]);
   }
   for ( int i = 0; i < vz_n.size(); i++ ) {
-    if ( pz_n[i] >= 0 )
+    if ( pz_n[i] <= 0 )
       h_norm_vz->Fill(vz_n[i]);
   }
 

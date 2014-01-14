@@ -16,3 +16,5 @@ link_directories(${CMAKE_SOURCE_DIR}/lib)
 
 add_library(NuMIana SHARED NuMIana.cc)
 target_link_libraries(NuMIana ${ROOT_LIBS})
+
+add_subdirectory(anas)
