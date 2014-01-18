@@ -49,28 +49,28 @@ namespace lar {
     
     virtual ~LArAna();
     
-    inline const std::vector<double>& NuIntVtxX()     const { return fNuIntVtxX;    }
-    inline const std::vector<double>& NuIntVtxY()     const { return fNuIntVtxY;    }
-    inline const std::vector<double>& NuIntVtxZ()     const { return fNuIntVtxZ;    }
-    inline const std::vector<double>& NuEnergy()      const { return fNuEnergy;     }
-    inline const std::vector<double>& HadronDecayX()  const { return fHadronDecayX; }
-    inline const std::vector<double>& HadronDecayY()  const { return fHadronDecayY; }
-    inline const std::vector<double>& HadronDecayZ()  const { return fHadronDecayZ; }
-    inline const std::vector<bool>&   CCint()         const { return fCCint;        }
-    inline const std::vector<bool>&   CCQEint()       const { return fCCQEint;      }
-    inline const std::vector<bool>&   NCint()         const { return fNCint;        }
-    inline const std::vector<bool>&   NCQEint()       const { return fNCQEint;      }
+    inline const std::vector<double> NuIntVtxX()      const { return fNuIntVtxX;    }
+    inline const std::vector<double> NuIntVtxY()      const { return fNuIntVtxY;    }
+    inline const std::vector<double> NuIntVtxZ()      const { return fNuIntVtxZ;    }
+    inline const std::vector<double> NuEnergy()       const { return fNuEnergy;     }
+    inline const std::vector<double> HadronDecayX()   const { return fHadronDecayX; }
+    inline const std::vector<double> HadronDecayY()   const { return fHadronDecayY; }
+    inline const std::vector<double> HadronDecayZ()   const { return fHadronDecayZ; }
+    inline const std::vector<bool>   CCint()          const { return fCCint;        }
+    inline const std::vector<bool>   CCQEint()        const { return fCCQEint;      }
+    inline const std::vector<bool>   NCint()          const { return fNCint;        }
+    inline const std::vector<bool>   NCQEint()        const { return fNCQEint;      }
 
-    inline const std::vector< std::vector<int> >& TrackID() const { return fTrackID; }
-    inline const std::vector< std::vector<int> >& PdgCode() const { return fPdgCode; }
+    inline const std::vector< std::vector<int> > TrackID()  const { return fTrackID; }
+    inline const std::vector< std::vector<int> > PdgCode()  const { return fPdgCode; }
 
-    inline const std::vector< std::vector<double> >& StartX()  const { return fStartX;  }
-    inline const std::vector< std::vector<double> >& StartY()  const { return fStartY;  }
-    inline const std::vector< std::vector<double> >& StartZ()  const { return fStartZ;  }
-    inline const std::vector< std::vector<double> >& StartPX() const { return fStartPX; }
-    inline const std::vector< std::vector<double> >& StartPY() const { return fStartPY; }
-    inline const std::vector< std::vector<double> >& StartPZ() const { return fStartPZ; }
-    inline const std::vector< std::vector<double> >& StartE()  const { return fStartE;  }
+    inline const std::vector< std::vector<double> > StartX()   const { return fStartX;  }
+    inline const std::vector< std::vector<double> > StartY()   const { return fStartY;  }
+    inline const std::vector< std::vector<double> > StartZ()   const { return fStartZ;  }
+    inline const std::vector< std::vector<double> > StartPX()  const { return fStartPX; }
+    inline const std::vector< std::vector<double> > StartPY()  const { return fStartPY; }
+    inline const std::vector< std::vector<double> > StartPZ()  const { return fStartPZ; }
+    inline const std::vector< std::vector<double> > StartE()   const { return fStartE;  }
 
   };
   
