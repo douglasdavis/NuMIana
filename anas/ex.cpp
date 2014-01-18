@@ -27,9 +27,9 @@ int main(int argc, char *argv[])
   std::string file_name3 = "files/norm/combined.root";
   */
 
-  NuMIana *bott_ana = new NuMIana(file_name1.c_str());
-  NuMIana *long_ana = new NuMIana(file_name2.c_str());
-  NuMIana *norm_ana = new NuMIana(file_name3.c_str());
+  simple::NuMIana *bott_ana = new simple::NuMIana(file_name1.c_str());
+  simple::NuMIana *long_ana = new simple::NuMIana(file_name2.c_str());
+  simple::NuMIana *norm_ana = new simple::NuMIana(file_name3.c_str());
   
   std::cout << "*************** LONG ************" << std::endl;
   long_ana->PrintDecays();
