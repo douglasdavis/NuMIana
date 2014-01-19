@@ -79,11 +79,7 @@ namespace simple {
   }
 
   NuMIana::~NuMIana()
-  {
-    delete fFile;
-    delete fNuMI_Tree;
-    delete fEntryTree;
-  }
+  {}
 
   void NuMIana::PrintDecays()
   {
