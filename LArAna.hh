@@ -51,6 +51,8 @@ namespace lar {
     
     void FillTH1D(TH1D& histogram, const std::vector<double>& values);
     void FillTH1D(TH1D& histogram, const std::vector< std::vector<double> >& values);
+    void FillTH1D(TH1D& histogram, const std::vector<double>& values, const double& cut);
+    void FillTH1D(TH1D& histogram, const std::vector< std::vector<double> >& values, const double& cut);
 
     inline const std::vector<double> NuIntVtxX()     const { return fNuIntVtxX;    }
     inline const std::vector<double> NuIntVtxY()     const { return fNuIntVtxY;    }
