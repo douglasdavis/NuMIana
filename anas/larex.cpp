@@ -15,7 +15,7 @@ int main(int argc, char *argv[])
   // GETTING SOME DATA
   TH1D *hstartz = new TH1D("hstartz","hist",50,1,0);
   TH1D *hnuintx = new TH1D("hnuintx","hist",50,1,0);
-  my_ana->FillTH1D(*hstartz,my_ana->StartZ());
+  my_ana->FillTH1D(*hstartz,my_ana->StartZ(),200);
   my_ana->FillTH1D(*hnuintx,my_ana->NuIntVtxX());
   
   // DRAWING
