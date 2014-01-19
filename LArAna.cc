@@ -95,4 +95,16 @@ namespace lar {
   
   LArAna::~LArAna() {}
   
+  void LArAna::FillTH1D(TH1D& histogram, const std::vector<double>& values)
+  {
+    for ( auto const &val : values )
+      histogram.Fill(val);
+  }
+  
+  void LArAna::FillTH1D(TH1D& histogram, const std::vector< std::vector<double> >& values)
+  {
+    for ( auto const &vec : values )
+      for ( auto const &val : vec ) 
+	histogram.Fill(val);    
+  }
 }

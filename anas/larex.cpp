@@ -9,27 +9,20 @@ int main(int argc, char *argv[])
   // SETUP
   std::string file_name = argv[1];
   lar::LArAna *my_ana = new lar::LArAna(file_name);
-  std::vector< std::vector<double> > startx = my_ana->StartX();
-
-
-
-  // GETTING SOME DATA
-  TH1D *filler = new TH1D("filler","hist",100,1,0);
-  int counter = 0;
-  for ( auto const &j : startx ) {
-    counter = counter + j.size();
-    for ( auto const &k : j )
-      filler->Fill(k);
-  }
-  std::cout << counter << std::endl;
   
-
-
+  // GETTING SOME DATA
+  TH1D *hstartx = new TH1D("hstartx","hist",100,1,0);
+  TH1D *hnuintx = new TH1D("hnuintx","hist",100,1,0);
+  my_ana->FillTH1D(*hstartx,my_ana->StartX());
+  my_ana->FillTH1D(*hnuintx,my_ana->NuIntVtxX());
+  
   // DRAWING
   TApplication *tapp = new TApplication("tapp",&argc,argv);
-  TCanvas *can = new TCanvas();
-  filler->Draw();
+  TCanvas *can1 = new TCanvas();
+  hstartx->Draw();
+  TCanvas *can2 = new TCanvas();
+  hnuintx->Draw();
   tapp->Run();
-
+  
   return 0;
 }
