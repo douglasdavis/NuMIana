@@ -1,5 +1,5 @@
-#ifndef NUMIANA_HH
-#define NUMIANA_HH
+#ifndef WINDOWANA_HH
+#define WINDOWANA_HH
 
 #include <iostream>
 #include <vector>
@@ -9,7 +9,7 @@
 
 namespace simple {
 
-  class NuMIana {
+  class WindowAna {
     
   private:
     
@@ -43,9 +43,9 @@ namespace simple {
 
   public:
     
-    NuMIana();
-    NuMIana(const std::string& file_name);
-    virtual ~NuMIana();
+    WindowAna();
+    WindowAna(const std::string& file_name);
+    virtual ~WindowAna();
 
     virtual void PrintDecays();
     virtual void PrintNeutrinos();

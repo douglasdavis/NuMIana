@@ -1,10 +1,10 @@
-#include "NuMIana.hh"
+#include "WindowAna.hh"
 
 namespace simple {
 
-  NuMIana::NuMIana() {}
+  WindowAna::WindowAna() {}
 
-  NuMIana::NuMIana(const std::string& file_name)
+  WindowAna::WindowAna(const std::string& file_name)
   {
     fFile      = new TFile(file_name.c_str(),"READ");
     fEntryTree = (TTree*)fFile->Get("EntryTree");
@@ -78,10 +78,10 @@ namespace simple {
     fPlotTitle->SetBorderSize(0);
   }
 
-  NuMIana::~NuMIana()
+  WindowAna::~WindowAna()
   {}
 
-  void NuMIana::PrintDecays()
+  void WindowAna::PrintDecays()
   {
     std::cout << "====================================" << std::endl
 	      << "          Printing ndecays          " << std::endl
@@ -144,7 +144,7 @@ namespace simple {
 	      << " :: " << 100*(double)unk/(double)counter << std::endl;
   }
 
-  void NuMIana::PrintNeutrinos()
+  void WindowAna::PrintNeutrinos()
   {
     std::cout << " ** NEUTRINOS ** " << std::endl;
     int numu = 0, numubar = 0, nue = 0, nuebar = 0;
@@ -157,7 +157,7 @@ namespace simple {
       case 12:  nue++;     break;
       case -12: nuebar++;  break;
       default:
-	std::cout << "Warning in NuMIana::PrintNeutrinos(): Unkown pdg code: " << n << std::endl;
+	std::cout << "Warning in WindowAna::PrintNeutrinos(): Unkown pdg code: " << n << std::endl;
 	break;
       }
     }
@@ -171,7 +171,7 @@ namespace simple {
 	      << 100*(double)nuebar/(double)counter  << std::endl;
   }
 
-  void NuMIana::PrintDecayLocations()
+  void WindowAna::PrintDecayLocations()
   {
     // target hall
     int target_hall = 0;

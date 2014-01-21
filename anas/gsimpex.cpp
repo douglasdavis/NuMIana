@@ -1,5 +1,5 @@
 #include <iostream>
-#include "NuMIana.hh"
+#include "WindowAna.hh"
 #include "TH3D.h"
 #include "TApplication.h"
 #include "TCanvas.h"
@@ -27,9 +27,9 @@ int main(int argc, char *argv[])
   std::string file_name3 = "files/norm/combined.root";
   */
 
-  simple::NuMIana *bott_ana = new simple::NuMIana(file_name1.c_str());
-  simple::NuMIana *long_ana = new simple::NuMIana(file_name2.c_str());
-  simple::NuMIana *norm_ana = new simple::NuMIana(file_name3.c_str());
+  simple::WindowAna *bott_ana = new simple::WindowAna(file_name1.c_str());
+  simple::WindowAna *long_ana = new simple::WindowAna(file_name2.c_str());
+  simple::WindowAna *norm_ana = new simple::WindowAna(file_name3.c_str());
   
   std::cout << "*************** LONG ************" << std::endl;
   long_ana->PrintDecays();
