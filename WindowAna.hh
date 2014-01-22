@@ -51,28 +51,28 @@ namespace simple {
     virtual void PrintNeutrinos();
     virtual void PrintDecayLocations();
 
-    inline const std::vector<double> wgt()      const { return fwgt;      }
-    inline const std::vector<double> vtxx()     const { return fvtxx;     }
-    inline const std::vector<double> vtxy()     const { return fvtxy;     }
-    inline const std::vector<double> vtxz()     const { return fvtxz;     }
-    inline const std::vector<double> dist()     const { return fdist;     }
-    inline const std::vector<double> px()       const { return fpx;       }
-    inline const std::vector<double> py()       const { return fpy;       }
-    inline const std::vector<double> pz()       const { return fpz;       }
-    inline const std::vector<double> E()        const { return fE;        }  
-    inline const std::vector<int>    pdg()      const { return fpdg;      }
-    inline const std::vector<double> tpx()      const { return ftpx;      }
-    inline const std::vector<double> tpy()      const { return ftpy;      }
-    inline const std::vector<double> tpz()      const { return ftpz;      }
-    inline const std::vector<double> vx()       const { return fvx;       }
-    inline const std::vector<double> vy()       const { return fvy;       }
-    inline const std::vector<double> vz()       const { return fvz;       }
-    inline const std::vector<int>    ndecay()   const { return fndecay;   }
-    inline const std::vector<int>    ppmedium() const { return fppmedium; }
-    inline const std::vector<int>    tptype()   const { return ftptype;   }
-    inline const std::vector<int>    run()      const { return frun;      }
-    inline const std::vector<int>    evtno()    const { return fevtno;    }
-    inline const std::vector<int>    entryno()  const { return fentryno;  }
+    inline const std::vector<double>& wgt()      const { return fwgt;      }
+    inline const std::vector<double>& vtxx()     const { return fvtxx;     }
+    inline const std::vector<double>& vtxy()     const { return fvtxy;     }
+    inline const std::vector<double>& vtxz()     const { return fvtxz;     }
+    inline const std::vector<double>& dist()     const { return fdist;     }
+    inline const std::vector<double>& px()       const { return fpx;       }
+    inline const std::vector<double>& py()       const { return fpy;       }
+    inline const std::vector<double>& pz()       const { return fpz;       }
+    inline const std::vector<double>& E()        const { return fE;        }  
+    inline const std::vector<int>&    pdg()      const { return fpdg;      }
+    inline const std::vector<double>& tpx()      const { return ftpx;      }
+    inline const std::vector<double>& tpy()      const { return ftpy;      }
+    inline const std::vector<double>& tpz()      const { return ftpz;      }
+    inline const std::vector<double>& vx()       const { return fvx;       }
+    inline const std::vector<double>& vy()       const { return fvy;       }
+    inline const std::vector<double>& vz()       const { return fvz;       }
+    inline const std::vector<int>&    ndecay()   const { return fndecay;   }
+    inline const std::vector<int>&    ppmedium() const { return fppmedium; }
+    inline const std::vector<int>&    tptype()   const { return ftptype;   }
+    inline const std::vector<int>&    run()      const { return frun;      }
+    inline const std::vector<int>&    evtno()    const { return fevtno;    }
+    inline const std::vector<int>&    entryno()  const { return fentryno;  }
   
     TPaveText *fPlotTitle;
 

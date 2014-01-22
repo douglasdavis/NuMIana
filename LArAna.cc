@@ -18,12 +18,12 @@ namespace lar {
 
     std::vector<int>    *_TrackID = 0;
     std::vector<int>    *_PdgCode = 0;
-    std::vector<double> *_StartX  = 0;
-    std::vector<double> *_StartY  = 0;
-    std::vector<double> *_StartZ  = 0;
-    std::vector<double> *_StartPX = 0;
-    std::vector<double> *_StartPY = 0;
-    std::vector<double> *_StartPZ = 0;
+    std::vector<double> *_StartVx  = 0;
+    std::vector<double> *_StartVy  = 0;
+    std::vector<double> *_StartVz  = 0;
+    std::vector<double> *_StartPx = 0;
+    std::vector<double> *_StartPy = 0;
+    std::vector<double> *_StartPz = 0;
     std::vector<double> *_StartE  = 0;
     
     fTree->SetBranchAddress("NuIntVtxX",   &_NuIntVtxX);
@@ -39,22 +39,22 @@ namespace lar {
 
     fTree->SetBranchAddress("TrackID",&_TrackID);
     fTree->SetBranchAddress("PdgCode",&_PdgCode);
-    fTree->SetBranchAddress("StartX", &_StartX);
-    fTree->SetBranchAddress("StartY", &_StartY);
-    fTree->SetBranchAddress("StartZ", &_StartZ);
-    fTree->SetBranchAddress("StartPX",&_StartPX);
-    fTree->SetBranchAddress("StartPY",&_StartPY);
-    fTree->SetBranchAddress("StartPZ",&_StartPZ);
+    fTree->SetBranchAddress("StartVx", &_StartVx);
+    fTree->SetBranchAddress("StartVy", &_StartVy);
+    fTree->SetBranchAddress("StartVz", &_StartVz);
+    fTree->SetBranchAddress("StartPx",&_StartPx);
+    fTree->SetBranchAddress("StartPy",&_StartPy);
+    fTree->SetBranchAddress("StartPz",&_StartPz);
     fTree->SetBranchAddress("StartE", &_StartE);
 
     TBranch *b_TrackID = fTree->GetBranch("TrackID");
     TBranch *b_PdgCode = fTree->GetBranch("PdgCode");
-    TBranch *b_StartX  = fTree->GetBranch("StartX");
-    TBranch *b_StartY  = fTree->GetBranch("StartY");
-    TBranch *b_StartZ  = fTree->GetBranch("StartZ");
-    TBranch *b_StartPX = fTree->GetBranch("StartPX");
-    TBranch *b_StartPY = fTree->GetBranch("StartPY");
-    TBranch *b_StartPZ = fTree->GetBranch("StartPZ");
+    TBranch *b_StartVx  = fTree->GetBranch("StartVx");
+    TBranch *b_StartVy  = fTree->GetBranch("StartVy");
+    TBranch *b_StartVz  = fTree->GetBranch("StartVz");
+    TBranch *b_StartPx = fTree->GetBranch("StartPx");
+    TBranch *b_StartPy = fTree->GetBranch("StartPy");
+    TBranch *b_StartPz = fTree->GetBranch("StartPz");
     TBranch *b_StartE  = fTree->GetBranch("StartE");
 
     for ( int i = 0; i < fTree->GetEntries(); i++ ) {
@@ -73,22 +73,22 @@ namespace lar {
       
       b_TrackID->GetEntry(i);
       b_PdgCode->GetEntry(i);
-      b_StartX->GetEntry(i);
-      b_StartY->GetEntry(i);
-      b_StartZ->GetEntry(i);
-      b_StartPX->GetEntry(i);
-      b_StartPY->GetEntry(i);
-      b_StartPZ->GetEntry(i);
+      b_StartVx->GetEntry(i);
+      b_StartVy->GetEntry(i);
+      b_StartVz->GetEntry(i);
+      b_StartPx->GetEntry(i);
+      b_StartPy->GetEntry(i);
+      b_StartPz->GetEntry(i);
       b_StartE->GetEntry(i);
 
       fTrackID.push_back(*_TrackID);
       fPdgCode.push_back(*_PdgCode);
-      fStartX.push_back(*_StartX);
-      fStartY.push_back(*_StartY);
-      fStartZ.push_back(*_StartZ);
-      fStartPX.push_back(*_StartPX);
-      fStartPY.push_back(*_StartPY);
-      fStartPZ.push_back(*_StartPZ);
+      fStartVx.push_back(*_StartVx);
+      fStartVy.push_back(*_StartVy);
+      fStartVz.push_back(*_StartVz);
+      fStartPx.push_back(*_StartPx);
+      fStartPy.push_back(*_StartPy);
+      fStartPz.push_back(*_StartPz);
       fStartE.push_back(*_StartE);
     }
   }

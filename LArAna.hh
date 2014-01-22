@@ -32,14 +32,18 @@ namespace lar {
     std::vector<int>    fSubRun;
     std::vector<int>    fRun;
     
+    std::vector< std::pair< std::vector<int>, std::vector<double> > > fpPdgCodeStartPx;
+    std::vector< std::pair< std::vector<int>, std::vector<double> > > fpPdgCodeStartPy;
+    std::vector< std::pair< std::vector<int>, std::vector<double> > > fpPdgCodeStartPz;
+    
     std::vector< std::vector<int> >    fTrackID;
     std::vector< std::vector<int> >    fPdgCode;
-    std::vector< std::vector<double> > fStartX;
-    std::vector< std::vector<double> > fStartY;
-    std::vector< std::vector<double> > fStartZ;
-    std::vector< std::vector<double> > fStartPX;
-    std::vector< std::vector<double> > fStartPY;
-    std::vector< std::vector<double> > fStartPZ;
+    std::vector< std::vector<double> > fStartVx;
+    std::vector< std::vector<double> > fStartVy;
+    std::vector< std::vector<double> > fStartVz;
+    std::vector< std::vector<double> > fStartPx;
+    std::vector< std::vector<double> > fStartPy;
+    std::vector< std::vector<double> > fStartPz;
     std::vector< std::vector<double> > fStartE;
     
   public:
@@ -69,12 +73,12 @@ namespace lar {
     inline const std::vector< std::vector<int> > TrackID() const { return fTrackID; }
     inline const std::vector< std::vector<int> > PdgCode() const { return fPdgCode; }
 
-    inline const std::vector< std::vector<double> > StartX()  const { return fStartX;  }
-    inline const std::vector< std::vector<double> > StartY()  const { return fStartY;  }
-    inline const std::vector< std::vector<double> > StartZ()  const { return fStartZ;  }
-    inline const std::vector< std::vector<double> > StartPX() const { return fStartPX; }
-    inline const std::vector< std::vector<double> > StartPY() const { return fStartPY; }
-    inline const std::vector< std::vector<double> > StartPZ() const { return fStartPZ; }
+    inline const std::vector< std::vector<double> > StartX()  const { return fStartVx;  }
+    inline const std::vector< std::vector<double> > StartY()  const { return fStartVy;  }
+    inline const std::vector< std::vector<double> > StartZ()  const { return fStartVz;  }
+    inline const std::vector< std::vector<double> > StartPX() const { return fStartPx; }
+    inline const std::vector< std::vector<double> > StartPY() const { return fStartPy; }
+    inline const std::vector< std::vector<double> > StartPZ() const { return fStartPz; }
     inline const std::vector< std::vector<double> > StartE()  const { return fStartE;  }
 
   };
