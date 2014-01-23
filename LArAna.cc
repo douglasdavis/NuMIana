@@ -11,10 +11,15 @@ namespace lar {
     fFile = new TFile(file_name.c_str());
     fTree = (TTree*)fFile->Get("LArNuMIana/LArNuMIanaSimulation");
 
+    int    _NuPdg, _LeptonPdg;
+    double _NuPx, _NuPy, _NuPz, _LeptonPx, _LeptonPy, _LeptonPz;
+    double _LeptonVx, _LeptonVy, _LeptonVz, _LeptonEnergy;
+    double _LeptonThetaXZ2, _LeptonThetaYZ2;
+    double _LeptonThetaXZ, _LeptonThetaYZ;
     double _NuIntVtxX, _NuIntVtxY, _NuIntVtxZ, _NuEnergy;
     double _HadronDecayX, _HadronDecayY, _HadronDecayZ;
-    bool _CCint, _CCQEint, _NCint, _NCQEint;
-    int _Event, _SubRun, _Run;
+    bool   _CCint, _CCQEint, _NCint, _NCQEint;
+    int    _Event, _SubRun, _Run;
 
     std::vector<int>    *_TrackID = 0;
     std::vector<int>    *_PdgCode = 0;
@@ -26,22 +31,37 @@ namespace lar {
     std::vector<double> *_StartPz = 0;
     std::vector<double> *_StartE  = 0;
     
-    fTree->SetBranchAddress("NuIntVtxX",   &_NuIntVtxX);
-    fTree->SetBranchAddress("NuIntVtxY",   &_NuIntVtxY);
-    fTree->SetBranchAddress("NuIntVtxZ",   &_NuIntVtxZ);
-    fTree->SetBranchAddress("HadronDecayX",&_HadronDecayX);
-    fTree->SetBranchAddress("HadronDecayY",&_HadronDecayY);
-    fTree->SetBranchAddress("HadronDecayZ",&_HadronDecayZ);
-    fTree->SetBranchAddress("CCint",       &_CCint);
-    fTree->SetBranchAddress("CCQEint",     &_CCQEint);
-    fTree->SetBranchAddress("NCint",       &_NCint);
-    fTree->SetBranchAddress("NCQEint",     &_NCQEint);
+    fTree->SetBranchAddress("NuPdg",         &_NuPdg);
+    fTree->SetBranchAddress("LeptonPdg",     &_LeptonPdg);
+    fTree->SetBranchAddress("NuPx",          &_NuPx);
+    fTree->SetBranchAddress("NuPy",          &_NuPy);
+    fTree->SetBranchAddress("NuPz",          &_NuPz);
+    fTree->SetBranchAddress("LeptonPx",      &_LeptonPx);
+    fTree->SetBranchAddress("LeptonPy",      &_LeptonPy);
+    fTree->SetBranchAddress("LeptonPz",      &_LeptonPz);
+    fTree->SetBranchAddress("LeptonVx",      &_LeptonVx);
+    fTree->SetBranchAddress("LeptonVy",      &_LeptonVy);
+    fTree->SetBranchAddress("LeptonVz",      &_LeptonVz);
+    fTree->SetBranchAddress("LeptonThetaXZ2",&_LeptonThetaXZ2);
+    fTree->SetBranchAddress("LeptonThetaYZ2",&_LeptonThetaYZ2);
+    fTree->SetBranchAddress("LeptonThetaXZ", &_LeptonThetaXZ);
+    fTree->SetBranchAddress("LeptonThetaYZ", &_LeptonThetaYZ);
+    fTree->SetBranchAddress("NuIntVtxX",     &_NuIntVtxX);
+    fTree->SetBranchAddress("NuIntVtxY",     &_NuIntVtxY);
+    fTree->SetBranchAddress("NuIntVtxZ",     &_NuIntVtxZ);
+    fTree->SetBranchAddress("HadronDecayX",  &_HadronDecayX);
+    fTree->SetBranchAddress("HadronDecayY",  &_HadronDecayY);
+    fTree->SetBranchAddress("HadronDecayZ",  &_HadronDecayZ);
+    fTree->SetBranchAddress("CCint",         &_CCint);
+    fTree->SetBranchAddress("CCQEint",       &_CCQEint);
+    fTree->SetBranchAddress("NCint",         &_NCint);
+    fTree->SetBranchAddress("NCQEint",       &_NCQEint);
 
     fTree->SetBranchAddress("TrackID",&_TrackID);
     fTree->SetBranchAddress("PdgCode",&_PdgCode);
-    fTree->SetBranchAddress("StartVx", &_StartVx);
-    fTree->SetBranchAddress("StartVy", &_StartVy);
-    fTree->SetBranchAddress("StartVz", &_StartVz);
+    fTree->SetBranchAddress("StartVx",&_StartVx);
+    fTree->SetBranchAddress("StartVy",&_StartVy);
+    fTree->SetBranchAddress("StartVz",&_StartVz);
     fTree->SetBranchAddress("StartPx",&_StartPx);
     fTree->SetBranchAddress("StartPy",&_StartPy);
     fTree->SetBranchAddress("StartPz",&_StartPz);
@@ -60,6 +80,21 @@ namespace lar {
     for ( int i = 0; i < fTree->GetEntries(); i++ ) {
       fTree->GetEntry(i);
       
+      fNuPdg.push_back(_NuPdg);
+      fLeptonPdg.push_back(_LeptonPdg);
+      fNuPx.push_back(_NuPx);
+      fNuPy.push_back(_NuPy);
+      fNuPz.push_back(_NuPz);
+      fLeptonVx.push_back(_LeptonVx);
+      fLeptonVy.push_back(_LeptonVy);
+      fLeptonVz.push_back(_LeptonVz);
+      fLeptonPx.push_back(_LeptonPx);
+      fLeptonPy.push_back(_LeptonPy);
+      fLeptonPz.push_back(_LeptonPz);
+      fLeptonThetaXZ2.push_back(_LeptonThetaXZ2);
+      fLeptonThetaYZ2.push_back(_LeptonThetaYZ2);
+      fLeptonThetaXZ.push_back(_LeptonThetaXZ);
+      fLeptonThetaYZ.push_back(_LeptonThetaYZ);
       fNuIntVtxX.push_back(_NuIntVtxX);
       fNuIntVtxY.push_back(_NuIntVtxY);
       fNuIntVtxZ.push_back(_NuIntVtxZ);
