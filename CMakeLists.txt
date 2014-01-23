@@ -14,7 +14,7 @@ link_directories(${ROOT_LIB_DIR})
 include_directories(${CMAKE_SOURCE_DIR}/include)
 link_directories(${CMAKE_SOURCE_DIR}/lib)
 
-add_library(NuMIana SHARED WindowAna.cc LArAna.cc)
+add_library(NuMIana SHARED WindowAna.cc LArAna.cc DAnaLibs.cc)
 target_link_libraries(NuMIana ${ROOT_LIBS})
 
 add_subdirectory(anas)

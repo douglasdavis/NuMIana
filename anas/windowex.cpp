@@ -53,18 +53,6 @@ int main(int argc, char *argv[])
   TH1D *h_norm_vy = new TH1D("h_norm_vy",";y decay vertex;#nu/10^{9} POT",500,1,0);
   TH1D *h_norm_vz = new TH1D("h_norm_vz",";z decay vertex;#nu/10^{9} POT",500,1,0);
   
-  std::vector<TH1D*> hist_vec;
-  hist_vec.push_back(h_bott_vx);
-  hist_vec.push_back(h_bott_vy);
-  hist_vec.push_back(h_bott_vz);
-  hist_vec.push_back(h_long_vx);
-  hist_vec.push_back(h_long_vy);
-  hist_vec.push_back(h_long_vz);
-  hist_vec.push_back(h_norm_vx);
-  hist_vec.push_back(h_norm_vy);
-  hist_vec.push_back(h_norm_vz);
-  fix_hist(hist_vec);
-  
   /*
     for ( double n : bott_ana->vx() )
     h_bott_vx->Fill(n);

@@ -3,18 +3,15 @@
 #include "TStyle.h"
 #include <iostream>
 
-void fix_hist(std::vector<TH1D*> hvec)
+void fix_hist(TH1D& j)
 {
-  for ( auto j : hvec ) {
-    j->GetXaxis()->CenterTitle();
-    j->GetYaxis()->CenterTitle();
-  }
+  j.GetXaxis()->CenterTitle();
+  j.GetYaxis()->CenterTitle();
 }
 
 void looks()
 {
   TGaxis::SetMaxDigits(3);    
-  TStyle *DStyle = new TStyle("DStyle","Doug Style");
   gStyle->SetFrameBorderMode(0);
   gStyle->SetFrameFillColor(0);
   gStyle->SetCanvasBorderMode(0);
