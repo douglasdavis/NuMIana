@@ -126,6 +126,13 @@ namespace lar {
       fStartPz.push_back(*_StartPz);
       fStartE.push_back(*_StartE);
     }
+
+    fPlotTitle = new TPaveText(0.6485149,0.9311224,0.8778878,0.9821429,"brNDC");
+    fPlotTitle->SetTextSize(0.048);
+    fPlotTitle->SetTextFont(102);
+    fPlotTitle->SetFillColor(0);
+    fPlotTitle->SetBorderSize(0);
+
   }
   
   LArAna::~LArAna() {}

@@ -6,6 +6,7 @@
 #include "TFile.h"
 #include "TTree.h"
 #include "TH1D.h"
+#include "TPaveText.h"
 
 namespace lar {
   
@@ -109,6 +110,8 @@ namespace lar {
     inline const std::vector< std::vector<double> > StartPY() const { return fStartPy; }
     inline const std::vector< std::vector<double> > StartPZ() const { return fStartPz; }
     inline const std::vector< std::vector<double> > StartE()  const { return fStartE;  }
+
+    TPaveText *fPlotTitle;
 
   };
   

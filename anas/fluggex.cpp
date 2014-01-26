@@ -2,9 +2,8 @@
 #include <vector>
 #include <TFile.h>
 #include <TTree.h>
+#include "DAnaLibs.hh"
 #include <algorithm>
-
-void max_min(const std::string& var, const std::vector<double>& vec);
 
 int main()
 {
@@ -32,14 +31,7 @@ int main()
   }
   
   max_min("tvz",_tvz);
-
+  
   return 0;
   
-}
-
-void max_min(const std::string& var, const std::vector<double>& vec)
-{
-  std::cout << var << std::endl;
-  std::cout << "Max: " << *(std::max_element(vec.begin(),vec.end())) << std::endl;
-  std::cout << "Min: " << *(std::min_element(vec.begin(),vec.end())) << std::endl;
 }

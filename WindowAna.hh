@@ -7,7 +7,7 @@
 #include "TTree.h"
 #include "TPaveText.h"
 
-namespace simple {
+namespace window {
 
   class WindowAna {
     

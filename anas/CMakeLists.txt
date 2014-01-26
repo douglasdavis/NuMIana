@@ -7,4 +7,4 @@ add_executable(larex larex.cpp)
 target_link_libraries(larex ${ROOT_LIBS} NuMIana)
 
 add_executable(fluggex fluggex.cpp)
-target_link_libraries(fluggex ${ROOT_LIBS})
+target_link_libraries(fluggex ${ROOT_LIBS} NuMIana)

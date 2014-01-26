@@ -21,15 +21,9 @@ int main(int argc, char *argv[])
   std::string file_name2 = argv[2];
   std::string file_name3 = argv[3];
 
-  /*
-  std::string file_name1 = "files/bott/combined.root";
-  std::string file_name2 = "files/long/combined.root";
-  std::string file_name3 = "files/norm/combined.root";
-  */
-
-  simple::WindowAna *bott_ana = new simple::WindowAna(file_name1.c_str());
-  simple::WindowAna *long_ana = new simple::WindowAna(file_name2.c_str());
-  simple::WindowAna *norm_ana = new simple::WindowAna(file_name3.c_str());
+  window::WindowAna *bott_ana = new window::WindowAna(file_name1.c_str());
+  window::WindowAna *long_ana = new window::WindowAna(file_name2.c_str());
+  window::WindowAna *norm_ana = new window::WindowAna(file_name3.c_str());
   
   std::cout << "*************** LONG ************" << std::endl;
   long_ana->PrintDecays();
@@ -52,27 +46,6 @@ int main(int argc, char *argv[])
   TH1D *h_norm_vx = new TH1D("h_norm_vx",";x decay vertex;#nu/10^{9} POT",500,1,0);
   TH1D *h_norm_vy = new TH1D("h_norm_vy",";y decay vertex;#nu/10^{9} POT",500,1,0);
   TH1D *h_norm_vz = new TH1D("h_norm_vz",";z decay vertex;#nu/10^{9} POT",500,1,0);
-  
-  /*
-    for ( double n : bott_ana->vx() )
-    h_bott_vx->Fill(n);
-    for ( double n : bott_ana->vy() )
-    h_bott_vy->Fill(n);
-    for ( double n : bott_ana->vz() )
-    h_bott_vz->Fill(n);
-    for ( double n : long_ana->vx() )
-    h_long_vx->Fill(n);
-    for ( double n : long_ana->vy() )
-    h_long_vy->Fill(n);
-    for ( double n : long_ana->vz() )
-    h_long_vz->Fill(n);
-    for ( double n : norm_ana->vx() )
-    h_norm_vx->Fill(n);
-    for ( double n : norm_ana->vy() )
-    h_norm_vy->Fill(n);
-    for ( double n : norm_ana->vz() )
-    h_norm_vz->Fill(n);
-  */
   
   std::vector<double> vx_l = long_ana->vx();
   std::vector<double> vy_l = long_ana->vy();
