@@ -17,13 +17,16 @@ int main(int argc, char *argv[])
   lar::LArAna       *lar_ana    = new lar::LArAna(file_name1);
   window::WindowAna *window_ana = new window::WindowAna(file_name2);
 
-  TH1D *h_LeptonVx = new TH1D("h_LeptonTx",";Lepton Vx",100,1,0);
-  FillTH1D(*h_LeptonVx,lar_ana->LeptonVx());
+  TH1D *h_NuE = new TH1D("h_NuE",";#nu Energy",60,1,0);
+  FillTH1D(*h_NuE,lar_ana->NuEnergy());
 
-  lar_ana->fPlotTitle->AddText("The Title");
+  TH1D *h_LeptonThetaXZ2 = new TH1D("h_LeptonThetaXZ2",";Lepton Theta XZ;",60,1,0);
+  FillTH1D(*h_LeptonThetaXZ2,lar_ana->LeptonThetaXZ2());
+
+  lar_ana->fPlotTitle->AddText("NuMI MC");
 
   TApplication *app = new TApplication("app",&argc,argv);
-  h_LeptonVx->Draw();
+  h_NuE->Draw();
   lar_ana->fPlotTitle->Draw("same");
   app->Run();
 

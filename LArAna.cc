@@ -49,6 +49,7 @@ namespace lar {
     fTree->SetBranchAddress("NuIntVtxX",     &_NuIntVtxX);
     fTree->SetBranchAddress("NuIntVtxY",     &_NuIntVtxY);
     fTree->SetBranchAddress("NuIntVtxZ",     &_NuIntVtxZ);
+    fTree->SetBranchAddress("NuEnergy",      &_NuEnergy);
     fTree->SetBranchAddress("HadronDecayX",  &_HadronDecayX);
     fTree->SetBranchAddress("HadronDecayY",  &_HadronDecayY);
     fTree->SetBranchAddress("HadronDecayZ",  &_HadronDecayZ);
@@ -85,6 +86,7 @@ namespace lar {
       fNuPx.push_back(_NuPx);
       fNuPy.push_back(_NuPy);
       fNuPz.push_back(_NuPz);
+      fNuEnergy.push_back(_NuEnergy);
       fLeptonVx.push_back(_LeptonVx);
       fLeptonVy.push_back(_LeptonVy);
       fLeptonVz.push_back(_LeptonVz);

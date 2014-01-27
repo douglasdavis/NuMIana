@@ -5,9 +5,10 @@
 #include "DAnaLibs.hh"
 #include <algorithm>
 
-int main()
+int main(int argc, char *argv[])
 {
-  TFile the_file("FluxFLUGG.root");
+  std::string afile = argv[1];
+  TFile the_file(afile.c_str());
   TTree *the_tree = (TTree*)the_file.Get("h10");
 
   double Vx, Vy, Vz, tvx, tvy, tvz;

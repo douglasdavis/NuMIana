@@ -35,17 +35,17 @@ int main(int argc, char *argv[])
   norm_ana->PrintDecays();
   norm_ana->PrintNeutrinos();
 
-  TH1D *h_bott_vx = new TH1D("h_bott_vx",";x decay vertex;#nu/10^{9} POT",500,1,0);
-  TH1D *h_bott_vy = new TH1D("h_bott_vy",";y decay vertex;#nu/10^{9} POT",500,1,0);
-  TH1D *h_bott_vz = new TH1D("h_bott_vz",";z decay vertex;#nu/10^{9} POT",500,1,0);
+  TH1D *h_bott_vx = new TH1D("h_bott_vx",";x decay vertex;#nu/10^{9} POT",100,1,0);
+  TH1D *h_bott_vy = new TH1D("h_bott_vy",";y decay vertex;#nu/10^{9} POT",100,1,0);
+  TH1D *h_bott_vz = new TH1D("h_bott_vz",";z decay vertex;#nu/10^{9} POT",100,1,0);
   
-  TH1D *h_long_vx = new TH1D("h_long_vx",";x decay vertex;#nu/10^{9} POT",500,1,0);
-  TH1D *h_long_vy = new TH1D("h_long_vy",";y decay vertex;#nu/10^{9} POT",500,1,0);
-  TH1D *h_long_vz = new TH1D("h_long_vz",";z decay vertex;#nu/10^{9} POT",500,1,0);
+  TH1D *h_long_vx = new TH1D("h_long_vx",";x decay vertex;#nu/10^{9} POT",100,1,0);
+  TH1D *h_long_vy = new TH1D("h_long_vy",";y decay vertex;#nu/10^{9} POT",100,1,0);
+  TH1D *h_long_vz = new TH1D("h_long_vz",";z decay vertex;#nu/10^{9} POT",100,1,0);
   
-  TH1D *h_norm_vx = new TH1D("h_norm_vx",";x decay vertex;#nu/10^{9} POT",500,1,0);
-  TH1D *h_norm_vy = new TH1D("h_norm_vy",";y decay vertex;#nu/10^{9} POT",500,1,0);
-  TH1D *h_norm_vz = new TH1D("h_norm_vz",";z decay vertex;#nu/10^{9} POT",500,1,0);
+  TH1D *h_norm_vx = new TH1D("h_norm_vx",";x decay vertex;#nu/10^{9} POT",100,1,0);
+  TH1D *h_norm_vy = new TH1D("h_norm_vy",";y decay vertex;#nu/10^{9} POT",100,1,0);
+  TH1D *h_norm_vz = new TH1D("h_norm_vz",";z decay vertex;#nu/10^{9} POT",100,1,0);
   
   std::vector<double> vx_l = long_ana->vx();
   std::vector<double> vy_l = long_ana->vy();
