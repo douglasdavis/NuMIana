@@ -2,6 +2,7 @@
 #define DANALIBS_HH
 
 #include "TH1D.h"
+#include <iostream>
 #include <vector>
 
 void FillTH1D(TH1D& histogram, const std::vector<double>& values);
