@@ -2,7 +2,18 @@
 #define DANALIBS_HH
 
 #include "TH1D.h"
+#include "TPaveText.h"
 #include <vector>
+
+class Ana {
+  
+protected:
+  
+public:
+
+  TPaveText *fPlotTitle;
+  
+};
 
 void FillTH1D(TH1D& histogram, const std::vector<double>& values);
 void FillTH1D(TH1D& histogram, const std::vector<double>& values, const double& cut);

@@ -14,8 +14,8 @@ int main(int argc, char *argv[])
   std::string file_name1 = argv[1];
   std::string file_name2 = argv[2];
 
-  lar::LArAna       *lar_ana    = new lar::LArAna(file_name1);
-  window::WindowAna *window_ana = new window::WindowAna(file_name2);
+  LArAna    *lar_ana    = new LArAna(file_name1);
+  WindowAna *window_ana = new WindowAna(file_name2);
 
   TH1D *h_NuE = new TH1D("h_NuE",";#nu Energy",60,1,0);
   FillTH1D(*h_NuE,lar_ana->NuEnergy());

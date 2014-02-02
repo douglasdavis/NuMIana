@@ -21,9 +21,9 @@ int main(int argc, char *argv[])
   std::string file_name2 = argv[2];
   std::string file_name3 = argv[3];
 
-  window::WindowAna *bott_ana = new window::WindowAna(file_name1.c_str());
-  window::WindowAna *long_ana = new window::WindowAna(file_name2.c_str());
-  window::WindowAna *norm_ana = new window::WindowAna(file_name3.c_str());
+  WindowAna *bott_ana = new WindowAna(file_name1.c_str());
+  WindowAna *long_ana = new WindowAna(file_name2.c_str());
+  WindowAna *norm_ana = new WindowAna(file_name3.c_str());
   
   std::cout << "*************** LONG ************" << std::endl;
   long_ana->PrintDecays();
