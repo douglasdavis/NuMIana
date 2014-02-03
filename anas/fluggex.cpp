@@ -30,9 +30,12 @@ int main(int argc, char *argv[])
     _tvy.push_back(tvy);
     _tvz.push_back(tvz);
   }
-  
-  max_min("tvz",_tvz);
-  
+
+  double the_max;
+  double the_min;
+  max_min("tvz",_tvz,the_max,the_min);
+  std::cout << the_max << std::endl;
+  std::cout << the_min << std::endl;
   return 0;
   
 }
