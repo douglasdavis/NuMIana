@@ -79,9 +79,9 @@ int main(int argc, char *argv[])
       h_norm_vz->Fill(vz_n[i]);
   }
 
-  long_ana->fPlotTitle->AddText("Long Window");
-  norm_ana->fPlotTitle->AddText("Normal Window");
-  bott_ana->fPlotTitle->AddText("Bottom Window");
+  long_ana->SetupTitle("Long Window");
+  norm_ana->SetupTitle("Normal Window");
+  bott_ana->SetupTitle("Bottom Window");
 
   
   TApplication *app = new TApplication("app",&argc,argv);

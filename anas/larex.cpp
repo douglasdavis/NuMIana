@@ -23,7 +23,7 @@ int main(int argc, char *argv[])
   TH1D *h_LeptonThetaXZ2 = new TH1D("h_LeptonThetaXZ2",";Lepton Theta XZ;",60,1,0);
   FillTH1D(*h_LeptonThetaXZ2,lar_ana->LeptonThetaXZ2());
 
-  lar_ana->fPlotTitle->AddText("NuMI MC");
+  lar_ana->SetupTitle("NuMI MC");
 
   TApplication *app = new TApplication("app",&argc,argv);
   h_NuE->Draw();

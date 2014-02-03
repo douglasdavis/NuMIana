@@ -11,8 +11,18 @@ class Ana {
 protected:
   
 public:
-
+  
   TPaveText *fPlotTitle;
+
+  void SetupTitle(const std::string& title_)
+  {
+    fPlotTitle = new TPaveText(0.6485149,0.9311224,0.8778878,0.9821429,"brNDC");
+    fPlotTitle->SetTextSize(0.048);
+    fPlotTitle->SetTextFont(102);
+    fPlotTitle->SetFillColor(0);
+    fPlotTitle->SetBorderSize(0);
+    fPlotTitle->AddText(title_.c_str());
+  }
   
 };
 
