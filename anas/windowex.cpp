@@ -7,7 +7,7 @@
 #include "TH2D.h"
 #include "TStyle.h"
 #include "TROOT.h"
-#include "looks.h"
+#include "looks.hh"
 
 int main(int argc, char *argv[])
 {

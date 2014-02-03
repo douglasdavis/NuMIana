@@ -5,7 +5,7 @@
 #include "TApplication.h"
 #include "TH1D.h"
 #include "TCanvas.h"
-#include "looks.h"
+#include "looks.hh"
 
 int main(int argc, char *argv[])
 {
