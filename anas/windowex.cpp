@@ -88,15 +88,15 @@ int main(int argc, char *argv[])
   TCanvas      *can1 = new TCanvas();
   can1->SetLogy();
   h_bott_vz->Draw();
-  bott_ana->fPlotTitle->Draw("same");
+  bott_ana->PlotTitle->Draw("same");
   TCanvas      *can2 = new TCanvas();
   can2->SetLogy();
   h_long_vz->Draw();
-  long_ana->fPlotTitle->Draw("same");
+  long_ana->PlotTitle->Draw("same");
   TCanvas      *can3 = new TCanvas();
   can3->SetLogy();
   h_norm_vz->Draw();
-  norm_ana->fPlotTitle->Draw("same");
+  norm_ana->PlotTitle->Draw("same");
 
   app->Run();
 

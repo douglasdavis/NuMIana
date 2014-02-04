@@ -3,6 +3,17 @@
 #include <vector>
 #include "DAnaLibs.hh"
 
+void Ana::SetupTitle(const std::string& title_)
+{
+  PlotTitle = new TPaveText(0.6485149,0.9311224,0.8778878,0.9821429,"brNDC");
+  PlotTitle->SetTextSize(0.048);
+  PlotTitle->SetTextFont(102);
+  PlotTitle->SetFillColor(0);
+  PlotTitle->SetBorderSize(0);
+  PlotTitle->AddText(title_.c_str());
+}
+
+
 void FillTH1D(TH1D& histogram, const std::vector<double>& values)
 {
   for ( auto const &val : values )

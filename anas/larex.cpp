@@ -27,7 +27,7 @@ int main(int argc, char *argv[])
 
   TApplication *app = new TApplication("app",&argc,argv);
   h_NuE->Draw();
-  lar_ana->fPlotTitle->Draw("same");
+  lar_ana->PlotTitle->Draw("same");
   app->Run();
 
 
