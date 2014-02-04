@@ -123,6 +123,11 @@ LArAna::LArAna(const std::string& file_name)
     fStartPy.push_back(*_StartPy);
     fStartPz.push_back(*_StartPz);
     fStartE.push_back(*_StartE);
+
+    fpPdgCodeStartPx.push_back(std::make_pair(*_PdgCode,*_StartPx));
+    fpPdgCodeStartPy.push_back(std::make_pair(*_PdgCode,*_StartPy));
+    fpPdgCodeStartPz.push_back(std::make_pair(*_PdgCode,*_StartPz));
+
   }
 
 }

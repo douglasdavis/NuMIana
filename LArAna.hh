@@ -48,12 +48,10 @@ private:
   std::vector<int>    fSubRun;
   std::vector<int>    fRun;
 
-  /* Not using yet. Maybe later.
-     std::vector< std::pair< std::vector<int>, std::vector<double> > > fpPdgCodeStartPx;
-     std::vector< std::pair< std::vector<int>, std::vector<double> > > fpPdgCodeStartPy;
-     std::vector< std::pair< std::vector<int>, std::vector<double> > > fpPdgCodeStartPz;
-  */
-
+  std::vector< std::pair< std::vector<int>, std::vector<double> > > fpPdgCodeStartPx;
+  std::vector< std::pair< std::vector<int>, std::vector<double> > > fpPdgCodeStartPy;
+  std::vector< std::pair< std::vector<int>, std::vector<double> > > fpPdgCodeStartPz;
+  
   std::vector< std::vector<int> >    fTrackID;
   std::vector< std::vector<int> >    fPdgCode;
   std::vector< std::vector<double> > fStartVx;
@@ -107,6 +105,10 @@ public:
   inline const std::vector< std::vector<double> > StartPY() const { return fStartPy; }
   inline const std::vector< std::vector<double> > StartPZ() const { return fStartPz; }
   inline const std::vector< std::vector<double> > StartE()  const { return fStartE;  }
+  
+  inline const std::vector< std::pair< std::vector<int>, std::vector<double> > > PdgCodeStartPx() const { return fpPdgCodeStartPx; }
+  inline const std::vector< std::pair< std::vector<int>, std::vector<double> > > PdgCodeStartPy() const { return fpPdgCodeStartPy; }
+  inline const std::vector< std::pair< std::vector<int>, std::vector<double> > > PdgCodeStartPz() const { return fpPdgCodeStartPz; }
 
 };
   
