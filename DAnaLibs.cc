@@ -44,3 +44,12 @@ void max_min(const std::string& var, const std::vector<int>& vec, int& max, int&
   max = *(std::max_element(vec.begin(),vec.end()));
   min = *(std::min_element(vec.begin(),vec.end()));
 }
+
+void FixTitle(TPaveText& pave, const std::string& title)
+{
+  pave.SetTextSize(0.048);
+  pave.SetTextFont(102);
+  pave.SetFillColor(0);
+  pave.SetBorderSize(0);
+  pave.AddText(title.c_str());
+}

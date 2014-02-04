@@ -17,28 +17,40 @@ int main(int argc, char *argv[])
   LArAna    *lar_ana    = new LArAna(file_name1);
   WindowAna *window_ana = new WindowAna(file_name2);
 
-  auto PdgCodeStartPx = lar_ana->PdgCodeStartPx(); // vector<pair<vector,vector>>
+  /*
+  auto PdgCodeStartPx = lar_ana->PdgCodeStartPx();
+  auto PdgCodeStartE  = lar_ana->PdgCodeStartE();
   
   for ( auto vec_entry : PdgCodeStartPx ) {
     for ( auto i = 0; i < vec_entry.first.size(); i++ ) {
       std::cout << vec_entry.first[i] << " " << vec_entry.second[i] << std::endl;
     }
   }
-  
-  //  TH1D *h_NuE = new TH1D("h_NuE",";#nu Energy",60,1,0);
-  //  FillTH1D(*h_NuE,lar_ana->NuEnergy());
-  
-  //TH1D *h_LeptonThetaXZ2 = new TH1D("h_LeptonThetaXZ2",";Lepton Theta XZ;",60,1,0);
-  //FillTH1D(*h_LeptonThetaXZ2,lar_ana->LeptonThetaXZ2());
-  
-  /*
-    lar_ana->SetupTitle("NuMI MC");
-    
-    TApplication *app = new TApplication("app",&argc,argv);
-    h_NuE->Draw();
-    lar_ana->PlotTitle->Draw("same");
-    app->Run();
+
+  std::cout << " *************** " << std::endl;
+
+  for ( auto vec_entry : PdgCodeStartE ) {
+    for ( auto i = 0; i < vec_entry.first.size(); i++ ) {
+      std::cout << vec_entry.first[i] << " " << vec_entry.second[i] << std::endl;
+    }
+  }
   */
+
+  TH1D *h_NuE = new TH1D("h_NuE",";#nu Energy",60,1,0);
+  FillTH1D(*h_NuE,lar_ana->NuEnergy());
+  
+  TH1D *h_LeptonThetaXZ2 = new TH1D("h_LeptonThetaXZ2",";Lepton Theta XZ;",60,1,0);
+  FillTH1D(*h_LeptonThetaXZ2,lar_ana->LeptonThetaXZ2());
+
+  TPaveText *title2 = new TPaveText(0.6485149,0.9311224,0.8778878,0.9821429,"brNDC");
+  FixTitle(*title2,"NuMI MC Energy");
+
+  lar_ana->SetupTitle("NuMI MC");
+  TApplication *app = new TApplication("app",&argc,argv);
+  h_NuE->Draw();
+  //lar_ana->PlotTitle->Draw("same");
+  title2->Draw("same");
+  app->Run();
   
   return 0;
 }

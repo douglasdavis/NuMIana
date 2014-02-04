@@ -127,6 +127,11 @@ LArAna::LArAna(const std::string& file_name)
     fpPdgCodeStartPx.push_back(std::make_pair(*_PdgCode,*_StartPx));
     fpPdgCodeStartPy.push_back(std::make_pair(*_PdgCode,*_StartPy));
     fpPdgCodeStartPz.push_back(std::make_pair(*_PdgCode,*_StartPz));
+    fpPdgCodeStartVx.push_back(std::make_pair(*_PdgCode,*_StartVx));
+    fpPdgCodeStartVy.push_back(std::make_pair(*_PdgCode,*_StartVy));
+    fpPdgCodeStartVz.push_back(std::make_pair(*_PdgCode,*_StartVz));
+    fpPdgCodeStartE.push_back(std::make_pair(*_PdgCode,*_StartE));
+
 
   }
 

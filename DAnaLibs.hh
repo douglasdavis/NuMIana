@@ -34,4 +34,7 @@ void max_min(const std::string& var,
 	     int& max,
 	     int& min);
 
+void FixTitle(TPaveText& pave,
+		const std::string& title);
+  
 #endif

@@ -51,7 +51,11 @@ private:
   std::vector< std::pair< std::vector<int>, std::vector<double> > > fpPdgCodeStartPx;
   std::vector< std::pair< std::vector<int>, std::vector<double> > > fpPdgCodeStartPy;
   std::vector< std::pair< std::vector<int>, std::vector<double> > > fpPdgCodeStartPz;
-  
+  std::vector< std::pair< std::vector<int>, std::vector<double> > > fpPdgCodeStartVx;
+  std::vector< std::pair< std::vector<int>, std::vector<double> > > fpPdgCodeStartVy;
+  std::vector< std::pair< std::vector<int>, std::vector<double> > > fpPdgCodeStartVz;
+  std::vector< std::pair< std::vector<int>, std::vector<double> > > fpPdgCodeStartE;
+
   std::vector< std::vector<int> >    fTrackID;
   std::vector< std::vector<int> >    fPdgCode;
   std::vector< std::vector<double> > fStartVx;
@@ -109,6 +113,10 @@ public:
   inline const std::vector< std::pair< std::vector<int>, std::vector<double> > > PdgCodeStartPx() const { return fpPdgCodeStartPx; }
   inline const std::vector< std::pair< std::vector<int>, std::vector<double> > > PdgCodeStartPy() const { return fpPdgCodeStartPy; }
   inline const std::vector< std::pair< std::vector<int>, std::vector<double> > > PdgCodeStartPz() const { return fpPdgCodeStartPz; }
+  inline const std::vector< std::pair< std::vector<int>, std::vector<double> > > PdgCodeStartVx() const { return fpPdgCodeStartVx; }
+  inline const std::vector< std::pair< std::vector<int>, std::vector<double> > > PdgCodeStartVy() const { return fpPdgCodeStartVy; }
+  inline const std::vector< std::pair< std::vector<int>, std::vector<double> > > PdgCodeStartVz() const { return fpPdgCodeStartVz; }
+  inline const std::vector< std::pair< std::vector<int>, std::vector<double> > > PdgCodeStartE()  const { return fpPdgCodeStartE;  }
 
 };
   
