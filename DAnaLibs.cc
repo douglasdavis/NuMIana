@@ -116,3 +116,23 @@ void PrintDecays(const std::vector<int>& ndecay_vec)
 	    << "999 unkown                 : " << unk 
 	    << " :: " << 100*(double)unk/(double)counter << std::endl;
 }
+
+const std::string ndecayToString(const int& n)
+{
+  if      ( n == 1   ) { return "K0L -> nue pi- e+";      }
+  else if ( n == 2   ) { return "K0L -> nuebar pi+ e-";   }
+  else if ( n == 3   ) { return "K0L -> numu pi- mu+";    }
+  else if ( n == 4   ) { return "K0L -> numubar pi+ mu-"; }
+  else if ( n == 5   ) { return "K+  -> numu mu+";        }
+  else if ( n == 6   ) { return "K+  -> nue pi0 e+";      }
+  else if ( n == 7   ) { return "K+  -> numu pi0 mu+";    }
+  else if ( n == 8   ) { return "K-  -> numubar mu-";     }
+  else if ( n == 9   ) { return "K-  -> nuebar pi0 e-";   }
+  else if ( n == 10  ) { return "K-  -> numubar pi0 mu-"; }
+  else if ( n == 11  ) { return "mu+ -> numubar nue e+";  }
+  else if ( n == 12  ) { return "mu- -> numu nuebar e-";  }
+  else if ( n == 13  ) { return "pi+ -> numu mu+";        }
+  else if ( n == 14  ) { return "pi- -> numubar mu-";     }
+  else if ( n == 999 ) { return "Other";                  }
+  else                 { return "BAD BAD BAD";            }
+}
