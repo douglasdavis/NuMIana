@@ -169,4 +169,6 @@ const std::string ppmediumToString(const int& n)
   else if ( n == -30 ) { return "SULFUR  "; }
   else if ( n == -31 ) { return "PHOSPHO "; }
   else if ( n == -32 ) { return "SLAB_STL"; }
+
+  else { return "BAD BAD BAD"; }
 }
