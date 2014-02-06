@@ -46,7 +46,6 @@ public:
   WindowAna(const std::string& file_name);
   virtual ~WindowAna();
 
-  virtual void PrintDecays();
   virtual void PrintNeutrinos();
   virtual void PrintDecayLocations();
 

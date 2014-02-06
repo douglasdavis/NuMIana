@@ -37,4 +37,7 @@ void max_min(const std::string& var,
 void FixTitle(TPaveText& pave,
 	      const std::string& title);
 
+
+void PrintDecays(const std::vector<int>& ndecay_vec);
+
 #endif
