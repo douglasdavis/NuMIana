@@ -9,7 +9,7 @@ LArAna::LArAna(const std::string& file_name)
   fFile = new TFile(file_name.c_str());
   fTree = (TTree*)fFile->Get("LArNuMIana/LArNuMIanaSimulation");
     
-  int    _NuPdg, _LeptonPdg;
+  int    _NuPdg, _LeptonPdg, _PPmedium;
   double _NuPx, _NuPy, _NuPz, _LeptonPx, _LeptonPy, _LeptonPz;
   double _LeptonVx, _LeptonVy, _LeptonVz, _LeptonEnergy;
   double _LeptonThetaXZ2, _LeptonThetaYZ2;
@@ -51,6 +51,7 @@ LArAna::LArAna(const std::string& file_name)
   fTree->SetBranchAddress("HadronDecayX",  &_HadronDecayX);
   fTree->SetBranchAddress("HadronDecayY",  &_HadronDecayY);
   fTree->SetBranchAddress("HadronDecayZ",  &_HadronDecayZ);
+  fTree->SetBranchAddress("PPmedium",      &_PPmedium);
   fTree->SetBranchAddress("CCint",         &_CCint);
   fTree->SetBranchAddress("CCQEint",       &_CCQEint);
   fTree->SetBranchAddress("NCint",         &_NCint);
@@ -100,6 +101,7 @@ LArAna::LArAna(const std::string& file_name)
     fHadronDecayX.push_back(_HadronDecayX);
     fHadronDecayY.push_back(_HadronDecayY);
     fHadronDecayZ.push_back(_HadronDecayZ);
+    fPPmedium.push_back(_PPmedium);
     fCCint.push_back(_CCint);
     fCCQEint.push_back(_CCQEint);
     fNCint.push_back(_NCint);
