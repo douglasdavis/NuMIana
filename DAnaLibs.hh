@@ -41,5 +41,6 @@ void FixTitle(TPaveText& pave,
 void PrintDecays(const std::vector<int>& ndecay_vec);
 
 const std::string ndecayToString(const int& n);
+const std::string ppmediumToString(const int& n);
 
 #endif

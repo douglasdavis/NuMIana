@@ -1,6 +1,7 @@
 #include <iostream>
 #include <algorithm>
 #include <vector>
+#include <cmath>
 #include "DAnaLibs.hh"
 
 void Ana::SetupTitle(const std::string& title_)
@@ -135,4 +136,37 @@ const std::string ndecayToString(const int& n)
   else if ( n == 14  ) { return "pi- -> numubar mu-";     }
   else if ( n == 999 ) { return "Other";                  }
   else                 { return "BAD BAD BAD";            }
+}
+
+const std::string ppmediumToString(const int& n)
+{
+  if      ( n == -4  ) { return "HELIUM  "; }
+  else if ( n == -5  ) { return "BERYLLIU"; }
+  else if ( n == -6  ) { return "CARBON  "; }
+  else if ( n == -7  ) { return "NITROGEN"; }
+  else if ( n == -8  ) { return "OXYGEN  "; }
+  else if ( n == -9  ) { return "MAGNESIU"; }
+  else if ( n == -10 ) { return "ALUMINUN"; }
+  else if ( n == -11 ) { return "IRON    "; }
+  else if ( n == -12 ) { return "COPPER  "; }
+  else if ( n == -13 ) { return "SILVER  "; }
+  else if ( n == -14 ) { return "SILICON "; }
+  else if ( n == -15 ) { return "GOLD    "; }
+  else if ( n == -16 ) { return "MERCURY "; }
+  else if ( n == -17 ) { return "LEAD    "; }
+  else if ( n == -18 ) { return "TANTALUM"; }
+  else if ( n == -19 ) { return "SODIUM  "; }
+  else if ( n == -20 ) { return "ARGON   "; }
+  else if ( n == -21 ) { return "CALCIUM "; }
+  else if ( n == -22 ) { return "TIN     "; }
+  else if ( n == -23 ) { return "TUNGSTEN"; }
+  else if ( n == -24 ) { return "TITANIUM"; }
+  else if ( n == -25 ) { return "NICKEL  "; }
+  else if ( n == -26 ) { return "AIR     "; }
+  else if ( n == -27 ) { return "CT852   "; }
+  else if ( n == -28 ) { return "MANGANES"; }
+  else if ( n == -29 ) { return "CHROMIUM"; }
+  else if ( n == -30 ) { return "SULFUR  "; }
+  else if ( n == -31 ) { return "PHOSPHO "; }
+  else if ( n == -32 ) { return "SLAB_STL"; }
 }
