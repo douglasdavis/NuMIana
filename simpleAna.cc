@@ -1,8 +1,8 @@
-#include "WindowAna.hh"
+#include "simpleAna.hh"
 
-WindowAna::WindowAna() {}
+simpleAna::simpleAna() {}
 
-WindowAna::WindowAna(const std::string& file_name)
+simpleAna::simpleAna(const std::string& file_name)
 {
   fFile      = new TFile(file_name.c_str(),"READ");
   fEntryTree = (TTree*)fFile->Get("EntryTree");
@@ -75,10 +75,10 @@ WindowAna::WindowAna(const std::string& file_name)
 
 }
 
-WindowAna::~WindowAna()
+simpleAna::~simpleAna()
 {}
 
-void WindowAna::PrintNeutrinos()
+void simpleAna::PrintNeutrinos()
 {
   std::cout << " ** NEUTRINOS ** " << std::endl;
   int numu = 0, numubar = 0, nue = 0, nuebar = 0;
@@ -91,7 +91,7 @@ void WindowAna::PrintNeutrinos()
     case 12:  nue++;     break;
     case -12: nuebar++;  break;
     default:
-      std::cout << "Warning in WindowAna::PrintNeutrinos(): Unkown pdg code: " << n << std::endl;
+      std::cout << "Warning in simpleAna::PrintNeutrinos(): Unkown pdg code: " << n << std::endl;
       break;
     }
   }
@@ -105,7 +105,7 @@ void WindowAna::PrintNeutrinos()
 	    << 100*(double)nuebar/(double)counter  << std::endl;
 }
 
-void WindowAna::PrintDecayLocations()
+void simpleAna::PrintDecayLocations()
 {
   // target hall
   int target_hall = 0;

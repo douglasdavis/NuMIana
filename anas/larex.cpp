@@ -1,5 +1,5 @@
 #include "LArAna.hh"
-#include "WindowAna.hh"
+#include "simpleAna.hh"
 #include "Ana.hh"
 #include <iostream>
 #include "TApplication.h"
@@ -17,7 +17,7 @@ int main(int argc, char *argv[])
   std::string file_name2 = argv[2];
 
   LArAna    *lar_ana    = new LArAna(file_name1);
-  WindowAna *window_ana = new WindowAna(file_name2);
+  simpleAna *window_ana = new simpleAna(file_name2);
 
   /*
   auto PdgCodeStartPx = lar_ana->PdgCodeStartPx();

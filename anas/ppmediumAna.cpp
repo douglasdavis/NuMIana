@@ -1,5 +1,5 @@
 #include <iostream>
-#include "WindowAna.hh"
+#include "simpleAna.hh"
 #include "TH3D.h"
 #include "TApplication.h"
 #include "TCanvas.h"
@@ -21,9 +21,9 @@ int main(int argc, char *argv[])
   std::string file_name2 = argv[2];
   std::string file_name3 = argv[3];
 
-  WindowAna bott_ana(file_name1);
-  WindowAna long_ana(file_name2);
-  WindowAna norm_ana(file_name3);
+  simpleAna bott_ana(file_name1);
+  simpleAna long_ana(file_name2);
+  simpleAna norm_ana(file_name3);
   
   ana.Print_ppmediumndecay(bott_ana.ppmediumndecay());
   
