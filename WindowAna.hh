@@ -3,7 +3,7 @@
 
 #include <iostream>
 #include <vector>
-#include "DAnaLibs.hh"
+#include "Ana.hh"
 #include "TFile.h"
 #include "TTree.h"
 #include "TPaveText.h"
@@ -30,11 +30,6 @@ private:
   std::vector<double> ftpx;      ///< parent momentum at target exit x
   std::vector<double> ftpy;      ///< parent momentum at target exit y
   std::vector<double> ftpz;      ///< parent momentum at target exit z
-  std::vector<double> fvx;       ///< vertex position of hadron/muon decay x
-  std::vector<double> fvy;       ///< vertex position of hadron/muon decay y
-  std::vector<double> fvz;       ///< vertex position of hadron/muon decay z
-  std::vector<int>    fndecay;   ///< decay mode;
-  std::vector<int>    fppmedium; ///< tracking medium where parent was produced
   std::vector<int>    ftptype;   ///< parent particle type at target exit
   std::vector<int>    frun;      ///<
   std::vector<int>    fevtno;    ///<
@@ -62,11 +57,6 @@ public:
   inline const std::vector<double>& tpx()      const { return ftpx;      }
   inline const std::vector<double>& tpy()      const { return ftpy;      }
   inline const std::vector<double>& tpz()      const { return ftpz;      }
-  inline const std::vector<double>& vx()       const { return fvx;       }
-  inline const std::vector<double>& vy()       const { return fvy;       }
-  inline const std::vector<double>& vz()       const { return fvz;       }
-  inline const std::vector<int>&    ndecay()   const { return fndecay;   }
-  inline const std::vector<int>&    ppmedium() const { return fppmedium; }
   inline const std::vector<int>&    tptype()   const { return ftptype;   }
   inline const std::vector<int>&    run()      const { return frun;      }
   inline const std::vector<int>&    evtno()    const { return fevtno;    }

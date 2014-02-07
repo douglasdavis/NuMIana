@@ -3,7 +3,11 @@
 #include <map>
 #include <vector>
 #include <cmath>
-#include "DAnaLibs.hh"
+#include "Ana.hh"
+
+Ana::Ana() {}
+
+Ana::~Ana() {}
 
 void Ana::SetupTitle(const std::string& title_)
 {
@@ -16,20 +20,20 @@ void Ana::SetupTitle(const std::string& title_)
 }
 
 
-void FillTH1D(TH1D& histogram, const std::vector<double>& values)
+void Ana::FillTH1D(TH1D& histogram, const std::vector<double>& values)
 {
   for ( auto const &val : values )
     histogram.Fill(val);
 }
 
-void FillTH1D(TH1D& histogram, const std::vector<double>& values, const double& cut)
+void Ana::FillTH1D(TH1D& histogram, const std::vector<double>& values, const double& cut)
 {
   for ( auto const &val : values )
     if ( val >= cut ) 
       histogram.Fill(val);
 }
 
-void max_min(const std::string& var, const std::vector<double>& vec, double& max, double& min)
+void Ana::max_min(const std::string& var, const std::vector<double>& vec, double& max, double& min)
 {
   std::cout << var << std::endl;
   std::cout << "Max: " << *(std::max_element(vec.begin(),vec.end())) << std::endl;
@@ -38,7 +42,7 @@ void max_min(const std::string& var, const std::vector<double>& vec, double& max
   min = *(std::min_element(vec.begin(),vec.end()));
 }
 
-void max_min(const std::string& var, const std::vector<int>& vec, int& max, int& min)
+void Ana::max_min(const std::string& var, const std::vector<int>& vec, int& max, int& min)
 {
   std::cout << var << std::endl;
   std::cout << "Max: " << *(std::max_element(vec.begin(),vec.end())) << std::endl;
@@ -47,7 +51,7 @@ void max_min(const std::string& var, const std::vector<int>& vec, int& max, int&
   min = *(std::min_element(vec.begin(),vec.end()));
 }
 
-void FixTitle(TPaveText& pave, const std::string& title)
+void Ana::FixTitle(TPaveText& pave, const std::string& title)
 {
   pave.SetTextSize(0.048);
   pave.SetTextFont(102);
@@ -56,7 +60,7 @@ void FixTitle(TPaveText& pave, const std::string& title)
   pave.AddText(title.c_str());
 }
 
-void PrintDecays(const std::vector<int>& ndecay_vec)
+void Ana::PrintDecays(const std::vector<int>& ndecay_vec)
 {
   std::cout << "====================================" << std::endl
 	    << "          Printing ndecays          " << std::endl
@@ -119,7 +123,7 @@ void PrintDecays(const std::vector<int>& ndecay_vec)
 	    << " :: " << 100*(double)unk/(double)counter << std::endl;
 }
 
-const std::string ndecayToString(const int& n)
+const std::string Ana::ndecayToString(const int& n) const
 {
   if      ( n == 1   ) { return "K0L -> nue pi- e+";      }
   else if ( n == 2   ) { return "K0L -> nuebar pi+ e-";   }
@@ -139,7 +143,7 @@ const std::string ndecayToString(const int& n)
   else                 { return "BAD BAD BAD";            }
 }
 
-const std::string ppmediumToString(const int& n)
+const std::string Ana::ppmediumToString(const int& n) const
 {
   if      ( n == -4  ) { return "HELIUM  "; }
   else if ( n == -5  ) { return "BERYLLIU"; }
@@ -216,7 +220,7 @@ const std::string ppmediumToString(const int& n)
   else { return "BAD BAD BAD"; }
 }
 
-void PrintPPmediumNdecay(const std::vector< std::pair<int,int> >& ana_data)
+void Ana::Print_ppmediumndecay(const std::vector< std::pair<int,int> >& ana_data)
 {
   std::map<int, std::vector<int> > m_Ndecay_vppmedium;
   std::map<int, std::vector<int> > m_ppmedium_vNdecay;

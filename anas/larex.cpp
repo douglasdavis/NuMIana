@@ -1,6 +1,6 @@
 #include "LArAna.hh"
 #include "WindowAna.hh"
-#include "DAnaLibs.hh"
+#include "Ana.hh"
 #include <iostream>
 #include "TApplication.h"
 #include "TH1D.h"
@@ -9,6 +9,8 @@
 
 int main(int argc, char *argv[])
 {
+  Ana ana;
+
   looks();
   gStyle->SetOptStat(0);
   std::string file_name1 = argv[1];
@@ -37,13 +39,13 @@ int main(int argc, char *argv[])
   */
 
   TH1D *h_NuE = new TH1D("h_NuE",";#nu Energy",60,1,0);
-  FillTH1D(*h_NuE,lar_ana->NuEnergy());
+  ana.FillTH1D(*h_NuE,lar_ana->NuEnergy());
   
   TH1D *h_LeptonThetaXZ2 = new TH1D("h_LeptonThetaXZ2",";Lepton Theta XZ;",60,1,0);
-  FillTH1D(*h_LeptonThetaXZ2,lar_ana->LeptonThetaXZ2());
+  ana.FillTH1D(*h_LeptonThetaXZ2,lar_ana->LeptonThetaXZ2());
 
   TPaveText *title2 = new TPaveText(0.6485149,0.9311224,0.8778878,0.9821429,"brNDC");
-  FixTitle(*title2,"NuMI MC Energy");
+  ana.FixTitle(*title2,"NuMI MC Energy");
 
   lar_ana->SetupTitle("NuMI MC");
   TApplication *app = new TApplication("app",&argc,argv);

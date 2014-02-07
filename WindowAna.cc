@@ -68,7 +68,7 @@ WindowAna::WindowAna(const std::string& file_name)
     fevtno.push_back(evtno);
     fentryno.push_back(entryno);
 
-    fppmediumNdecay.push_back(std::make_pair(ppmedium,ndecay));
+    fppmediumndecay.push_back(std::make_pair(ppmedium,ndecay));
  
 
   }

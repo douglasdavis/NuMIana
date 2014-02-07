@@ -11,6 +11,8 @@
 
 int main(int argc, char *argv[])
 {
+  Ana ana;
+  
   looks();
   gStyle->SetOptStat(0);
   if ( argc < 4 ) return 0;
@@ -22,8 +24,8 @@ int main(int argc, char *argv[])
   WindowAna bott_ana(file_name1);
   WindowAna long_ana(file_name2);
   WindowAna norm_ana(file_name3);
-
-  PrintPPmediumNdecay(bott_ana.ppmediumNdecay());
+  
+  ana.Print_ppmediumndecay(bott_ana.ppmediumndecay());
   
   return 0;
 }
