@@ -9,7 +9,6 @@
 
 int main(int argc, char *argv[])
 {
-  Ana ana;
 
   looks();
   gStyle->SetOptStat(0);
@@ -39,13 +38,13 @@ int main(int argc, char *argv[])
   */
 
   TH1D *h_NuE = new TH1D("h_NuE",";#nu Energy",60,1,0);
-  ana.FillTH1D(*h_NuE,lar_ana->NuEnergy());
+  lar_ana->FillTH1D(*h_NuE,lar_ana->NuEnergy());
   
   TH1D *h_LeptonThetaXZ2 = new TH1D("h_LeptonThetaXZ2",";Lepton Theta XZ;",60,1,0);
-  ana.FillTH1D(*h_LeptonThetaXZ2,lar_ana->LeptonThetaXZ2());
+  lar_ana->FillTH1D(*h_LeptonThetaXZ2,lar_ana->LeptonThetaXZ2());
 
   TPaveText *title2 = new TPaveText(0.6485149,0.9311224,0.8778878,0.9821429,"brNDC");
-  ana.FixTitle(*title2,"NuMI MC Energy");
+  lar_ana->FixTitle(*title2,"NuMI MC Energy");
 
   lar_ana->SetupTitle("NuMI MC");
   TApplication *app = new TApplication("app",&argc,argv);
