@@ -1,5 +1,6 @@
 #include <iostream>
 #include <algorithm>
+#include <map>
 #include <vector>
 #include <cmath>
 #include "DAnaLibs.hh"
@@ -213,4 +214,40 @@ const std::string ppmediumToString(const int& n)
   else if ( n == 31  ) { return "CT852";          }
 
   else { return "BAD BAD BAD"; }
+}
+
+void PrintPPmediumNdecay(const std::vector< std::pair<int,int> >& ana_data)
+{
+  std::map<int, std::vector<int> > m_Ndecay_vppmedium;
+  std::map<int, std::vector<int> > m_ppmedium_vNdecay;
+  
+  for ( auto const& entry : ana_data ) {
+    m_Ndecay_vppmedium[entry.second].push_back(entry.first);
+    m_ppmedium_vNdecay[entry.first].push_back(entry.second);
+  }
+
+  unsigned int total_decays = 0;
+  for ( auto const& entry : m_Ndecay_vppmedium ) {
+    total_decays += entry.second.size();
+  }
+
+  unsigned int total_media = 0;
+  for ( auto const& entry : m_ppmedium_vNdecay) {
+    total_media += entry.second.size();
+  }
+
+  std::cout << total_decays << std::endl
+	    << total_media << std::endl << std::endl;
+
+  for ( auto const& entry : m_Ndecay_vppmedium ) {
+    auto total_entries = entry.second.size();
+    std::cout << ndecayToString(entry.first) << " total: " << total_entries
+	      << " percent: " << (double)total_entries/(double)total_decays << std::endl;
+  }
+  std::cout << std::endl;
+  for ( auto const& entry : m_ppmedium_vNdecay ) {
+    auto total_entries = entry.second.size();
+    std::cout << ppmediumToString(entry.first) << " total: " << total_entries
+	      << " percent: " << (double)total_entries/(double)total_media << std::endl;
+  }
 }

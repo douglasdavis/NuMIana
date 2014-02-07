@@ -34,4 +34,6 @@ void PrintDecays(const std::vector<int>& ndecay_vec);
 const std::string ndecayToString(const int& n);
 const std::string ppmediumToString(const int& n);
 
+void PrintPPmediumNdecay(const std::vector< std::pair<int,int> >& ana_data);
+
 #endif

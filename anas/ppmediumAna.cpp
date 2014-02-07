@@ -18,24 +18,12 @@ int main(int argc, char *argv[])
   std::string file_name1 = argv[1];
   std::string file_name2 = argv[2];
   std::string file_name3 = argv[3];
+
   WindowAna bott_ana(file_name1);
   WindowAna long_ana(file_name2);
   WindowAna norm_ana(file_name3);
 
-  auto B_evtno    = bott_ana.evtno();
-  auto L_evtno    = long_ana.evtno();
-  auto N_evtno    = norm_ana.evtno();
-  auto B_ppmedium = bott_ana.ppmedium();
-  auto L_ppmedium = long_ana.ppmedium();
-  auto N_ppmedium = norm_ana.ppmedium();
-  auto B_ndecay   = bott_ana.ndecay();
-  auto L_ndecay   = long_ana.ndecay();
-  auto N_ndecay   = norm_ana.ndecay();
-  
-  for ( auto i = 0; i < B_evtno.size(); i++ ) {
-    std::cout << ppmediumToString(B_ppmedium[i]) << " "
-	      << ndecayToString(B_ndecay[i]) << std::endl;
-  }
+  PrintPPmediumNdecay(bott_ana.ppmediumNdecay());
   
   return 0;
 }
