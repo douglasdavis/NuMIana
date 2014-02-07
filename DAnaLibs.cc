@@ -146,7 +146,7 @@ const std::string ppmediumToString(const int& n)
   else if ( n == -7  ) { return "NITROGEN"; }
   else if ( n == -8  ) { return "OXYGEN  "; }
   else if ( n == -9  ) { return "MAGNESIU"; }
-  else if ( n == -10 ) { return "ALUMINUN"; }
+  else if ( n == -10 ) { return "ALUMINUM"; }
   else if ( n == -11 ) { return "IRON    "; }
   else if ( n == -12 ) { return "COPPER  "; }
   else if ( n == -13 ) { return "SILVER  "; }
@@ -169,6 +169,48 @@ const std::string ppmediumToString(const int& n)
   else if ( n == -30 ) { return "SULFUR  "; }
   else if ( n == -31 ) { return "PHOSPHO "; }
   else if ( n == -32 ) { return "SLAB_STL"; }
+  else if ( n == -33 ) { return "IRON02  "; }
+  else if ( n == -34 ) { return "WATER   "; }
+  else if ( n == -35 ) { return "CHERT   "; }
+  else if ( n == -36 ) { return "PYRITE  "; }
+  else if ( n == -37 ) { return "DECAYPIP"; }
+  else if ( n == -38 ) { return "HELIUM02 HELIUM "; }
+  else if ( n == -39 ) { return "CARBON02"; }
+  else if ( n == -40 ) { return "ARGON02 ARGON   "; }
+  else if ( n == -41 ) { return "CONCRETE"; }
+  else if ( n == -42 ) { return "POTASSIU"; }
+  else if ( n == -43 ) { return "CALCIUM "; }
+  else if ( n == -44 ) { return "SHOTCRET"; }
+  else if ( n == -45 ) { return "REBAR_CO"; }
+  else if ( n == -46 ) { return "ROCKMAT "; }
+  else if ( n == -47 ) { return "MAQSHALE"; }
+  else if ( n == -48 ) { return "DOLOSTON"; } 
+  else if ( n == -49 ) { return "VARIABLE"; }
+  else if ( n == -50 ) { return "BARIAB02"; }
+  else if ( n == -51 ) { return "1018STEE"; }
+  else if ( n == -52 ) { return "A500STEE"; }
+  else if ( n == -53 ) { return "M1018STE"; }
+
+  else if ( n == 5   ) { return "Beryllium";      }
+  else if ( n == 6   ) { return "Carbon";         }
+  else if ( n == 9   ) { return "Aluminum";       }
+  else if ( n == 10  ) { return "Iron";           }
+  else if ( n == 11  ) { return "Slab Steel";     }
+  else if ( n == 12  ) { return "Blu Steel";      }
+  else if ( n == 15  ) { return "Air";            }
+  else if ( n == 16  ) { return "Vacuum";         }
+  else if ( n == 17  ) { return "Concrete";       }
+  else if ( n == 18  ) { return "Target";         }
+  else if ( n == 19  ) { return "Rebar Concrete"; }
+  else if ( n == 20  ) { return "Shotcrete";      }
+  else if ( n == 21  ) { return "Var Dens Alum";  }
+  else if ( n == 22  ) { return "Var Dens Steel"; }
+  else if ( n == 23  ) { return "1018 Steel";     }
+  else if ( n == 24  ) { return "0500 Steel";     }
+  else if ( n == 25  ) { return "Water";          }
+  else if ( n == 26  ) { return "M1018 Steel";    }
+  else if ( n == 28  ) { return "Decay Pipe Vac"; }
+  else if ( n == 31  ) { return "CT852";          }
 
   else { return "BAD BAD BAD"; }
 }

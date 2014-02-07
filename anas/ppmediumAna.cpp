@@ -33,7 +33,7 @@ int main(int argc, char *argv[])
   auto N_ndecay   = norm_ana.ndecay();
   
   for ( auto i = 0; i < B_evtno.size(); i++ ) {
-    std::cout << B_ppmedium[i] << " "
+    std::cout << ppmediumToString(B_ppmedium[i]) << " "
 	      << ndecayToString(B_ndecay[i]) << std::endl;
   }
   
