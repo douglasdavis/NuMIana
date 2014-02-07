@@ -1,0 +1,7 @@
+NuMIana
+libraries and executables for analyzing
+MicroBooNE MC data including simple flux files
+and LArSoft event data
+
+src directory contains source code for building analysis libraries
+anas directory contains code for creating analysis executables using the analysis libraries

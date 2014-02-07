@@ -4,6 +4,6 @@
 *.root
 build
 larex
-windowex
+simpleex
 fluggex
 ppmediumAna
