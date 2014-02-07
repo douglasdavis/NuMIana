@@ -41,6 +41,7 @@ private:
   std::vector<double> fHadronDecayY;
   std::vector<double> fHadronDecayZ;
   std::vector<int>    fPPmedium;
+  std::vector<int>    fNdecay;
   std::vector<bool>   fCCint;
   std::vector<bool>   fCCQEint;
   std::vector<bool>   fNCint;
@@ -97,6 +98,7 @@ public:
   inline const std::vector<double> HadronDecayY()   const { return fHadronDecayY;    }
   inline const std::vector<double> HadronDecayZ()   const { return fHadronDecayZ;    }
   inline const std::vector<int>    PPmedium()       const { return fPPmedium;        }
+  inline const std::vector<int>    Ndecay()         const { return fNdecay;          }
   inline const std::vector<bool>   CCint()          const { return fCCint;           }
   inline const std::vector<bool>   CCQEint()        const { return fCCQEint;         }
   inline const std::vector<bool>   NCint()          const { return fNCint;           }
