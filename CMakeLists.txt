@@ -12,9 +12,10 @@ link_directories("${ROOT_LIB_DIR}")
 
 ## -- prepare project include and lib dirs
 include_directories("${CMAKE_SOURCE_DIR}/include")
+include_directories("${CMAKE_SOURCE_DIR}/src")
 link_directories("${CMAKE_SOURCE_DIR}/lib")
 
-add_library(NuMIana SHARED WindowAna.cc LArAna.cc Ana.cc)
+add_library(NuMIana SHARED src/simpleAna.cc src/LArAna.cc src/Ana.cc)
 target_link_libraries(NuMIana ${ROOT_LIBS})
 
 add_subdirectory(anas)

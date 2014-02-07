@@ -1,5 +1,5 @@
-#ifndef WINDOWANA_HH
-#define WINDOWANA_HH
+#ifndef SIMPLEANA_HH
+#define SIMPLEANA_HH
 
 #include <iostream>
 #include <vector>
@@ -8,7 +8,7 @@
 #include "TTree.h"
 #include "TPaveText.h"
 
-class WindowAna : public Ana {
+class simpleAna : public Ana {
     
 private:
     
@@ -37,9 +37,9 @@ private:
 
 public:
     
-  WindowAna();
-  WindowAna(const std::string& file_name);
-  virtual ~WindowAna();
+  simpleAna();
+  simpleAna(const std::string& file_name);
+  virtual ~simpleAna();
 
   virtual void PrintNeutrinos();
   virtual void PrintDecayLocations();

@@ -1,5 +1,5 @@
-#ifndef DANALIBS_HH
-#define DANALIBS_HH
+#ifndef ANA_HH
+#define ANA_HH
 
 #include "TH1D.h"
 #include "TPaveText.h"
