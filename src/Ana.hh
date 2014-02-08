@@ -31,6 +31,7 @@ public:
   void max_min(const std::string& var, const std::vector<int>& vec, int& max, int& min);
   void FixTitle(TPaveText& pave, const std::string& title);
   void PrintDecays(const std::vector<int>& ndecay_vec);
+  void Print_ndecayppmedium(const std::vector< std::pair<int,int> >& ana_data);
   void Print_ppmediumndecay(const std::vector< std::pair<int,int> >& ana_data);
 
   inline const std::string ndecayToString(const int& n) const;

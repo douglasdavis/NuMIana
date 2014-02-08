@@ -220,38 +220,41 @@ const std::string Ana::ppmediumToString(const int& n) const
   else { return "BAD BAD BAD"; }
 }
 
-void Ana::Print_ppmediumndecay(const std::vector< std::pair<int,int> >& ana_data)
+void Ana::Print_ndecayppmedium(const std::vector< std::pair<int,int> >& ana_data)
 {
-  std::map<int, std::vector<int> > m_Ndecay_vppmedium;
-  std::map<int, std::vector<int> > m_ppmedium_vNdecay;
-  
+  std::map<int, std::vector<int> > m_ndecay_vppmedium;
   for ( auto const& entry : ana_data ) {
-    m_Ndecay_vppmedium[entry.second].push_back(entry.first);
-    m_ppmedium_vNdecay[entry.first].push_back(entry.second);
+    m_ndecay_vppmedium[entry.second].push_back(entry.first);
   }
 
   unsigned int total_decays = 0;
-  for ( auto const& entry : m_Ndecay_vppmedium ) {
+  for ( auto const& entry : m_ndecay_vppmedium ) {
     total_decays += entry.second.size();
   }
 
-  unsigned int total_media = 0;
-  for ( auto const& entry : m_ppmedium_vNdecay) {
-    total_media += entry.second.size();
-  }
-
-  std::cout << total_decays << std::endl
-	    << total_media << std::endl << std::endl;
-
-  for ( auto const& entry : m_Ndecay_vppmedium ) {
+  for ( auto const& entry : m_ndecay_vppmedium ) {
     auto total_entries = entry.second.size();
     std::cout << ndecayToString(entry.first) << " total: " << total_entries
-	      << " percent: " << (double)total_entries/(double)total_decays << std::endl;
+	      << " percent: " << 100*((double)total_entries/(double)total_decays) << std::endl;
   }
-  std::cout << std::endl;
-  for ( auto const& entry : m_ppmedium_vNdecay ) {
+  
+}
+
+void Ana::Print_ppmediumndecay(const std::vector< std::pair<int,int> >& ana_data)
+{
+  std::map<int, std::vector<int> > m_ppmedium_vndecay;
+  for ( auto const& entry : ana_data ) {
+    m_ppmedium_vndecay[entry.first].push_back(entry.second);
+  }
+  
+  unsigned int total_media = 0;
+  for ( auto const& entry : m_ppmedium_vndecay) {
+    total_media += entry.second.size();
+  }
+  
+  for ( auto const& entry : m_ppmedium_vndecay ) {
     auto total_entries = entry.second.size();
     std::cout << ppmediumToString(entry.first) << " total: " << total_entries
-	      << " percent: " << (double)total_entries/(double)total_media << std::endl;
+	      << " percent: " << 100*((double)total_entries/(double)total_media) << std::endl;
   }
 }
