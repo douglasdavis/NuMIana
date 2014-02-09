@@ -5,22 +5,24 @@
 #include "TPaveText.h"
 #include <iostream>
 #include <vector>
+#include <map>
 
 class Ana {
   
 protected:
-  
+
   std::vector<double> fvx;
   std::vector<double> fvy;
   std::vector<double> fvz;
   std::vector<int>    fppmedium;
   std::vector<int>    fndecay;
   std::vector< std::pair< int, int > > fppmediumndecay;
-  
+  std::map< int, std::string > fppmediumCodeMap;
+  std::map< int, std::string > fndecayCodeMap;
 public:
   
   Ana();
-  ~Ana();
+  virtual ~Ana();
 
   TPaveText *PlotTitle;
   void SetupTitle(const std::string& title_);  
@@ -34,16 +36,17 @@ public:
   void Print_ndecayppmedium(const std::vector< std::pair<int,int> >& ana_data);
   void Print_ppmediumndecay(const std::vector< std::pair<int,int> >& ana_data);
 
-  inline const std::string ndecayToString(const int& n) const;
-  inline const std::string ppmediumToString(const int& n) const;
+  inline const std::string ndecayToString(const int& n);
+  inline const std::string ppmediumToString(const int& n) { return fppmediumCodeMap[n]; }
   
-  inline const std::vector<double>                  vx()             const { return fvx;             }
-  inline const std::vector<double>                  vy()             const { return fvy;             }
-  inline const std::vector<double>                  vz()             const { return fvz;             }
-  inline const std::vector<int>                     ppmedium()       const { return fppmedium;       }
-  inline const std::vector<int>                     ndecay()         const { return fndecay;         }
-  inline const std::vector< std::pair< int, int > > ppmediumndecay() const { return fppmediumndecay; }
-  
+  inline const std::vector<double>                  vx()              const { return fvx;              }
+  inline const std::vector<double>                  vy()              const { return fvy;              }
+  inline const std::vector<double>                  vz()              const { return fvz;              }
+  inline const std::vector<int>                     ppmedium()        const { return fppmedium;        }
+  inline const std::vector<int>                     ndecay()          const { return fndecay;          }
+  inline const std::vector< std::pair< int, int > > ppmediumndecay()  const { return fppmediumndecay;  }
+  inline const std::map< int, std::string >         ppmediumCodeMap() const { return fppmediumCodeMap; }
+
 };
 
 #endif

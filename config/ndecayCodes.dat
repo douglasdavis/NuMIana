@@ -1,0 +1,15 @@
+1	K0L_->nue_pi-_e+
+2	K0L_->nuebar_pi+_e-
+3	K0L_->numu_pi-_mu+
+4	K0L_->numubar_pi+_mu-
+5	K+_->numu_mu+
+6	K+_->nue_pi0_e+
+7	K+_->numu_pi0_mu+
+8	K-_->numubar_mu-
+9	K-_->nuebar_pi0_e-
+10	K-_->numubar_pi0_mu-
+11	mu+_->numubar_nue_e+
+12	mu-_->numu_nuebar_e-
+13	pi+_->numu_mu+
+14	pi-_->numubar_mu-
+999	Other

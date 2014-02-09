@@ -24,6 +24,7 @@ int main(int argc, char *argv[])
   simpleAna norm_ana(file_name3);
   
   bott_ana.Print_ppmediumndecay(bott_ana.ppmediumndecay());
-  
+  bott_ana.PrintDecays(bott_ana.ndecay());
+
   return 0;
 }

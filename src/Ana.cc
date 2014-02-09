@@ -3,9 +3,26 @@
 #include <map>
 #include <vector>
 #include <cmath>
+#include <fstream>
 #include "Ana.hh"
 
-Ana::Ana() {}
+Ana::Ana()
+{
+  int         int_code;
+  std::string str_code;
+  
+  std::ifstream ppmedium_config;
+  ppmedium_config.open("config/ppmediumCodes.dat");
+  while ( ppmedium_config >> int_code >> str_code )
+    fppmediumCodeMap[int_code] = str_code;
+  ppmedium_config.close();
+  
+  std::ifstream ndecay_config;
+  ndecay_config.open("config/ndecayCodes.dat");
+  while ( ndecay_config >> int_code >> str_code )
+    fndecayCodeMap[int_code] = str_code;
+  ndecay_config.close();
+}
 
 Ana::~Ana() {}
 
@@ -62,35 +79,44 @@ void Ana::FixTitle(TPaveText& pave, const std::string& title)
 
 void Ana::PrintDecays(const std::vector<int>& ndecay_vec)
 {
-  std::cout << "====================================" << std::endl
-	    << "          Printing ndecays          " << std::endl
-	    << "====================================" << std::endl;
-  
-  int d1 = 0, d2 = 0, d3 = 0, d4 = 0, d5 = 0, d6 = 0, d7 = 0,
-    d8 = 0, d9 = 0, d10 = 0, d11 = 0, d12 = 0, d13 = 0, d14 = 0;
-  int counter = 0; int unk = 0;
+  int d[15] = {0};
+  int counter = 0;
+  int unk = 0;
   for ( int n : ndecay_vec ) {
     counter++;
     switch(n) {
-    case 1:  d1++;  break;
-    case 2:  d2++;  break;
-    case 3:  d3++;  break;
-    case 4:  d4++;  break;    
-    case 5:  d5++;  break;
-    case 6:  d6++;  break;
-    case 7:  d7++;  break;
-    case 8:  d8++;  break;
-    case 9:  d9++;  break;
-    case 10: d10++; break;
-    case 11: d11++; break;
-    case 12: d12++; break;
-    case 13: d13++; break;
-    case 14: d14++; break;
-    default:
-      unk++;
-      break;
+    case 1:  d[1]++;  break;
+    case 2:  d[2]++;  break;
+    case 3:  d[3]++;  break;
+    case 4:  d[4]++;  break;    
+    case 5:  d[5]++;  break;
+    case 6:  d[6]++;  break;
+    case 7:  d[7]++;  break;
+    case 8:  d[8]++;  break;
+    case 9:  d[9]++;  break;
+    case 10: d[10]++; break;
+    case 11: d[11]++; break;
+    case 12: d[12]++; break;
+    case 13: d[13]++; break;
+    case 14: d[14]++; break;
+    case 999: d[0]++; break;
+    default: unk++; break;
     }
   }
+
+  for ( auto const& entry : fndecayCodeMap ) {
+    if ( entry.first != 999 ) {
+      std::cout << entry.first << " " << entry.second << " "
+		<< d[entry.first] << " percent: " << 100*(double)d[entry.first]/(double)counter
+		<< std::endl;
+    }
+    else { 
+      std::cout << entry.first << " " << entry.second << " "
+		<< d[0] << " percent: " << 100*(double)d[0]/(double)counter
+		<< std::endl;
+    }
+  }
+  /*
   std::cout << "1   K0L -> nue pi- e+      : " << d1  
 	    << " :: " << 100*(double)d1/(double)counter  << std::endl
 	    << "2   K0L -> nuebar pi+ e-   : " << d2  
@@ -121,108 +147,32 @@ void Ana::PrintDecays(const std::vector<int>& ndecay_vec)
 	    << " :: " << 100*(double)d14/(double)counter << std::endl
 	    << "999 unkown                 : " << unk 
 	    << " :: " << 100*(double)unk/(double)counter << std::endl;
+  */
 }
 
-const std::string Ana::ndecayToString(const int& n) const
+const std::string Ana::ndecayToString(const int& n)
 {
-  if      ( n == 1   ) { return "K0L -> nue pi- e+";      }
-  else if ( n == 2   ) { return "K0L -> nuebar pi+ e-";   }
-  else if ( n == 3   ) { return "K0L -> numu pi- mu+";    }
-  else if ( n == 4   ) { return "K0L -> numubar pi+ mu-"; }
-  else if ( n == 5   ) { return "K+  -> numu mu+";        }
-  else if ( n == 6   ) { return "K+  -> nue pi0 e+";      }
-  else if ( n == 7   ) { return "K+  -> numu pi0 mu+";    }
-  else if ( n == 8   ) { return "K-  -> numubar mu-";     }
-  else if ( n == 9   ) { return "K-  -> nuebar pi0 e-";   }
-  else if ( n == 10  ) { return "K-  -> numubar pi0 mu-"; }
-  else if ( n == 11  ) { return "mu+ -> numubar nue e+";  }
-  else if ( n == 12  ) { return "mu- -> numu nuebar e-";  }
-  else if ( n == 13  ) { return "pi+ -> numu mu+";        }
-  else if ( n == 14  ) { return "pi- -> numubar mu-";     }
-  else if ( n == 999 ) { return "Other";                  }
-  else                 { return "BAD BAD BAD";            }
-}
-
-const std::string Ana::ppmediumToString(const int& n) const
-{
-  if      ( n == -4  ) { return "HELIUM  "; }
-  else if ( n == -5  ) { return "BERYLLIU"; }
-  else if ( n == -6  ) { return "CARBON  "; }
-  else if ( n == -7  ) { return "NITROGEN"; }
-  else if ( n == -8  ) { return "OXYGEN  "; }
-  else if ( n == -9  ) { return "MAGNESIU"; }
-  else if ( n == -10 ) { return "ALUMINUM"; }
-  else if ( n == -11 ) { return "IRON    "; }
-  else if ( n == -12 ) { return "COPPER  "; }
-  else if ( n == -13 ) { return "SILVER  "; }
-  else if ( n == -14 ) { return "SILICON "; }
-  else if ( n == -15 ) { return "GOLD    "; }
-  else if ( n == -16 ) { return "MERCURY "; }
-  else if ( n == -17 ) { return "LEAD    "; }
-  else if ( n == -18 ) { return "TANTALUM"; }
-  else if ( n == -19 ) { return "SODIUM  "; }
-  else if ( n == -20 ) { return "ARGON   "; }
-  else if ( n == -21 ) { return "CALCIUM "; }
-  else if ( n == -22 ) { return "TIN     "; }
-  else if ( n == -23 ) { return "TUNGSTEN"; }
-  else if ( n == -24 ) { return "TITANIUM"; }
-  else if ( n == -25 ) { return "NICKEL  "; }
-  else if ( n == -26 ) { return "AIR     "; }
-  else if ( n == -27 ) { return "CT852   "; }
-  else if ( n == -28 ) { return "MANGANES"; }
-  else if ( n == -29 ) { return "CHROMIUM"; }
-  else if ( n == -30 ) { return "SULFUR  "; }
-  else if ( n == -31 ) { return "PHOSPHO "; }
-  else if ( n == -32 ) { return "SLAB_STL"; }
-  else if ( n == -33 ) { return "IRON02  "; }
-  else if ( n == -34 ) { return "WATER   "; }
-  else if ( n == -35 ) { return "CHERT   "; }
-  else if ( n == -36 ) { return "PYRITE  "; }
-  else if ( n == -37 ) { return "DECAYPIP"; }
-  else if ( n == -38 ) { return "HELIUM02 HELIUM "; }
-  else if ( n == -39 ) { return "CARBON02"; }
-  else if ( n == -40 ) { return "ARGON02 ARGON   "; }
-  else if ( n == -41 ) { return "CONCRETE"; }
-  else if ( n == -42 ) { return "POTASSIU"; }
-  else if ( n == -43 ) { return "CALCIUM "; }
-  else if ( n == -44 ) { return "SHOTCRET"; }
-  else if ( n == -45 ) { return "REBAR_CO"; }
-  else if ( n == -46 ) { return "ROCKMAT "; }
-  else if ( n == -47 ) { return "MAQSHALE"; }
-  else if ( n == -48 ) { return "DOLOSTON"; } 
-  else if ( n == -49 ) { return "VARIABLE"; }
-  else if ( n == -50 ) { return "BARIAB02"; }
-  else if ( n == -51 ) { return "1018STEE"; }
-  else if ( n == -52 ) { return "A500STEE"; }
-  else if ( n == -53 ) { return "M1018STE"; }
-
-  else if ( n == 5   ) { return "Beryllium";      }
-  else if ( n == 6   ) { return "Carbon";         }
-  else if ( n == 9   ) { return "Aluminum";       }
-  else if ( n == 10  ) { return "Iron";           }
-  else if ( n == 11  ) { return "Slab Steel";     }
-  else if ( n == 12  ) { return "Blu Steel";      }
-  else if ( n == 15  ) { return "Air";            }
-  else if ( n == 16  ) { return "Vacuum";         }
-  else if ( n == 17  ) { return "Concrete";       }
-  else if ( n == 18  ) { return "Target";         }
-  else if ( n == 19  ) { return "Rebar Concrete"; }
-  else if ( n == 20  ) { return "Shotcrete";      }
-  else if ( n == 21  ) { return "Var Dens Alum";  }
-  else if ( n == 22  ) { return "Var Dens Steel"; }
-  else if ( n == 23  ) { return "1018 Steel";     }
-  else if ( n == 24  ) { return "0500 Steel";     }
-  else if ( n == 25  ) { return "Water";          }
-  else if ( n == 26  ) { return "M1018 Steel";    }
-  else if ( n == 28  ) { return "Decay Pipe Vac"; }
-  else if ( n == 31  ) { return "CT852";          }
-
-  else { return "BAD BAD BAD"; }
+  if      ( n == 1   ) { return "K0L_->nue_pi-_e+";      }
+  else if ( n == 2   ) { return "K0L_->nuebar_pi+_e-";   }
+  else if ( n == 3   ) { return "K0L_->numu_pi-_mu+";    }
+  else if ( n == 4   ) { return "K0L_->numubar_pi+_mu-"; }
+  else if ( n == 5   ) { return "K+_->numu_mu+";         }
+  else if ( n == 6   ) { return "K+_->nue_pi0_e+";       }
+  else if ( n == 7   ) { return "K+_->numu_pi0_mu+";     }
+  else if ( n == 8   ) { return "K-_->numubar_mu-";      }
+  else if ( n == 9   ) { return "K-_->nuebar_pi0_e-";    }
+  else if ( n == 10  ) { return "K-_->numubar_pi0_mu-";  }
+  else if ( n == 11  ) { return "mu+_->numubar_nue_e+";  }
+  else if ( n == 12  ) { return "mu-_->numu_nuebar_e-";  }
+  else if ( n == 13  ) { return "pi+_->numu_mu+";        }
+  else if ( n == 14  ) { return "pi-_->numubar_mu-";     }
+  else if ( n == 999 ) { return "Other";                 }
+  else                 { return "ok";                    }
 }
 
 void Ana::Print_ndecayppmedium(const std::vector< std::pair<int,int> >& ana_data)
 {
-  std::map<int, std::vector<int> > m_ndecay_vppmedium;
+  std::map< int, std::vector<int> > m_ndecay_vppmedium;
   for ( auto const& entry : ana_data ) {
     m_ndecay_vppmedium[entry.second].push_back(entry.first);
   }
@@ -241,7 +191,7 @@ void Ana::Print_ndecayppmedium(const std::vector< std::pair<int,int> >& ana_data
 
 void Ana::Print_ppmediumndecay(const std::vector< std::pair<int,int> >& ana_data)
 {
-  std::map<int, std::vector<int> > m_ppmedium_vndecay;
+  std::map< int, std::vector<int> > m_ppmedium_vndecay;
   for ( auto const& entry : ana_data ) {
     m_ppmedium_vndecay[entry.first].push_back(entry.second);
   }
