@@ -36,7 +36,7 @@ public:
   void Print_ndecayppmedium(const std::vector< std::pair<int,int> >& ana_data);
   void Print_ppmediumndecay(const std::vector< std::pair<int,int> >& ana_data);
 
-  inline const std::string ndecayToString(const int& n);
+  inline const std::string ndecayToString(const int& n)   { return fndecayCodeMap[n];   }
   inline const std::string ppmediumToString(const int& n) { return fppmediumCodeMap[n]; }
   
   inline const std::vector<double>                  vx()              const { return fvx;              }

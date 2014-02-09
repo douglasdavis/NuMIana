@@ -84,26 +84,12 @@ void Ana::PrintDecays(const std::vector<int>& ndecay_vec)
   int unk = 0;
   for ( int n : ndecay_vec ) {
     counter++;
-    switch(n) {
-    case 1:  d[1]++;  break;
-    case 2:  d[2]++;  break;
-    case 3:  d[3]++;  break;
-    case 4:  d[4]++;  break;    
-    case 5:  d[5]++;  break;
-    case 6:  d[6]++;  break;
-    case 7:  d[7]++;  break;
-    case 8:  d[8]++;  break;
-    case 9:  d[9]++;  break;
-    case 10: d[10]++; break;
-    case 11: d[11]++; break;
-    case 12: d[12]++; break;
-    case 13: d[13]++; break;
-    case 14: d[14]++; break;
-    case 999: d[0]++; break;
-    default: unk++; break;
-    }
+    if ( n != 999 )
+      d[n]++;
+    else
+      d[0]++;
   }
-
+  
   for ( auto const& entry : fndecayCodeMap ) {
     if ( entry.first != 999 ) {
       std::cout << entry.first << " " << entry.second << " "
@@ -116,26 +102,6 @@ void Ana::PrintDecays(const std::vector<int>& ndecay_vec)
 		<< std::endl;
     }
   }
-}
-
-const std::string Ana::ndecayToString(const int& n)
-{
-  if      ( n == 1   ) { return "K0L_->nue_pi-_e+";      }
-  else if ( n == 2   ) { return "K0L_->nuebar_pi+_e-";   }
-  else if ( n == 3   ) { return "K0L_->numu_pi-_mu+";    }
-  else if ( n == 4   ) { return "K0L_->numubar_pi+_mu-"; }
-  else if ( n == 5   ) { return "K+_->numu_mu+";         }
-  else if ( n == 6   ) { return "K+_->nue_pi0_e+";       }
-  else if ( n == 7   ) { return "K+_->numu_pi0_mu+";     }
-  else if ( n == 8   ) { return "K-_->numubar_mu-";      }
-  else if ( n == 9   ) { return "K-_->nuebar_pi0_e-";    }
-  else if ( n == 10  ) { return "K-_->numubar_pi0_mu-";  }
-  else if ( n == 11  ) { return "mu+_->numubar_nue_e+";  }
-  else if ( n == 12  ) { return "mu-_->numu_nuebar_e-";  }
-  else if ( n == 13  ) { return "pi+_->numu_mu+";        }
-  else if ( n == 14  ) { return "pi-_->numubar_mu-";     }
-  else if ( n == 999 ) { return "Other";                 }
-  else                 { return "ok";                    }
 }
 
 void Ana::Print_ndecayppmedium(const std::vector< std::pair<int,int> >& ana_data)
