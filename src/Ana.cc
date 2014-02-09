@@ -166,7 +166,7 @@ namespace numi {
 
     for ( auto const& entry : m_ndecay_vppmedium ) {
       auto total_entries = entry.second.size();
-      std::cout << ndecayToString(entry.first) << " total: " << total_entries
+      std::cout << entry.first << " " << ndecayToString(entry.first) << " total: " << total_entries
 		<< " percent: " << 100*((double)total_entries/(double)total_decays) << std::endl;
     
       for ( auto const& entry_2: fppmediumCodeMap )
@@ -203,7 +203,7 @@ namespace numi {
   
     for ( auto const& entry : m_ppmedium_vndecay ) {
       auto total_entries = entry.second.size();
-      std::cout << ppmediumToString(entry.first) << " total: " << total_entries
+      std::cout << entry.first << " " << ppmediumToString(entry.first) << " total: " << total_entries
 		<< " percent: " << 100*((double)total_entries/(double)total_media) << std::endl;
 
       for ( auto const& entry_2: fndecayCodeMap )
