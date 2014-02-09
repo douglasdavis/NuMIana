@@ -82,7 +82,7 @@ LArAna::LArAna(const std::string& file_name)
   fFluxNtuple->SetBranchAddress("ppmedium",&ppmedium);
   fFluxNtuple->SetBranchAddress("ndecay",  &ndecay);
 
-  for ( int i = 0; i < fSimulationNtuple->GetEntries(); i++ ) {
+  for ( int i = 0; i < fSimulationNtuple->GetEntries(); ++i ) {
     fSimulationNtuple->GetEntry(i);
     fNuPdg.push_back(_NuPdg);
     fLeptonPdg.push_back(_LeptonPdg);
@@ -137,7 +137,7 @@ LArAna::LArAna(const std::string& file_name)
 
   }
   
-  for ( auto i = 0; i < fFluxNtuple->GetEntries(); i++ ) {
+  for ( auto i = 0; i < fFluxNtuple->GetEntries(); ++i ) {
     fFluxNtuple->GetEntry(i);
     fvx.push_back(vx);
     fvy.push_back(vy);

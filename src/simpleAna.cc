@@ -40,7 +40,7 @@ simpleAna::simpleAna(const std::string& file_name)
   fNuMI_Tree->SetBranchAddress("evtno",   &evtno);
   fNuMI_Tree->SetBranchAddress("entryno", &entryno);
 
-  for ( int i = 0; i < fEntryTree->GetEntries(); i++ ) {
+  for ( int i = 0; i < fEntryTree->GetEntries(); ++i ) {
     fEntryTree->GetEntry(i);
     fwgt.push_back(wgt);
     fvtxx.push_back(vtxx);
@@ -53,7 +53,7 @@ simpleAna::simpleAna(const std::string& file_name)
     fE.push_back(E);
     fpdg.push_back(pdg);
   }
-  for ( int i = 0; i < fNuMI_Tree->GetEntries(); i++ ) {
+  for ( int i = 0; i < fNuMI_Tree->GetEntries(); ++i ) {
     fNuMI_Tree->GetEntry(i);
     ftpx.push_back(tpx);
     ftpy.push_back(tpy);
