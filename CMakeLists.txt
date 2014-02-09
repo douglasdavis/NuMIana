@@ -11,7 +11,6 @@ include_directories("${ROOT_INC_DIR}")
 link_directories("${ROOT_LIB_DIR}")
 
 ## -- prepare project include and lib dirs
-include_directories("${CMAKE_SOURCE_DIR}/include")
 include_directories("${CMAKE_SOURCE_DIR}/src")
 link_directories("${CMAKE_SOURCE_DIR}/lib")
 

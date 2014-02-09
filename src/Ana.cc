@@ -137,75 +137,76 @@ void Ana::PrintDecays(const std::vector<int>& ndecay_vec)
 // percentages for. We have to loop through the vector which is the value of the first map
 // to fill define the value of the second map. This then allows us to calculate the percentage
 // of each ppmedium for each ndecay. Then it starts all over with a fresh count of each
-// ppmedium for each ndecay. I might do the same where I swap ppmedium and ndecay.
-// ... if Karol wants it.
+// ppmedium for each ndecay.
+// Same thing is done switching ndecay and ppmedium places in next function
 
 void Ana::Print_ndecayppmedium(const std::vector< std::pair<int,int> >& ana_data)
 {
-  // map (ndecay code, vector of ppmedium codes with that decay)
   std::map< int, std::vector<int> > m_ndecay_vppmedium;
-  // map (ppmedium code, total # of decays with that ppmedium)
   std::map< int, int > m_ppmedium_total;
 
-  // fill the first map
   for ( auto const& entry : ana_data )
     m_ndecay_vppmedium[entry.second].push_back(entry.first);
 
-  // get the total # neutrinos in the ntuple
   unsigned int total_decays = 0;
   for ( auto const& entry : m_ndecay_vppmedium ) {
     total_decays += entry.second.size();
   }
+
   std::cout << "total_decays = " << total_decays << std::endl;
-  // print the ndecay code with the percentage of the total # events with that code
-  // print the ndecay with individual ppmedium percentages
+
   for ( auto const& entry : m_ndecay_vppmedium ) {
     auto total_entries = entry.second.size();
     std::cout << ndecayToString(entry.first) << " total: " << total_entries
 	      << " percent: " << 100*((double)total_entries/(double)total_decays) << std::endl;
     
-    // initialize map that counts total #ppmedium for each ndecay
     for ( auto const& entry_2: fppmediumCodeMap )
       m_ppmedium_total[entry_2.first] = 0;
     
-    // get that total number of ppmed codes for each one
-    for ( auto const& ppmed_code : entry.second ) {
+    for ( auto const& ppmed_code : entry.second )
       m_ppmedium_total[ppmed_code]++;
-    }
 
-    // loop through the total ppmed code map to get percentages
-    for ( auto const& ppmed_counter : m_ppmedium_total ) {
+    for ( auto const& ppmed_counter : m_ppmedium_total )
       std::cout << "  ** " << ppmed_counter.first  << " "
 		<< ppmediumToString(ppmed_counter.first) << " percent: "
 		<< 100*((double)ppmed_counter.second/(double)total_entries) << std::endl;
       
-    }
   }  
-
 }
 
 /// ____________________________________________________________________________________
 
 void Ana::Print_ppmediumndecay(const std::vector< std::pair<int,int> >& ana_data)
 {
-  // map (ppmedium code, vector of ndecay codes with that ppmedium)
   std::map< int, std::vector<int> > m_ppmedium_vndecay;
-  // fill the map
+  std::map< int, int > m_ndecay_total;
+
   for ( auto const& entry : ana_data ) {
     m_ppmedium_vndecay[entry.first].push_back(entry.second);
   }
   
-  // get the total # neutrinos in the ntuple
   unsigned int total_media = 0;
   for ( auto const& entry : m_ppmedium_vndecay) {
     total_media += entry.second.size();
   }
+
+  std::cout << "total decays: " << total_media << std::endl;
   
-  // print the ppmedium code with the percentage of the total # events with that code
   for ( auto const& entry : m_ppmedium_vndecay ) {
     auto total_entries = entry.second.size();
     std::cout << ppmediumToString(entry.first) << " total: " << total_entries
 	      << " percent: " << 100*((double)total_entries/(double)total_media) << std::endl;
-  }
 
+    for ( auto const& entry_2: fndecayCodeMap )
+      m_ndecay_total[entry_2.first] = 0;
+
+    for ( auto const& ndec_code : entry.second )
+      m_ndecay_total[ndec_code]++;
+
+    for ( auto const& ndec_counter : m_ndecay_total )
+      std::cout << "  ** " << ndec_counter.first  << " "
+		<< ndecayToString(ndec_counter.first) << " percent: "
+		<< 100*((double)ndec_counter.second/(double)total_entries) << std::endl;
+    
+  }
 }
