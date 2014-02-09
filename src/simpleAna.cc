@@ -105,6 +105,8 @@ void simpleAna::PrintNeutrinos()
 	    << 100*(double)nuebar/(double)counter  << std::endl;
 }
 
+///____________________________________________________________________________
+
 void simpleAna::PrintDecayLocations()
 {
   // target hall

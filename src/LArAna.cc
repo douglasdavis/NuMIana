@@ -147,7 +147,6 @@ LArAna::LArAna(const std::string& file_name)
     fppmediumndecay.push_back(std::make_pair(ppmedium,ndecay));
   }
 
-
 }
   
 LArAna::~LArAna() {}

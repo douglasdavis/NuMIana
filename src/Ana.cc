@@ -1,7 +1,5 @@
 #include <iostream>
 #include <algorithm>
-#include <map>
-#include <vector>
 #include <cmath>
 #include <fstream>
 #include "Ana.hh"
@@ -24,7 +22,11 @@ Ana::Ana()
   ndecay_config.close();
 }
 
+/// ____________________________________________________________________________________
+
 Ana::~Ana() {}
+
+/// ____________________________________________________________________________________
 
 void Ana::SetupTitle(const std::string& title_)
 {
@@ -36,6 +38,7 @@ void Ana::SetupTitle(const std::string& title_)
   PlotTitle->AddText(title_.c_str());
 }
 
+/// ____________________________________________________________________________________
 
 void Ana::FillTH1D(TH1D& histogram, const std::vector<double>& values)
 {
@@ -43,12 +46,16 @@ void Ana::FillTH1D(TH1D& histogram, const std::vector<double>& values)
     histogram.Fill(val);
 }
 
+/// ____________________________________________________________________________________
+
 void Ana::FillTH1D(TH1D& histogram, const std::vector<double>& values, const double& cut)
 {
   for ( auto const &val : values )
     if ( val >= cut ) 
       histogram.Fill(val);
 }
+
+/// ____________________________________________________________________________________
 
 void Ana::max_min(const std::string& var, const std::vector<double>& vec, double& max, double& min)
 {
@@ -59,6 +66,8 @@ void Ana::max_min(const std::string& var, const std::vector<double>& vec, double
   min = *(std::min_element(vec.begin(),vec.end()));
 }
 
+/// ____________________________________________________________________________________
+
 void Ana::max_min(const std::string& var, const std::vector<int>& vec, int& max, int& min)
 {
   std::cout << var << std::endl;
@@ -68,6 +77,8 @@ void Ana::max_min(const std::string& var, const std::vector<int>& vec, int& max,
   min = *(std::min_element(vec.begin(),vec.end()));
 }
 
+/// ____________________________________________________________________________________
+
 void Ana::FixTitle(TPaveText& pave, const std::string& title)
 {
   pave.SetTextSize(0.048);
@@ -76,6 +87,8 @@ void Ana::FixTitle(TPaveText& pave, const std::string& title)
   pave.SetBorderSize(0);
   pave.AddText(title.c_str());
 }
+
+/// ____________________________________________________________________________________
 
 void Ana::PrintDecays(const std::vector<int>& ndecay_vec)
 {
@@ -104,6 +117,8 @@ void Ana::PrintDecays(const std::vector<int>& ndecay_vec)
   }
 }
 
+/// ____________________________________________________________________________________
+
 void Ana::Print_ndecayppmedium(const std::vector< std::pair<int,int> >& ana_data)
 {
   std::map< int, std::vector<int> > m_ndecay_vppmedium;
@@ -122,6 +137,8 @@ void Ana::Print_ndecayppmedium(const std::vector< std::pair<int,int> >& ana_data
 	      << " percent: " << 100*((double)total_entries/(double)total_decays) << std::endl;
   }  
 }
+
+/// ____________________________________________________________________________________
 
 void Ana::Print_ppmediumndecay(const std::vector< std::pair<int,int> >& ana_data)
 {
