@@ -236,8 +236,7 @@ void Ana::Print_ndecayppmedium(const std::vector< std::pair<int,int> >& ana_data
     auto total_entries = entry.second.size();
     std::cout << ndecayToString(entry.first) << " total: " << total_entries
 	      << " percent: " << 100*((double)total_entries/(double)total_decays) << std::endl;
-  }
-  
+  }  
 }
 
 void Ana::Print_ppmediumndecay(const std::vector< std::pair<int,int> >& ana_data)
