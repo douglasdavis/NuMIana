@@ -1,3 +1,8 @@
+///////////////////////////////////////////////////////////////////////////////
+//  \brief   Methods of the base Ana class (to analyze LArNuMI events/flux)
+//  \author  douglasdavis@utexas.edu
+///////////////////////////////////////////////////////////////////////////////
+
 #include <iostream>
 #include <algorithm>
 #include <cmath>
@@ -119,26 +124,28 @@ void Ana::PrintDecays(const std::vector<int>& ndecay_vec)
 
 /// ____________________________________________________________________________________
 
-// One of the most confusing peices of code I've probably ever written
-// Synopsis:
-// First we declare two maps, one which has key that is ndecay and entry
-// that is a vector containing all the ppmedium codes for events that had the ndecay
-// The second map has key which is ppmedium code and value which is total # of events
-// with that ppmedium code. (this is for each ndecay, will explain later here).
-// We then fill the first map by looping through the vector of pairs which is
-// each event's ndecay and ppmedium. Now we have the map which contains each ndecay
-// and the the vector of ppmediums for each ndecay
-// Then we loop through that map to get the total number of neutrinos in the ntuple
-// so we can then loop through the map again and start calculating percentages.
-// The first percentage we calculate is the percentage of each ndecay for the entire ntuple
-// we then loop through the ppmedium codes map to intialize the second map described above
-// (key is ppmedium code, value is total number for each ndecay that we're looping through)
-// we erase this map during each iteration to clear it for the next ndecay to show the
-// percentages for. We have to loop through the vector which is the value of the first map
-// to fill define the value of the second map. This then allows us to calculate the percentage
-// of each ppmedium for each ndecay. Then it starts all over with a fresh count of each
-// ppmedium for each ndecay.
-// Same thing is done switching ndecay and ppmedium places in next function
+//////////////////////////////////////////////////////////////////////////////////////////////
+/// One of the most confusing peices of code I've probably ever written
+/// Synopsis:
+/// First we declare two maps, one which has key that is ndecay and entry
+/// that is a vector containing all the ppmedium codes for events that had the ndecay
+/// The second map has key which is ppmedium code and value which is total # of events
+/// with that ppmedium code. (this is for each ndecay, will explain later here).
+/// We then fill the first map by looping through the vector of pairs which is
+/// each event's ndecay and ppmedium. Now we have the map which contains each ndecay
+/// and the the vector of ppmediums for each ndecay
+/// Then we loop through that map to get the total number of neutrinos in the ntuple
+/// so we can then loop through the map again and start calculating percentages.
+/// The first percentage we calculate is the percentage of each ndecay for the entire ntuple
+/// we then loop through the ppmedium codes map to intialize the second map described above
+/// (key is ppmedium code, value is total number for each ndecay that we're looping through)
+/// we erase this map during each iteration to clear it for the next ndecay to show the
+/// percentages for. We have to loop through the vector which is the value of the first map
+/// to fill define the value of the second map. This then allows us to calculate the percentage
+/// of each ppmedium for each ndecay. Then it starts all over with a fresh count of each
+/// ppmedium for each ndecay. Everything gets printed.
+/// Same thing is done switching ndecay and ppmedium places in next function
+//////////////////////////////////////////////////////////////////////////////////////////////
 
 void Ana::Print_ndecayppmedium(const std::vector< std::pair<int,int> >& ana_data)
 {
