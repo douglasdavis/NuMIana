@@ -7,7 +7,7 @@
 
 int main(int argc, char *argv[])
 {
-  Ana ana;
+  numi::Ana ana;
   
   std::string afile = argv[1];
   TFile the_file(afile.c_str());

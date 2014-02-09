@@ -19,9 +19,9 @@ int main(int argc, char *argv[])
   std::string file_name2 = argv[2];
   std::string file_name3 = argv[3];
 
-  simpleAna bott_ana(file_name1);
-  simpleAna long_ana(file_name2);
-  simpleAna norm_ana(file_name3);
+  numi::simpleAna bott_ana(file_name1);
+  numi::simpleAna long_ana(file_name2);
+  numi::simpleAna norm_ana(file_name3);
   
   bott_ana.Print_ppmediumndecay(bott_ana.ppmediumndecay());
   bott_ana.Print_ndecayppmedium(bott_ana.ppmediumndecay());
