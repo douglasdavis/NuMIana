@@ -177,7 +177,7 @@ namespace numi {
 
       for ( auto const& ppmed_counter : m_ppmedium_total )
 	std::cout << "  ** " << ppmed_counter.first  << " "
-		  << ppmediumToString(ppmed_counter.first) << " percent: "
+		  << ppmediumToString(ppmed_counter.first) << " " << ppmed_counter.second  << " percent: "
 		  << 100*((double)ppmed_counter.second/(double)total_entries) << std::endl;
       
     }  
@@ -214,7 +214,7 @@ namespace numi {
 
       for ( auto const& ndec_counter : m_ndecay_total )
 	std::cout << "  ** " << ndec_counter.first  << " "
-		  << ndecayToString(ndec_counter.first) << " percent: "
+		  << ndecayToString(ndec_counter.first) << " " << ndec_counter.second << " percent: "
 		  << 100*((double)ndec_counter.second/(double)total_entries) << std::endl;
     
     }
