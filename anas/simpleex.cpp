@@ -1,6 +1,7 @@
 #include <iostream>
 #include "simpleAna.hh"
 #include "TH3D.h"
+#include "Utils.hh"
 #include "TApplication.h"
 #include "TCanvas.h"
 #include "TH1D.h"
@@ -24,11 +25,7 @@ int main(int argc, char *argv[])
   numi::simpleAna bott_ana(file_name1);
   numi::simpleAna long_ana(file_name2);
   numi::simpleAna norm_ana(file_name3);
-
-  auto b_ppmedium = bott_ana.ppmedium();
-  auto l_ppmedium = long_ana.ppmedium();
-  auto n_ppmedium = norm_ana.ppmedium();
-
+  
   long_ana.SetupTitle("Long Window");
   norm_ana.SetupTitle("Normal Window");
   bott_ana.SetupTitle("Bottom Window");

@@ -34,9 +34,4 @@ void Print_ppmediumndecay(const std::vector< std::pair<int,int> >& ana_data,
 			  const std::map< int, std::string >& p_code_map,
 			  const std::map< int, std::string >& n_code_map);
 
-
-void FillHistogramFromTree(TH1D *hist, TTree *the_tree, const std::string var_name);
-
-void FillVectorFromTree(std::vector<double>& vec, const std::string& var_name);
-
 #endif

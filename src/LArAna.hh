@@ -20,11 +20,6 @@ namespace numi {
   
   private:
 
-    std::string fFileName;
-    TFile *fFile;
-    TTree *fSimulationNtuple;
-    TTree *fFluxNtuple;
-    
     std::vector<int>    fNuPdg;
     std::vector<double> fNuPx;
     std::vector<double> fNuPy;
@@ -122,7 +117,7 @@ namespace numi {
 
     TTree *SimulationNtuple() const { return fSimulationNtuple; }
     TTree *FluxNtuple()       const { return fFluxNtuple;       }
-
+    
   };
 }
   

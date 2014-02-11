@@ -43,4 +43,92 @@ namespace numi {
     PlotTitle->SetBorderSize(0);
     PlotTitle->AddText(title_.c_str());
   }
+
+  void Ana::FillHist_FluxNtuple(TH1D *hist,
+				const std::string& var_name)
+  {
+    double jj;
+    fFluxNtuple->SetBranchAddress(var_name.c_str(),&jj);
+    for ( auto i = 0; i < fFluxNtuple->GetEntries(); ++i ) {
+      fFluxNtuple->GetEntry(i);
+      hist->Fill(jj);
+    }
+  }
+
+  void Ana::FillVec_FluxNtuple(std::vector<double>& vec,
+			       const std::string& var_name)
+  {
+    double jj;
+    fFluxNtuple->SetBranchAddress(var_name.c_str(),&jj);
+    for ( auto i = 0; i < fFluxNtuple->GetEntries(); ++i ) {
+      fFluxNtuple->GetEntry(i);
+      vec.push_back(jj);
+    }
+  }
+
+  void Ana::FillHist_SimulationNtuple(TH1D *hist,
+				      const std::string& var_name)
+  {
+    double jj;
+    fSimulationNtuple->SetBranchAddress(var_name.c_str(),&jj);
+    for ( auto i = 0; i < fSimulationNtuple->GetEntries(); ++i ) {
+      fSimulationNtuple->GetEntry(i);
+      hist->Fill(jj);
+    }
+  }
+
+  void Ana::FillVec_SimulationNtuple(std::vector<double>& vec,
+				     const std::string& var_name)
+  {
+    double jj;
+    fSimulationNtuple->SetBranchAddress(var_name.c_str(),&jj);
+    for ( auto i = 0; i < fSimulationNtuple->GetEntries(); ++i ) {
+      fSimulationNtuple->GetEntry(i);
+      vec.push_back(jj);
+    }
+  }
+
+  void Ana::FillHist_EntryTree(TH1D *hist,
+			       const std::string& var_name)
+  {
+    double jj;
+    fEntryTree->SetBranchAddress(var_name.c_str(),&jj);
+    for ( auto i = 0; i < fEntryTree->GetEntries(); ++i ) {
+      fEntryTree->GetEntry(i);
+      hist->Fill(jj);
+    }
+  }
+
+  void Ana::FillVec_EntryTree(std::vector<double>& vec,
+			      const std::string& var_name)
+  {
+    double jj;
+    fEntryTree->SetBranchAddress(var_name.c_str(),&jj);
+    for ( auto i = 0; i < fEntryTree->GetEntries(); ++i ) {
+      fEntryTree->GetEntry(i);
+      vec.push_back(jj);
+    }  
+  }
+
+  void Ana::FillHist_NuMI_Tree(TH1D *hist,
+			       const std::string& var_name)
+  {
+    double jj;
+    fNuMI_Tree->SetBranchAddress(var_name.c_str(),&jj);
+    for ( auto i = 0; i < fNuMI_Tree->GetEntries(); ++i ) {
+      fNuMI_Tree->GetEntry(i);
+      hist->Fill(jj);
+    }
+  }
+
+  void Ana::FillVec_NuMI_Tree(std::vector<double>& vec,
+			      const std::string& var_name)
+  {
+    double jj;
+    fNuMI_Tree->SetBranchAddress(var_name.c_str(),&jj);
+    for ( auto i = 0; i < fNuMI_Tree->GetEntries(); ++i ) {
+      fNuMI_Tree->GetEntry(i);
+      vec.push_back(jj);
+    }
+  }
 }

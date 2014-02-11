@@ -21,7 +21,6 @@ namespace numi {
     
     TFile *fFile;
     
-    TTree *fEntryTree;
     std::vector<double> fwgt;      ///< nu weight
     std::vector<double> fvtxx;     ///< x position in lab frame
     std::vector<double> fvtxy;     ///< y position in lab frame
@@ -33,7 +32,6 @@ namespace numi {
     std::vector<double> fE;        ///< lab energy
     std::vector<int>    fpdg;      ///< pdg code for neutrino
 
-    TTree *fNuMI_Tree;
     std::vector<double> ftpx;      ///< parent momentum at target exit x
     std::vector<double> ftpy;      ///< parent momentum at target exit y
     std::vector<double> ftpz;      ///< parent momentum at target exit z
@@ -68,7 +66,10 @@ namespace numi {
     inline const std::vector<int>    run()      const { return frun;      }
     inline const std::vector<int>    evtno()    const { return fevtno;    }
     inline const std::vector<int>    entryno()  const { return fentryno;  }
-  
+
+    TTree *EntryTree() const { return fEntryTree; }
+    TTree *NuMI_Tree() const { return fNuMI_Tree; }
+    
   };
 }
 #endif

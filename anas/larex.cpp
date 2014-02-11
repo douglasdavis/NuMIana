@@ -1,6 +1,7 @@
 #include "LArAna.hh"
 #include "simpleAna.hh"
 #include "Ana.hh"
+#include "Utils.hh"
 #include <iostream>
 #include "TApplication.h"
 #include "TH1D.h"
@@ -15,13 +16,13 @@ int main(int argc, char *argv[])
   std::string file_name1 = argv[1];
   std::string file_name2 = argv[2];
 
-  numi::LArAna    bottana(file_name1);
-  numi::LArAna    normana(file_name2);
-
-  auto bott_CCQE      = bottana.CCQEint();
-  auto norm_CCQE      = normana.CCQEint();
-  auto bott_LeptonPdg = bottana.LeptonPdg();
-  auto norm_LeptonPdg = normana.LeptonPdg();
+  numi::LArAna    *bottana = new numi::LArAna(file_name1);
+  numi::LArAna    *normana = new numi::LArAna(file_name2);
+  
+  auto bott_CCQE      = bottana->CCQEint();
+  auto norm_CCQE      = normana->CCQEint();
+  auto bott_LeptonPdg = bottana->LeptonPdg();
+  auto norm_LeptonPdg = normana->LeptonPdg();
   
   int b_numuCCQE = 0;
   int b_nueCCQE = 0;
