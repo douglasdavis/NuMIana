@@ -120,8 +120,10 @@ namespace numi {
     inline const std::vector< std::pair< std::vector<int>, std::vector<double> > > PdgCodeStartVz() const { return fpPdgCodeStartVz; }
     inline const std::vector< std::pair< std::vector<int>, std::vector<double> > > PdgCodeStartE()  const { return fpPdgCodeStartE;  }
 
-  };
+    TTree *SimulationNtuple() const { return fSimulationNtuple; }
+    TTree *FluxNtuple()       const { return fFluxNtuple;       }
 
+  };
 }
   
 #endif

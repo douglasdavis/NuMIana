@@ -3,12 +3,11 @@
 #include <TFile.h>
 #include <TTree.h>
 #include "Ana.hh"
+#include "Utils.hh"
 #include <algorithm>
 
 int main(int argc, char *argv[])
 {
-  numi::Ana ana;
-  
   std::string afile = argv[1];
   TFile the_file(afile.c_str());
   TTree *the_tree = (TTree*)the_file.Get("h10");
@@ -35,7 +34,7 @@ int main(int argc, char *argv[])
 
   double the_max;
   double the_min;
-  ana.max_min("tvz",_tvz,the_max,the_min);
+  max_min("tvz",_tvz,the_max,the_min);
   std::cout << the_max << std::endl;
   std::cout << the_min << std::endl;
   return 0;

@@ -1,6 +1,7 @@
 #include <iostream>
 #include "simpleAna.hh"
 #include "LArAna.hh"
+#include "Utils.hh"
 #include "TH3D.h"
 #include "TApplication.h"
 #include "TCanvas.h"
@@ -31,8 +32,14 @@ int main(int argc, char *argv[])
   numi::simpleAna slong(long_file);
   numi::simpleAna snorm(norm_file);
 
-  sbott.Print_ndecayppmedium(sbott.ppmediumndecay());
-  slong.Print_ndecayppmedium(slong.ppmediumndecay());
-  snorm.Print_ndecayppmedium(snorm.ppmediumndecay());
+  Print_ndecayppmedium(sbott.ppmediumndecay(),
+		       sbott.ndecayCodeMap(),
+		       sbott.ppmediumCodeMap());
+  Print_ndecayppmedium(slong.ppmediumndecay(),
+		       slong.ndecayCodeMap(),
+		       slong.ppmediumCodeMap());
+  Print_ndecayppmedium(snorm.ppmediumndecay(),
+		       snorm.ndecayCodeMap(),
+		       snorm.ppmediumCodeMap());
   return 0;
 }
