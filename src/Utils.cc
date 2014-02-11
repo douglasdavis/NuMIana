@@ -180,3 +180,24 @@ void Print_ppmediumndecay(const std::vector< std::pair<int,int> >& ana_data,
     
   }
 }
+
+void FillHistogramFromTree(TH1D *hist, TTree *the_tree, const std::string var_name)
+{
+  double jj;
+  the_tree->SetBranchAddress(var_name.c_str(),&jj);
+  for ( auto i = 0; i < the_tree->GetEntries(); ++i ) {
+    the_tree->GetEntry(i);
+    hist->Fill(jj);
+  }
+}
+
+void FillVectorFromTree(std::vector<double>& vec, TTree *the_tree, const std::string& var_name)
+{
+  double jj;
+  the_tree->SetBranchAddress(var_name.c_str(),&jj);
+  for ( auto i = 0; i < the_tree->GetEntries(); ++i ) {
+    the_tree->GetEntry(i);
+    vec.push_back(jj);
+  }
+}
+  
