@@ -17,10 +17,10 @@ namespace numi {
 
     double wgt, vtxx, vtxy, vtxz;
     double dist, px, py, pz, E;
-    int pdg;
+    Int_t pdg;
     double tpx, tpy, tpz, vx, vy, vz;
-    int ndecay, ptype, ppmedium, tptype;
-    int run, evtno, entryno;
+    Int_t ndecay, ptype, ppmedium, tptype;
+    Int_t run, evtno, entryno;
   
     fEntryTree->SetBranchAddress("wgt", &wgt);
     fEntryTree->SetBranchAddress("vtxx",&vtxx);
@@ -47,7 +47,7 @@ namespace numi {
     fNuMI_Tree->SetBranchAddress("evtno",   &evtno);
     fNuMI_Tree->SetBranchAddress("entryno", &entryno);
 
-    for ( int i = 0; i < fEntryTree->GetEntries(); ++i ) {
+    for ( Int_t i = 0; i < fEntryTree->GetEntries(); ++i ) {
       fEntryTree->GetEntry(i);
       fwgt.push_back(wgt);
       fvtxx.push_back(vtxx);
@@ -60,7 +60,7 @@ namespace numi {
       fE.push_back(E);
       fpdg.push_back(pdg);
     }
-    for ( int i = 0; i < fNuMI_Tree->GetEntries(); ++i ) {
+    for ( Int_t i = 0; i < fNuMI_Tree->GetEntries(); ++i ) {
       fNuMI_Tree->GetEntry(i);
       ftpx.push_back(tpx);
       ftpy.push_back(tpy);
@@ -88,9 +88,9 @@ namespace numi {
   void simpleAna::PrintNeutrinos()
   {
     std::cout << " ** NEUTRINOS ** " << std::endl;
-    int numu = 0, numubar = 0, nue = 0, nuebar = 0;
-    int counter = 0;
-    for ( int n : fpdg ) {
+    Int_t numu = 0, numubar = 0, nue = 0, nuebar = 0;
+    Int_t counter = 0;
+    for ( Int_t n : fpdg ) {
       counter++;
       switch(n) {
       case 14:  numu++;    break;
@@ -117,16 +117,16 @@ namespace numi {
   void simpleAna::PrintDecayLocations()
   {
     // target hall
-    int target_hall = 0;
-    int target = 0;
-    int horn_1 = 0;
-    int horn_2 = 0;
+    Int_t target_hall = 0;
+    Int_t target = 0;
+    Int_t horn_1 = 0;
+    Int_t horn_2 = 0;
     // decay pipe
-    int decay_pipe = 0;
-    int decay_pipe_pre_ub = 0;
-    int decay_pipe_post_ub = 0;
-    // int absorber_etc
-    int absorber_etc = 0;
+    Int_t decay_pipe = 0;
+    Int_t decay_pipe_pre_ub = 0;
+    Int_t decay_pipe_post_ub = 0;
+    // Int_t absorber_etc
+    Int_t absorber_etc = 0;
 
     std::cout << "** DECAY LOCATIONS **" << std::endl;
     std::cout << std::endl;

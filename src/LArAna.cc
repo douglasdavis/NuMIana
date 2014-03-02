@@ -17,26 +17,26 @@ namespace numi {
     fSimulationNtuple = (TTree*)fFile->Get("LArNuMIana/LArNuMIanaSimulation");
     fFluxNtuple       = (TTree*)fFile->Get("LArNuMIana/LArNuMIanaFlux");
 
-    int    _NuPdg, _LeptonPdg;
-    double _NuPx, _NuPy, _NuPz, _LeptonPx, _LeptonPy, _LeptonPz;
-    double _LeptonVx, _LeptonVy, _LeptonVz, _LeptonEnergy;
-    double _LeptonThetaXZ2, _LeptonThetaYZ2;
-    double _LeptonThetaXZ, _LeptonThetaYZ;
-    double _NuIntVtxX, _NuIntVtxY, _NuIntVtxZ, _NuEnergy;
-    double vx, vy, vz;
-    int    ppmedium, ndecay;
+    Int_t    _NuPdg, _LeptonPdg;
+    Double_t _NuPx, _NuPy, _NuPz, _LeptonPx, _LeptonPy, _LeptonPz;
+    Double_t _LeptonVx, _LeptonVy, _LeptonVz, _LeptonEnergy;
+    Double_t _LeptonThetaXZ2, _LeptonThetaYZ2;
+    Double_t _LeptonThetaXZ, _LeptonThetaYZ;
+    Double_t _NuIntVtxX, _NuIntVtxY, _NuIntVtxZ, _NuEnergy;
+    Double_t vx, vy, vz;
+    Int_t    ppmedium, ndecay;
     bool   _CCint, _CCQEint, _NCint, _NCQEint;
-    int    _Event, _SubRun, _Run;
+    Int_t    _Event, _SubRun, _Run;
 
-    std::vector<int>    *_TrackID = 0;
-    std::vector<int>    *_PdgCode = 0;
-    std::vector<double> *_StartVx  = 0;
-    std::vector<double> *_StartVy  = 0;
-    std::vector<double> *_StartVz  = 0;
-    std::vector<double> *_StartPx = 0;
-    std::vector<double> *_StartPy = 0;
-    std::vector<double> *_StartPz = 0;
-    std::vector<double> *_StartE  = 0;
+    std::vector<Int_t>  *_TrackID = 0;
+    std::vector<Int_t>  *_PdgCode = 0;
+    std::vector<Double_t> *_StartVx  = 0;
+    std::vector<Double_t> *_StartVy  = 0;
+    std::vector<Double_t> *_StartVz  = 0;
+    std::vector<Double_t> *_StartPx = 0;
+    std::vector<Double_t> *_StartPy = 0;
+    std::vector<Double_t> *_StartPz = 0;
+    std::vector<Double_t> *_StartE  = 0;
     
     fSimulationNtuple->SetBranchAddress("NuPdg",         &_NuPdg);
     fSimulationNtuple->SetBranchAddress("LeptonPdg",     &_LeptonPdg);
@@ -89,7 +89,7 @@ namespace numi {
     fFluxNtuple->SetBranchAddress("ppmedium",&ppmedium);
     fFluxNtuple->SetBranchAddress("ndecay",  &ndecay);
 
-    for ( int i = 0; i < fSimulationNtuple->GetEntries(); ++i ) {
+    for ( Int_t i = 0; i < fSimulationNtuple->GetEntries(); ++i ) {
       fSimulationNtuple->GetEntry(i);
       fNuPdg.push_back(_NuPdg);
       fLeptonPdg.push_back(_LeptonPdg);

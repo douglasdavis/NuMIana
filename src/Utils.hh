@@ -1,3 +1,7 @@
+#ifndef UTILS_HH
+#define UTILS_HH
+
+#include "TROOT.h"
 #include "TH1D.h"
 #include "TPaveText.h"
 #include "TTree.h"
@@ -6,32 +10,29 @@
 #include <iostream>
 #include <utility>
 
-#ifndef UTILS_HH
-#define UTILS_HH
+void FillTH1DFromVec(TH1D& histogram, const std::vector<Double_t>& values);
 
-void FillTH1DFromVec(TH1D& histogram, const std::vector<double>& values);
+void FillTH1DFromVec(TH1D& histogram, const std::vector<Double_t>& values, const Double_t& cut);
 
-void FillTH1DFromVec(TH1D& histogram, const std::vector<double>& values, const double& cut);
+void max_min(const std::string& var, const std::vector<Double_t>& vec, Double_t& max, Double_t& min);
 
-void max_min(const std::string& var, const std::vector<double>& vec, double& max, double& min);
-
-void max_min(const std::string& var, const std::vector<int>& vec, int& max, int& min);
+void max_min(const std::string& var, const std::vector<Int_t>& vec, Int_t& max, Int_t& min);
 
 void FixTitle(TPaveText& pave, const std::string& title);
 
-std::string ndecayToString(int n, std::map< int, std::string > code_map);
+std::string ndecayToString(Int_t n, std::map< Int_t, std::string > code_map);
 
-std::string ppmediumToString(int n, std::map< int, std::string > code_map);
+std::string ppmediumToString(Int_t n, std::map< Int_t, std::string > code_map);
 
-void PrintDecays(const std::vector<int>& ndecay_vec,
-		 const std::map< int, std::string >& code_map);
+void PrintDecays(const std::vector<Int_t>& ndecay_vec,
+		 const std::map< Int_t, std::string >& code_map);
 
-void Print_ndecayppmedium(const std::vector< std::pair<int,int> >& ana_data,
-			  const std::map< int, std::string >& n_code_map,
-			  const std::map< int, std::string >& p_code_map);
+void Print_ndecayppmedium(const std::vector< std::pair<Int_t,Int_t> >& ana_data,
+			  const std::map< Int_t, std::string >& n_code_map,
+			  const std::map< Int_t, std::string >& p_code_map);
 
-void Print_ppmediumndecay(const std::vector< std::pair<int,int> >& ana_data,
-			  const std::map< int, std::string >& p_code_map,
-			  const std::map< int, std::string >& n_code_map);
+void Print_ppmediumndecay(const std::vector< std::pair<Int_t,Int_t> >& ana_data,
+			  const std::map< Int_t, std::string >& p_code_map,
+			  const std::map< Int_t, std::string >& n_code_map);
 
 #endif

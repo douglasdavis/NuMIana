@@ -6,6 +6,7 @@
 #ifndef SIMPLEANA_HH
 #define SIMPLEANA_HH
 
+#include "TROOT.h"
 #include <iostream>
 #include <vector>
 #include "Ana.hh"
@@ -21,24 +22,26 @@ namespace numi {
     
     TFile *fFile;
     
-    std::vector<double> fwgt;      ///< nu weight
-    std::vector<double> fvtxx;     ///< x position in lab frame
-    std::vector<double> fvtxy;     ///< y position in lab frame
-    std::vector<double> fvtxz;     ///< z position in lab frame
-    std::vector<double> fdist;     ///< distance from hadron decay
-    std::vector<double> fpx;       ///< lab momentum x
-    std::vector<double> fpy;       ///< lab momentum y
-    std::vector<double> fpz;       ///< lab momentum z
-    std::vector<double> fE;        ///< lab energy
-    std::vector<int>    fpdg;      ///< pdg code for neutrino
+    std::vector<Double_t> fwgt;      ///< nu weight
+    std::vector<Double_t> fvtxx;     ///< x position in lab frame
+    std::vector<Double_t> fvtxy;     ///< y position in lab frame
+    std::vector<Double_t> fvtxz;     ///< z position in lab frame
+    std::vector<Double_t> fdist;     ///< distance from hadron decay
+    std::vector<Double_t> fpx;       ///< lab momentum x
+    std::vector<Double_t> fpy;       ///< lab momentum y
+    std::vector<Double_t> fpz;       ///< lab momentum z
+    std::vector<Double_t> fE;        ///< lab energy
+    std::vector<Int_t>    fpdg;      ///< pdg code for neutrino
 
-    std::vector<double> ftpx;      ///< parent momentum at target exit x
-    std::vector<double> ftpy;      ///< parent momentum at target exit y
-    std::vector<double> ftpz;      ///< parent momentum at target exit z
-    std::vector<int>    ftptype;   ///< parent particle type at target exit
-    std::vector<int>    frun;      ///<
-    std::vector<int>    fevtno;    ///<
-    std::vector<int>    fentryno;  ///<
+    std::vector<Double_t> ftpx;      ///< parent momentum at target exit x
+    std::vector<Double_t> ftpy;      ///< parent momentum at target exit y
+    std::vector<Double_t> ftpz;      ///< parent momentum at target exit z
+    std::vector<Int_t>    ftptype;   ///< parent particle type at target exit
+    std::vector<Int_t>    frun;      ///<
+    std::vector<Int_t>    fevtno;    ///<
+    std::vector<Int_t>    fentryno;  ///<
+
+    std::vector< std::pair< Int_t, Double_t > > fPdgEnergy;
 
   public:
     
@@ -49,23 +52,23 @@ namespace numi {
     virtual void PrintNeutrinos();
     virtual void PrintDecayLocations();
 
-    inline const std::vector<double> wgt()      const { return fwgt;      }
-    inline const std::vector<double> vtxx()     const { return fvtxx;     }
-    inline const std::vector<double> vtxy()     const { return fvtxy;     }
-    inline const std::vector<double> vtxz()     const { return fvtxz;     }
-    inline const std::vector<double> dist()     const { return fdist;     }
-    inline const std::vector<double> px()       const { return fpx;       }
-    inline const std::vector<double> py()       const { return fpy;       }
-    inline const std::vector<double> pz()       const { return fpz;       }
-    inline const std::vector<double> E()        const { return fE;        }  
-    inline const std::vector<int>    pdg()      const { return fpdg;      }
-    inline const std::vector<double> tpx()      const { return ftpx;      }
-    inline const std::vector<double> tpy()      const { return ftpy;      }
-    inline const std::vector<double> tpz()      const { return ftpz;      }
-    inline const std::vector<int>    tptype()   const { return ftptype;   }
-    inline const std::vector<int>    run()      const { return frun;      }
-    inline const std::vector<int>    evtno()    const { return fevtno;    }
-    inline const std::vector<int>    entryno()  const { return fentryno;  }
+    inline const std::vector<Double_t> wgt()      const { return fwgt;      }
+    inline const std::vector<Double_t> vtxx()     const { return fvtxx;     }
+    inline const std::vector<Double_t> vtxy()     const { return fvtxy;     }
+    inline const std::vector<Double_t> vtxz()     const { return fvtxz;     }
+    inline const std::vector<Double_t> dist()     const { return fdist;     }
+    inline const std::vector<Double_t> px()       const { return fpx;       }
+    inline const std::vector<Double_t> py()       const { return fpy;       }
+    inline const std::vector<Double_t> pz()       const { return fpz;       }
+    inline const std::vector<Double_t> E()        const { return fE;        }  
+    inline const std::vector<Int_t>    pdg()      const { return fpdg;      }
+    inline const std::vector<Double_t> tpx()      const { return ftpx;      }
+    inline const std::vector<Double_t> tpy()      const { return ftpy;      }
+    inline const std::vector<Double_t> tpz()      const { return ftpz;      }
+    inline const std::vector<Int_t>    tptype()   const { return ftptype;   }
+    inline const std::vector<Int_t>    run()      const { return frun;      }
+    inline const std::vector<Int_t>    evtno()    const { return fevtno;    }
+    inline const std::vector<Int_t>    entryno()  const { return fentryno;  }
 
     TTree *EntryTree() const { return fEntryTree; }
     TTree *NuMI_Tree() const { return fNuMI_Tree; }
