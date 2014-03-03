@@ -43,6 +43,10 @@ namespace numi {
 
     std::vector< std::pair< Int_t, Double_t > > fPdgEnergy;
 
+    Double_t fNormArea = 11.920;
+    Double_t fLongArea = 51.600;
+    Double_t fBottArea = 51.926;
+
   public:
     
     simpleAna();
@@ -51,6 +55,10 @@ namespace numi {
 
     virtual void PrintNeutrinos();
     virtual void PrintDecayLocations();
+
+    inline const Double_t NormArea() const { return fNormArea; }
+    inline const Double_t LongArea() const { return fLongArea; }
+    inline const Double_t BottArea() const { return fBottArea; }
 
     inline const std::vector<Double_t>& wgt()      const { return fwgt;      }
     inline const std::vector<Double_t>& vtxx()     const { return fvtxx;     }

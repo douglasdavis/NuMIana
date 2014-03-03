@@ -25,7 +25,7 @@ namespace numi {
     Double_t _NuIntVtxX, _NuIntVtxY, _NuIntVtxZ, _NuEnergy;
     Double_t vx, vy, vz;
     Int_t    ppmedium, ndecay;
-    bool   _CCint, _CCQEint, _NCint, _NCQEint;
+    bool     _CCint, _CCQEint, _NCint, _NCQEint;
     Int_t    _Event, _SubRun, _Run;
 
     std::vector<Int_t>  *_TrackID = 0;
@@ -88,6 +88,8 @@ namespace numi {
     fFluxNtuple->SetBranchAddress("vz",      &vx);
     fFluxNtuple->SetBranchAddress("ppmedium",&ppmedium);
     fFluxNtuple->SetBranchAddress("ndecay",  &ndecay);
+
+    fNEvents = fSimulationNtuple->GetEntries();
 
     for ( Int_t i = 0; i < fSimulationNtuple->GetEntries(); ++i ) {
       fSimulationNtuple->GetEntry(i);

@@ -47,11 +47,14 @@ namespace numi {
     fNuMI_Tree->SetBranchAddress("evtno",   &evtno);
     fNuMI_Tree->SetBranchAddress("entryno", &entryno);
     
+
     if ( is_normal ) {
+      fNEvents = 0;
       for ( Int_t i = 0; i < fEntryTree->GetEntries(); ++i ) {
 	fEntryTree->GetEntry(i);
 	fNuMI_Tree->GetEntry(i);
 	if ( pz > 0 ) {
+	  fNEvents++;
 	  fwgt.push_back(wgt);
 	  fvtxx.push_back(vtxx);
 	  fvtxy.push_back(vtxy);
@@ -81,6 +84,7 @@ namespace numi {
       }
       
     } else {
+      fNEvents = fEntryTree->GetEntries();
       for ( Int_t i = 0; i < fEntryTree->GetEntries(); ++i ) {
 	fEntryTree->GetEntry(i);
 	fNuMI_Tree->GetEntry(i);
@@ -114,8 +118,7 @@ namespace numi {
     }
   }
 
-  simpleAna::~simpleAna()
-  {}
+  simpleAna::~simpleAna() {}
 
   void simpleAna::PrintNeutrinos()
   {

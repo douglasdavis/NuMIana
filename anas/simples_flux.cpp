@@ -8,6 +8,7 @@
 #include "TStyle.h"
 #include "TROOT.h"
 #include "looks.hh"
+#include "TLegend.h"
 
 int main(int argc, char *argv[])
 {
@@ -32,20 +33,20 @@ int main(int argc, char *argv[])
   std::map < Int_t, TH1D* > hLong;
   std::map < Int_t, TH1D* > hNorm;
 
-  hBott[14]  = new TH1D("numu_bottom",";Energy (GeV);#nu_{#mu}/m^{2}/50 MeV/10^{9} POT",120,0,6);
-  hBott[-14] = new TH1D("numubar_bottom",";Energy (GeV);#bar{#nu}_{#mu}/m^{2}/50 MeV/10^{9} POT",120,0,6);
-  hBott[12]  = new TH1D("nue_bottom",";Energy (GeV);#nu_{e}/m^{2}/50 MeV/10^{9} POT",120,0,6);
-  hBott[-12] = new TH1D("nubar_bottom",";Energy (GeV);#bar{#nu}_{e}/m^{2}/50 MeV/10^{9} POT",120,0,6);
+  hBott[14]  = new TH1D("numu_bottom","MicroBooNE NuMI Flux, Bottom Window;Energy (GeV);#nu/m^{2}/50 MeV/10^{8} POT",120,0,6);
+  hBott[-14] = new TH1D("numubar_bottom","MicroBooNE NuMI Flux, Bottom Window;Energy (GeV);#nu/m^{2}/50 MeV/10^{8} POT",120,0,6);
+  hBott[12]  = new TH1D("nue_bottom","MicroBooNE NuMI Flux, Bottom Window;Energy (GeV);#nu/m^{2}/50 MeV/10^{8} POT",120,0,6);
+  hBott[-12] = new TH1D("nubar_bottom","MicroBooNE NuMI Flux, Bottom Window;Energy (GeV);#nu/m^{2}/50 MeV/10^{8} POT",120,0,6);
 
-  hLong[14]  = new TH1D("numu_length",";Energy (GeV);#nu_{#mu}/m^{2}/50 MeV/10^{9} POT",120,0,6);
-  hLong[-14] = new TH1D("numubar_length",";Energy (GeV);#bar{#nu}_{#mu}/m^{2}/50 MeV/10^{9} POT",120,0,6);
-  hLong[12]  = new TH1D("nue_length",";Energy (GeV);#nu_{e}/m^{2}/50 MeV/10^{9} POT",120,0,6);
-  hLong[-12] = new TH1D("nuebar_length",";Energy (GeV);#bar{#nu}_{e}/m^{2}/50 MeV/10^{9} POT",120,0,6);
+  hLong[14]  = new TH1D("numu_length","MicroBooNE NuMI Flux, Length Window;Energy (GeV);#nu/m^{2}/50 MeV/10^{8} POT",120,0,6);
+  hLong[-14] = new TH1D("numubar_length","MicroBooNE NuMI Flux, Length Window;Energy (GeV);#nu/m^{2}/50 MeV/10^{8} POT",120,0,6);
+  hLong[12]  = new TH1D("nue_length","MicroBooNE NuMI Flux, Length Window;Energy (GeV);#nu/m^{2}/50 MeV/10^{8} POT",120,0,6);
+  hLong[-12] = new TH1D("nuebar_length","MicroBooNE NuMI Flux, Length Window;Energy (GeV);#nu/m^{2}/50 MeV/10^{8} POT",120,0,6);
 
-  hNorm[14]  = new TH1D("numu_normal",";Energy (GeV);#nu_{#mu}/m^{2}/50 MeV/10^{9} POT",120,0,6);
-  hNorm[-14] = new TH1D("numubar_normal",";Energy (GeV);#bar{#nu}_{#mu}/m^{2}/50 MeV/10^{9} POT",120,0,6);
-  hNorm[12]  = new TH1D("nue_normal",";Energy (GeV);#nu_{e}/m^{2}/50 MeV/10^{9} POT",120,0,6);
-  hNorm[-12] = new TH1D("nuebar_normal",";Energy (GeV);#bar{#nu}_{e}/m^{2}/50 MeV/10^{9} POT",120,0,6);
+  hNorm[14]  = new TH1D("numu_normal","MicroBooNE NuMI Flux, Normal Window;Energy (GeV);#nu/m^{2}/50 MeV/10^{8} POT",120,0,6);
+  hNorm[-14] = new TH1D("numubar_normal","MicroBooNE NuMI Flux, Normal Window;Energy (GeV);#nu/m^{2}/50 MeV/10^{8} POT",120,0,6);
+  hNorm[12]  = new TH1D("nue_normal","MicroBooNE NuMI Flux, Normal Window;Energy (GeV);#nu/m^{2}/50 MeV/10^{8} POT",120,0,6);
+  hNorm[-12] = new TH1D("nuebar_normal","MicroBooNE NuMI Flux, Normal Window;Energy (GeV);#nu/m^{2}/50 MeV/10^{8} POT",120,0,6);
 
   std::vector< std::map< Int_t, TH1D* > > formatVec;
   formatVec.push_back(hBott);
@@ -80,18 +81,33 @@ int main(int argc, char *argv[])
   for ( auto const& hist : hBott ) {
     hist.second->GetXaxis()->CenterTitle();
     hist.second->GetYaxis()->CenterTitle();
+    hist.second->Scale((1./bott_ana.BottArea())/1e1);
   }
 
   for ( auto const& hist : hLong ) {
     hist.second->GetXaxis()->CenterTitle();
     hist.second->GetYaxis()->CenterTitle();
+    hist.second->Scale((1./long_ana.LongArea())/1e1);
   }
 
   for ( auto const& hist : hNorm ) {
     hist.second->GetXaxis()->CenterTitle();
     hist.second->GetYaxis()->CenterTitle();
+    hist.second->Scale((1./norm_ana.NormArea())/1e1);
   }
 
+  //_______________________________________________________________________________________________________
+
+  TLegend *legend = new TLegend(0.640264,0.6454082,0.80033,0.8979592,NULL,"brNDC");
+  legend->AddEntry(hBott[14], "#nu_{#mu}",      "l");
+  legend->AddEntry(hBott[-14],"#bar{#nu}_{#mu}","l");
+  legend->AddEntry(hBott[12], "#nu_{e}",        "l");
+  legend->AddEntry(hBott[-12],"#bar{#nu}_{e}",  "l");
+  legend->SetFillColor(0);
+  legend->SetBorderSize(0);
+  legend->SetTextFont(102);
+  legend->SetTextSize(0.048);
+  
   //_______________________________________________________________________________________________________
 
   TApplication tapp("tapp",&argc,argv);
@@ -102,6 +118,7 @@ int main(int argc, char *argv[])
   hBott[-14]->Draw("same");
   hBott[12]->Draw("same");
   hBott[-12]->Draw("same");
+  legend->Draw("same");
   cb.RedrawAxis();
 
   TCanvas cl;
@@ -110,6 +127,7 @@ int main(int argc, char *argv[])
   hLong[-14]->Draw("same");
   hLong[12]->Draw("same");
   hLong[-12]->Draw("same");
+  legend->Draw("same");
   cl.RedrawAxis();
 
   TCanvas cn;
@@ -118,6 +136,7 @@ int main(int argc, char *argv[])
   hNorm[-14]->Draw("same");
   hNorm[12]->Draw("same");
   hNorm[-12]->Draw("same");
+  legend->Draw("same");
   cn.RedrawAxis();
 
   tapp.Run();

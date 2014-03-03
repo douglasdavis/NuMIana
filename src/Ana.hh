@@ -26,6 +26,7 @@ namespace numi {
     TTree       *fEntryTree;
     TTree       *fNuMI_Tree;
 
+    Int_t                                    fNEvents;
     std::vector<Double_t>                    fvx;
     std::vector<Double_t>                    fvy;
     std::vector<Double_t>                    fvz;
@@ -52,6 +53,9 @@ namespace numi {
     void FillHist_NuMI_Tree(TH1D *hist, const std::string& var_name);
     void FillVec_NuMI_Tree(std::vector<Double_t>& vec, const std::string& var_name);
     
+
+    inline const Int_t NEvents() const;
+
     inline const std::vector<Double_t>&                    vx()              const;
     inline const std::vector<Double_t>&                    vy()              const;
     inline const std::vector<Double_t>&                    vz()              const;
@@ -64,6 +68,8 @@ namespace numi {
   };
 
 }
+
+inline const Int_t numi::Ana::NEvents() const { return fNEvents; }
 
 inline const std::vector<Double_t>&                     numi::Ana::vx()              const { return fvx;              }
 inline const std::vector<Double_t>&                     numi::Ana::vy()              const { return fvy;              }
