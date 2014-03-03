@@ -32,13 +32,13 @@ int main(int argc, char *argv[])
   numi::simpleAna slong(long_file,false);
   numi::simpleAna snorm(norm_file,true);
 
-  Print_ndecayppmedium(sbott.ppmediumndecay(),
+  numi::Print_ndecayppmedium(sbott.ppmediumndecay(),
 		       sbott.ndecayCodeMap(),
 		       sbott.ppmediumCodeMap());
-  Print_ndecayppmedium(slong.ppmediumndecay(),
+  numi::Print_ndecayppmedium(slong.ppmediumndecay(),
 		       slong.ndecayCodeMap(),
 		       slong.ppmediumCodeMap());
-  Print_ndecayppmedium(snorm.ppmediumndecay(),
+  numi::Print_ndecayppmedium(snorm.ppmediumndecay(),
 		       snorm.ndecayCodeMap(),
 		       snorm.ppmediumCodeMap());
   return 0;
