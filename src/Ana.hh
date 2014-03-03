@@ -19,21 +19,21 @@ namespace numi {
   
   protected:
 
-    std::string fFileName;    
-    TFile *fFile;
-    TTree *fSimulationNtuple;
-    TTree *fFluxNtuple;
-    TTree *fEntryTree;
-    TTree *fNuMI_Tree;
+    std::string  fFileName;    
+    TFile       *fFile;
+    TTree       *fSimulationNtuple;
+    TTree       *fFluxNtuple;
+    TTree       *fEntryTree;
+    TTree       *fNuMI_Tree;
 
-    std::vector<Double_t> fvx;
-    std::vector<Double_t> fvy;
-    std::vector<Double_t> fvz;
-    std::vector<Int_t>    fppmedium;
-    std::vector<Int_t>    fndecay;
+    std::vector<Double_t>                    fvx;
+    std::vector<Double_t>                    fvy;
+    std::vector<Double_t>                    fvz;
+    std::vector<Int_t>                       fppmedium;
+    std::vector<Int_t>                       fndecay;
     std::vector< std::pair< Int_t, Int_t > > fppmediumndecay;
-    std::map< Int_t, std::string > fppmediumCodeMap;
-    std::map< Int_t, std::string > fndecayCodeMap;
+    std::map< Int_t, std::string >           fppmediumCodeMap;
+    std::map< Int_t, std::string >           fndecayCodeMap;
 
   public:
   
@@ -65,13 +65,13 @@ namespace numi {
 
 }
 
-inline const std::vector<Double_t>&                    numi::Ana::vx()              const { return fvx;              }
-inline const std::vector<Double_t>&                    numi::Ana::vy()              const { return fvy;              }
-inline const std::vector<Double_t>&                    numi::Ana::vz()              const { return fvz;              }
-inline const std::vector<Int_t>&                       numi::Ana::ppmedium()        const { return fppmedium;        }
-inline const std::vector<Int_t>&                       numi::Ana::ndecay()          const { return fndecay;          }
-inline const std::vector< std::pair< Int_t, Int_t > >& numi::Ana::ppmediumndecay()  const { return fppmediumndecay;  }
-inline const std::map< Int_t, std::string >&           numi::Ana::ppmediumCodeMap() const { return fppmediumCodeMap; }
-inline const std::map< Int_t, std::string >&           numi::Ana::ndecayCodeMap()   const { return fndecayCodeMap;   }
+inline const std::vector<Double_t>&                     numi::Ana::vx()              const { return fvx;              }
+inline const std::vector<Double_t>&                     numi::Ana::vy()              const { return fvy;              }
+inline const std::vector<Double_t>&                     numi::Ana::vz()              const { return fvz;              }
+inline const std::vector<Int_t>&                        numi::Ana::ppmedium()        const { return fppmedium;        }
+inline const std::vector<Int_t>&                        numi::Ana::ndecay()          const { return fndecay;          }
+inline const std::vector< std::pair< Int_t, Int_t > >&  numi::Ana::ppmediumndecay()  const { return fppmediumndecay;  }
+inline const std::map< Int_t, std::string >&            numi::Ana::ppmediumCodeMap() const { return fppmediumCodeMap; }
+inline const std::map< Int_t, std::string >&            numi::Ana::ndecayCodeMap()   const { return fndecayCodeMap;   }
 
 #endif
