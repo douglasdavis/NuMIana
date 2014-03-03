@@ -32,6 +32,7 @@ int main(int argc, char *argv[])
   std::map < Int_t, TH1D* > hBott;
   std::map < Int_t, TH1D* > hLong;
   std::map < Int_t, TH1D* > hNorm;
+  std::map < Int_t, TH1D* > hTot;
 
   hBott[14]  = new TH1D("numu_bottom","MicroBooNE NuMI Flux, Bottom Window;Energy (GeV);#nu/m^{2}/50 MeV/10^{8} POT",120,0,6);
   hBott[-14] = new TH1D("numubar_bottom","MicroBooNE NuMI Flux, Bottom Window;Energy (GeV);#nu/m^{2}/50 MeV/10^{8} POT",120,0,6);
@@ -48,10 +49,16 @@ int main(int argc, char *argv[])
   hNorm[12]  = new TH1D("nue_normal","MicroBooNE NuMI Flux, Normal Window;Energy (GeV);#nu/m^{2}/50 MeV/10^{8} POT",120,0,6);
   hNorm[-12] = new TH1D("nuebar_normal","MicroBooNE NuMI Flux, Normal Window;Energy (GeV);#nu/m^{2}/50 MeV/10^{8} POT",120,0,6);
 
+  hTot[14]  = new TH1D("numu_total","MicroBooNE NuMI Flux, Combined Windows;Energy (GeV);#nu/m^{2}/50 MeV/10^{8} POT",120,0,6);
+  hTot[-14] = new TH1D("numubar_total","MicroBooNE NuMI Flux, Combined Windows;Energy (GeV);#nu/m^{2}/50 MeV/10^{8} POT",120,0,6);
+  hTot[12]  = new TH1D("nue_total","MicroBooNE NuMI Flux, Combined Windows;Energy (GeV);#nu/m^{2}/50 MeV/10^{8} POT",120,0,6);
+  hTot[-12] = new TH1D("nuebar_total","MicroBooNE NuMI Flux, Combined Windows;Energy (GeV);#nu/m^{2}/50 MeV/10^{8} POT",120,0,6);
+
   std::vector< std::map< Int_t, TH1D* > > formatVec;
   formatVec.push_back(hBott);
   formatVec.push_back(hLong);
   formatVec.push_back(hNorm);
+  formatVec.push_back(hTot);
   for ( auto const& topentry : formatVec ) {
     for ( auto const& entry : topentry ) {
       if ( entry.first == 14 )
@@ -96,6 +103,30 @@ int main(int argc, char *argv[])
     hist.second->Scale((1./norm_ana.NormArea())/1e1);
   }
 
+  for ( Int_t i = 0; i < hBott[14]->GetNbinsX(); i++ ) {
+    hTot[14]->SetBinContent(i+1,
+			    hNorm[14]->GetBinContent(i+1)+
+			    hLong[14]->GetBinContent(i+1)+
+			    hBott[14]->GetBinContent(i+1));
+    hTot[-14]->SetBinContent(i+1,
+			    hNorm[-14]->GetBinContent(i+1)+
+			    hLong[-14]->GetBinContent(i+1)+
+			    hBott[-14]->GetBinContent(i+1));
+    hTot[12]->SetBinContent(i+1,
+			    hNorm[12]->GetBinContent(i+1)+
+			    hLong[12]->GetBinContent(i+1)+
+			    hBott[12]->GetBinContent(i+1));
+    hTot[-12]->SetBinContent(i+1,
+			    hNorm[-12]->GetBinContent(i+1)+
+			    hLong[-12]->GetBinContent(i+1)+
+			    hBott[-12]->GetBinContent(i+1));
+  }
+  
+  for ( auto const& hist : hTot) {
+    hist.second->GetXaxis()->CenterTitle();
+    hist.second->GetYaxis()->CenterTitle();
+  }
+  
   //_______________________________________________________________________________________________________
 
   TLegend *legend = new TLegend(0.640264,0.6454082,0.80033,0.8979592,NULL,"brNDC");
@@ -138,6 +169,15 @@ int main(int argc, char *argv[])
   hNorm[-12]->Draw("same");
   legend->Draw("same");
   cn.RedrawAxis();
+
+  TCanvas ca;
+  ca.SetLogy();
+  hTot[14]->Draw();
+  hTot[-14]->Draw("same");
+  hTot[12]->Draw("same");
+  hTot[-12]->Draw("same");
+  legend->Draw();
+  ca.RedrawAxis();
 
   tapp.Run();
   Int_t ok;
