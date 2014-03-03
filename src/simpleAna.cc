@@ -59,6 +59,8 @@ namespace numi {
       fpz.push_back(pz);
       fE.push_back(E);
       fpdg.push_back(pdg);
+
+      fPdgEnergy.push_back(std::make_pair(pdg,E));
     }
     for ( Int_t i = 0; i < fNuMI_Tree->GetEntries(); ++i ) {
       fNuMI_Tree->GetEntry(i);

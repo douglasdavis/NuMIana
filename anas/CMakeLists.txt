@@ -1,7 +1,7 @@
 include_directories(${CMAKE_SOURCE_DIR})
 
-add_executable(simpleex simpleex.cpp)
-target_link_libraries(simpleex ${ROOT_LIBS} NuMIana)
+add_executable(simples_flux simples_flux.cpp)
+target_link_libraries(simples_flux ${ROOT_LIBS} NuMIana)
 
 add_executable(larex larex.cpp)
 target_link_libraries(larex ${ROOT_LIBS} NuMIana)

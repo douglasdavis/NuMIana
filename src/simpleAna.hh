@@ -52,23 +52,25 @@ namespace numi {
     virtual void PrintNeutrinos();
     virtual void PrintDecayLocations();
 
-    inline const std::vector<Double_t> wgt()      const { return fwgt;      }
-    inline const std::vector<Double_t> vtxx()     const { return fvtxx;     }
-    inline const std::vector<Double_t> vtxy()     const { return fvtxy;     }
-    inline const std::vector<Double_t> vtxz()     const { return fvtxz;     }
-    inline const std::vector<Double_t> dist()     const { return fdist;     }
-    inline const std::vector<Double_t> px()       const { return fpx;       }
-    inline const std::vector<Double_t> py()       const { return fpy;       }
-    inline const std::vector<Double_t> pz()       const { return fpz;       }
-    inline const std::vector<Double_t> E()        const { return fE;        }  
-    inline const std::vector<Int_t>    pdg()      const { return fpdg;      }
-    inline const std::vector<Double_t> tpx()      const { return ftpx;      }
-    inline const std::vector<Double_t> tpy()      const { return ftpy;      }
-    inline const std::vector<Double_t> tpz()      const { return ftpz;      }
-    inline const std::vector<Int_t>    tptype()   const { return ftptype;   }
-    inline const std::vector<Int_t>    run()      const { return frun;      }
-    inline const std::vector<Int_t>    evtno()    const { return fevtno;    }
-    inline const std::vector<Int_t>    entryno()  const { return fentryno;  }
+    inline const std::vector<Double_t>& wgt()      const { return fwgt;      }
+    inline const std::vector<Double_t>& vtxx()     const { return fvtxx;     }
+    inline const std::vector<Double_t>& vtxy()     const { return fvtxy;     }
+    inline const std::vector<Double_t>& vtxz()     const { return fvtxz;     }
+    inline const std::vector<Double_t>& dist()     const { return fdist;     }
+    inline const std::vector<Double_t>& px()       const { return fpx;       }
+    inline const std::vector<Double_t>& py()       const { return fpy;       }
+    inline const std::vector<Double_t>& pz()       const { return fpz;       }
+    inline const std::vector<Double_t>& E()        const { return fE;        }  
+    inline const std::vector<Int_t>&    pdg()      const { return fpdg;      }
+    inline const std::vector<Double_t>& tpx()      const { return ftpx;      }
+    inline const std::vector<Double_t>& tpy()      const { return ftpy;      }
+    inline const std::vector<Double_t>& tpz()      const { return ftpz;      }
+    inline const std::vector<Int_t>&    tptype()   const { return ftptype;   }
+    inline const std::vector<Int_t>&    run()      const { return frun;      }
+    inline const std::vector<Int_t>&    evtno()    const { return fevtno;    }
+    inline const std::vector<Int_t>&    entryno()  const { return fentryno;  }
+
+    inline const std::vector< std::pair< Int_t, Double_t > >& PdgEnergy() const { return fPdgEnergy; }
 
     TTree *EntryTree() const { return fEntryTree; }
     TTree *NuMI_Tree() const { return fNuMI_Tree; }
