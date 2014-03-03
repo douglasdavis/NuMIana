@@ -15,9 +15,9 @@ int main(int argc, char *argv[])
   looks();
   gStyle->SetOptStat(0);
 
-  std::string file_name1("../data/gsimple/bottom/bottom.root");
-  std::string file_name2("../data/gsimple/length/length.root");
-  std::string file_name3("../data/gsimple/normal/normal.root");
+  std::string file_name1("../data/gsimple/2013/bottom/bottom.root");
+  std::string file_name2("../data/gsimple/2013/length/length.root");
+  std::string file_name3("../data/gsimple/2013/normal/normal.root");
 
   numi::simpleAna bott_ana(file_name1,false);
   numi::simpleAna long_ana(file_name2,false);
@@ -141,6 +141,17 @@ int main(int argc, char *argv[])
   
   //_______________________________________________________________________________________________________
 
+  TFile *out_file = new TFile("fluxhists2013.root","RECREATE");
+  for ( auto const& entry : hTot )
+    entry.second->Write();
+  for ( auto const& entry : hBott )
+    entry.second->Write();
+  for ( auto const& entry : hLong )
+    entry.second->Write();
+  for ( auto const& entry : hNorm )
+    entry.second->Write();
+  out_file->Close();
+
   TApplication tapp("tapp",&argc,argv);
 
   TCanvas cb;
@@ -180,8 +191,7 @@ int main(int argc, char *argv[])
   ca.RedrawAxis();
 
   tapp.Run();
-  Int_t ok;
-  std::cin >> ok;
+
   return 0;
 
 }
