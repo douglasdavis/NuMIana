@@ -28,9 +28,9 @@ int main(int argc, char *argv[])
   //  larlong.Print_ndecayppmedium(larlong.ppmediumndecay());
   larnorm.Print_ndecayppmedium(larnorm.ppmediumndecay());
   */
-  numi::simpleAna sbott(bott_file);
-  numi::simpleAna slong(long_file);
-  numi::simpleAna snorm(norm_file);
+  numi::simpleAna sbott(bott_file,false);
+  numi::simpleAna slong(long_file,false);
+  numi::simpleAna snorm(norm_file,true);
 
   Print_ndecayppmedium(sbott.ppmediumndecay(),
 		       sbott.ndecayCodeMap(),

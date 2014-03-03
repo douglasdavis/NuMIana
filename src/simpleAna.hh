@@ -46,7 +46,7 @@ namespace numi {
   public:
     
     simpleAna();
-    simpleAna(const std::string& file_name);
+    simpleAna(const std::string& file_name, const bool& is_normal);
     virtual ~simpleAna();
 
     virtual void PrintNeutrinos();

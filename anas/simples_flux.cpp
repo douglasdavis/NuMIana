@@ -18,9 +18,9 @@ int main(int argc, char *argv[])
   std::string file_name2("../data/gsimple/length/length.root");
   std::string file_name3("../data/gsimple/normal/normal.root");
 
-  numi::simpleAna bott_ana(file_name1);
-  numi::simpleAna long_ana(file_name2);
-  numi::simpleAna norm_ana(file_name3);
+  numi::simpleAna bott_ana(file_name1,false);
+  numi::simpleAna long_ana(file_name2,false);
+  numi::simpleAna norm_ana(file_name3,true);
   
   auto b_pdgE = bott_ana.PdgEnergy(); // vector<pair<Int_t,Double_t>>
   auto l_pdgE = long_ana.PdgEnergy();
@@ -121,6 +121,8 @@ int main(int argc, char *argv[])
   cn.RedrawAxis();
 
   tapp.Run();
+  Int_t ok;
+  std::cin >> ok;
   return 0;
 
 }
