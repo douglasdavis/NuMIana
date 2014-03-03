@@ -105,7 +105,7 @@ int main(int argc, char *argv[])
   legend->AddEntry(hBott[-12],"#bar{#nu}_{e}",  "l");
   legend->SetFillColor(0);
   legend->SetBorderSize(0);
-  legend->SetTextFont(102);
+  legend->SetTextFont(22);
   legend->SetTextSize(0.048);
   
   //_______________________________________________________________________________________________________
