@@ -34,7 +34,7 @@ int main(int argc, char *argv[])
 
   double the_max;
   double the_min;
-  numi::max_min("tvz",_tvz,the_max,the_min);
+  numi::utils::max_min("tvz",_tvz,the_max,the_min);
   std::cout << the_max << std::endl;
   std::cout << the_min << std::endl;
   return 0;
