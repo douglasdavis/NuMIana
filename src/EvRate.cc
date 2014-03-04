@@ -17,7 +17,7 @@ namespace numi {
 		 const Bool_t& isnormal) {
     
     fNuMIChain = new TChain("NuMI");
-    fGenieFile = new TFile(genie_file_name.c_str(),"READ");
+    fGenieFile = new TFile(genie_file_name.c_str());
     
     fSelectedPdg = nu_pdg;
     fNFluxFiles  = file_vector.size();
@@ -32,17 +32,22 @@ namespace numi {
     for ( auto const& entry : file_vector )
       fNuMIChain->Add((flux_file_dir+"/"+entry).c_str());
     
-    if ( nu_pdg == 14 )
-      fDir = (TDirectory*)fGenieFile->Get("nu_mu_Ar40");
-    if ( nu_pdg == -14 )
-      fDir = (TDirectory*)fGenieFile->Get("nu_mu_bar_Ar40");
-    if ( nu_pdg == 12 )
-      fDir = (TDirectory*)fGenieFile->Get("nu_e_Ar40");
-    if ( nu_pdg == -12 )
-      fDir = (TDirectory*)fGenieFile->Get("nu_e_bar_Ar40");
-    
-    fXsecGraphs["tot_cc"]  = (TGraph*)fDir->Get("tot_cc");
-    fXsecGraphs["tot_nc"]  = (TGraph*)fDir->Get("tot_nc");
+    if ( nu_pdg == 14 ) {
+      fCCxsec = dynamic_cast<TGraph*> (fGenieFile->Get("nu_mu_Ar40/tot_cc"));
+      fNCxsec = dynamic_cast<TGraph*> (fGenieFile->Get("nu_mu_Ar40/tot_nc"));
+    }
+    if ( nu_pdg == -14 ) {
+      fCCxsec = dynamic_cast<TGraph*> (fGenieFile->Get("nu_mu_bar_Ar40/tot_cc"));
+      fNCxsec = dynamic_cast<TGraph*> (fGenieFile->Get("nu_mu_bar_Ar40/tot_nc"));
+    }
+    if ( nu_pdg == 12 ) {
+      fCCxsec = dynamic_cast<TGraph*> (fGenieFile->Get("nu_e_Ar40/tot_cc"));
+      fNCxsec = dynamic_cast<TGraph*> (fGenieFile->Get("nu_e_Ar40/tot_nc"));
+    }
+    if ( nu_pdg == -12 ) {
+      fCCxsec = dynamic_cast<TGraph*> (fGenieFile->Get("nu_e_bar_Ar40/tot_cc"));
+      fNCxsec = dynamic_cast<TGraph*> (fGenieFile->Get("nu_e_bar_Ar40/tot_nc"));
+    }
     
     fNuMIChain->SetBranchAddress("wgt",     &fwgt);
     fNuMIChain->SetBranchAddress("vtxx",    &fvtxx);
@@ -155,12 +160,21 @@ namespace numi {
       }	// if isnormal
     } // for all entries in chain
 
+    Double_t hist_val, energy, xsecval, filler;
+
     for ( auto const& hist : hFlux ) {
       for ( Int_t i = 0; i < hist.second->GetNbinsX(); i++ ) {
-	Double_t hist_val = hist.second->GetBinContent(i+1);
-	Double_t energy   = hist.second->GetBinCenter(i+1);
-	Double_t xsecval  = fXsecGraphs["cc_tot"]->Eval(energy);
-	Double_t filler   = xsecval*energy*hist_val;
+	hist_val = hist.second->GetBinContent(i+1);
+	std::cout << " ---------- " << std::endl;
+	std::cout << "hist_val " << hist_val << std::endl;
+	energy   = hist.second->GetBinCenter(i+1);
+	std::cout << "energy " << energy << std::endl;
+
+	// "DYING WHY"
+	xsecval  = fCCxsec->Eval(energy);
+	std::cout << "xsecval " << xsecval << std::endl;
+	filler   = xsecval*energy*hist_val;
+	std::cout << "filler " << std::endl;
 	hCC[hist.first]->SetBinContent(i+1,filler);
       }
     }

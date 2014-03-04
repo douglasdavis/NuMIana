@@ -25,7 +25,10 @@ namespace numi {
     TFile      *fGenieFile;
     TDirectory *fDir;
 
-    std::map< std::string, TGraph* > fXsecGraphs;
+    //    std::map< std::string, TGraph* > fXsecGraphs;
+    TGraph     *fCCxsec;
+    TGraph     *fNCxsec;
+    
 
     UInt_t   fNFluxFiles;
     Int_t    fSelectedPdg;
