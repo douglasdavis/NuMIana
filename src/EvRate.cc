@@ -42,7 +42,6 @@ namespace numi {
       fDir = (TDirectory*)fGenieFile->Get("nu_e_bar_Ar40");
     
     fXsecGraphs["tot_cc"]  = (TGraph*)fDir->Get("tot_cc");
-    std::cout << fXsecGraphs["tot_cc"]->Eval(6) << std::endl;
     fXsecGraphs["tot_nc"]  = (TGraph*)fDir->Get("tot_nc");
     
     fNuMIChain->SetBranchAddress("wgt",     &fwgt);
@@ -160,7 +159,8 @@ namespace numi {
       for ( Int_t i = 0; i < hist.second->GetNbinsX(); i++ ) {
 	Double_t hist_val = hist.second->GetBinContent(i+1);
 	Double_t energy   = hist.second->GetBinCenter(i+1);
-	Double_t filler   = (fXsecGraphs["cc_tot"]->Eval(energy))*energy*hist_val;
+	Double_t xsecval  = fXsecGraphs["cc_tot"]->Eval(energy);
+	Double_t filler   = xsecval*energy*hist_val;
 	hCC[hist.first]->SetBinContent(i+1,filler);
       }
     }
