@@ -78,14 +78,15 @@ namespace numi {
   
   void EvRate::MakeHists(const std::string& out_file_name, const Double_t& area_factor)
   {
-    Int_t    nbins     = 120;
-    Double_t E_min     = 0;
-    Double_t E_max     = 6;
-    Double_t BinEnergy = (E_max-E_min)/(Double_t)nbins;
-    Double_t FluxPOT   = 1e8;
-    Double_t CCPOT     = 6e20;
-    Double_t XsecExpo  = 1e-42;
-    Double_t POTscaler = CCPOT/FluxPOT;
+    Int_t    nbins       = 120;
+    Double_t E_min       = 0;
+    Double_t E_max       = 6;
+    Double_t BinEnergy   = (E_max-E_min)/(Double_t)nbins;
+    Double_t FluxPOT     = 1e8;
+    Double_t CCPOT       = 6e20;
+    Double_t XsecExpo    = 1e-42/(40*1.66e-27);
+    Double_t POTscaler   = CCPOT/FluxPOT;
+    Double_t Xsec_factor = POTscaler*XsecExpo;
 
     const Int_t n_parents = 7;
     std::string parent_strings[n_parents] = { "K0L", "K+", "K-", "mu+", "mu-", "pi+", "pi-" };
@@ -113,11 +114,14 @@ namespace numi {
       hNC[parent_strings[i]] = new TH1D(HNNC.c_str(),";Energy (GeV);NC int/m^{2}/50 MeV/6 #times 10^{20} POT",nbins,E_min,E_max);
       
     }
-    std::cout << " << Histograms initialized >> " << std::endl;
 
+    std::cout << " << Histograms initialized >> " << std::endl;
     std::cout << " << Filling histograms >> "     << std::endl;
+
     for ( Int_t i = 0; i < fNuMIChain->GetEntries(); i++ ) {
+
       fNuMIChain->GetEntry(i);
+
       if ( fIsBottom || fIsLength ) {
 	if ( fpdg == fSelectedPdg ) {
 	  hFlux["total"]->Fill(fE);
@@ -137,6 +141,7 @@ namespace numi {
 	    hFlux["pi-"]->Fill(fE);
 	} // selected pdg
       } // length or bottom
+
       if ( fIsNormal ) {
 	if ( fpz > 0 ) {
 	  if ( fpdg == fSelectedPdg ) {
@@ -158,6 +163,7 @@ namespace numi {
 	  } // pdg = selected pdg
 	} // if pz > 0
       }	// if isnormal
+
     } // for all entries in chain
 
     Double_t hist_val, energy, xsecval, filler;
@@ -165,17 +171,17 @@ namespace numi {
     for ( auto const& hist : hFlux ) {
       for ( Int_t i = 0; i < hist.second->GetNbinsX(); i++ ) {
 	hist_val = hist.second->GetBinContent(i+1);
-	std::cout << " ---------- " << std::endl;
-	std::cout << "hist_val " << hist_val << std::endl;
 	energy   = hist.second->GetBinCenter(i+1);
-	std::cout << "energy " << energy << std::endl;
 
-	// "DYING WHY"
+	// CC
 	xsecval  = fCCxsec->Eval(energy);
-	std::cout << "xsecval " << xsecval << std::endl;
 	filler   = xsecval*energy*hist_val;
-	std::cout << "filler " << std::endl;
 	hCC[hist.first]->SetBinContent(i+1,filler);
+
+	// NC
+	xsecval  = fNCxsec->Eval(energy);
+	filler   = xsecval*energy*hist_val;
+	hNC[hist.first]->SetBinContent(i+1,filler);
       }
     }
 
@@ -186,13 +192,18 @@ namespace numi {
       entry.second->Scale(1.0/(area_factor*fNFluxFiles));
       entry.second->Write();
     }
-    for ( auto const& entry : hCC )
+    for ( auto const& entry : hCC ) {
+      entry.second->Scale(Xsec_factor);
       entry.second->Write();
-    for ( auto const& entry : hNC )
+    }
+    for ( auto const& entry : hNC ) {
+      entry.second->Scale(Xsec_factor);
       entry.second->Write();
+    }
 
     out_file->Close();
     std::cout << " << Done >> " << std::endl;
+
   }
   
 }
