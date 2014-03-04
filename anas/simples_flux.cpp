@@ -1,4 +1,5 @@
 #include <iostream>
+#include <fstream>
 #include "simpleAna.hh"
 #include "Utils.hh"
 #include "TApplication.h"
@@ -14,14 +15,31 @@ int main(int argc, char *argv[])
 {
   looks();
   gStyle->SetOptStat(0);
+  
+  std::vector< std::string > bott_files;
+  std::vector< std::string > long_files;
+  std::vector< std::string > norm_files;
+  
+  std::ifstream data_list;
+  data_list.open("file_list.txt");
+  std::string holder;
+  std::string prefix = "/uboone/data/numi_gsimple_fluxes_02.27.2014/zDF/";
+  while ( data_list >> holder ) {
+    bott_files.push_back(prefix+"bottom/"+holder);
+    long_files.push_back(prefix+"length/"+holder);
+    norm_files.push_back(prefix+"normal/"+holder);
+  }
 
-  std::string file_name1("../data/gsimple/2013/bottom/bottom.root");
-  std::string file_name2("../data/gsimple/2013/length/length.root");
-  std::string file_name3("../data/gsimple/2013/normal/normal.root");
+  for ( auto const& entry : bott_files )
+    std::cout << entry << std::endl;
+  for ( auto const& entry : long_files )
+    std::cout << entry << std::endl;
+  for ( auto const& entry : norm_files )
+    std::cout << entry << std::endl;
 
-  numi::simpleAna bott_ana(file_name1,false);
-  numi::simpleAna long_ana(file_name2,false);
-  numi::simpleAna norm_ana(file_name3,true);
+  numi::simpleAna bott_ana(bott_files,false);
+  numi::simpleAna long_ana(long_files,false);
+  numi::simpleAna norm_ana(norm_files,true);
   
   auto b_pdgE = bott_ana.PdgEnergy(); // vector<pair<Int_t,Double_t>>
   auto l_pdgE = long_ana.PdgEnergy();
@@ -49,10 +67,10 @@ int main(int argc, char *argv[])
   hNorm[12]  = new TH1D("nue_normal","MicroBooNE NuMI Flux, Normal Window;Energy (GeV);#nu/m^{2}/50 MeV/10^{8} POT",120,0,6);
   hNorm[-12] = new TH1D("nuebar_normal","MicroBooNE NuMI Flux, Normal Window;Energy (GeV);#nu/m^{2}/50 MeV/10^{8} POT",120,0,6);
 
-  hTot[14]  = new TH1D("numu_total","MicroBooNE NuMI Flux, Combined Windows;Energy (GeV);#nu/m^{2}/50 MeV/10^{8} POT",120,0,6);
-  hTot[-14] = new TH1D("numubar_total","MicroBooNE NuMI Flux, Combined Windows;Energy (GeV);#nu/m^{2}/50 MeV/10^{8} POT",120,0,6);
-  hTot[12]  = new TH1D("nue_total","MicroBooNE NuMI Flux, Combined Windows;Energy (GeV);#nu/m^{2}/50 MeV/10^{8} POT",120,0,6);
-  hTot[-12] = new TH1D("nuebar_total","MicroBooNE NuMI Flux, Combined Windows;Energy (GeV);#nu/m^{2}/50 MeV/10^{8} POT",120,0,6);
+  hTot[14]   = new TH1D("numu_total","MicroBooNE NuMI Flux, Combined Windows;Energy (GeV);#nu/m^{2}/50 MeV/10^{8} POT",120,0,6);
+  hTot[-14]  = new TH1D("numubar_total","MicroBooNE NuMI Flux, Combined Windows;Energy (GeV);#nu/m^{2}/50 MeV/10^{8} POT",120,0,6);
+  hTot[12]   = new TH1D("nue_total","MicroBooNE NuMI Flux, Combined Windows;Energy (GeV);#nu/m^{2}/50 MeV/10^{8} POT",120,0,6);
+  hTot[-12]  = new TH1D("nuebar_total","MicroBooNE NuMI Flux, Combined Windows;Energy (GeV);#nu/m^{2}/50 MeV/10^{8} POT",120,0,6);
 
   std::vector< std::map< Int_t, TH1D* > > formatVec;
   formatVec.push_back(hBott);
@@ -88,19 +106,19 @@ int main(int argc, char *argv[])
   for ( auto const& hist : hBott ) {
     hist.second->GetXaxis()->CenterTitle();
     hist.second->GetYaxis()->CenterTitle();
-    hist.second->Scale((1./bott_ana.BottArea())/1e1);
+    hist.second->Scale((1./bott_ana.BottArea())/(Double_t)bott_files.size());
   }
 
   for ( auto const& hist : hLong ) {
     hist.second->GetXaxis()->CenterTitle();
     hist.second->GetYaxis()->CenterTitle();
-    hist.second->Scale((1./long_ana.LongArea())/1e1);
+    hist.second->Scale((1./long_ana.LongArea())/(Double_t)long_files.size());
   }
 
   for ( auto const& hist : hNorm ) {
     hist.second->GetXaxis()->CenterTitle();
     hist.second->GetYaxis()->CenterTitle();
-    hist.second->Scale((1./norm_ana.NormArea())/1e1);
+    hist.second->Scale((1./norm_ana.NormArea())/(Double_t)norm_files.size());
   }
 
   for ( Int_t i = 0; i < hBott[14]->GetNbinsX(); i++ ) {
@@ -195,4 +213,3 @@ int main(int argc, char *argv[])
   return 0;
 
 }
-

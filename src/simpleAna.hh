@@ -20,8 +20,6 @@ namespace numi {
     
   private:
     
-    TFile *fFile;
-    
     std::vector<Double_t> fwgt;      ///< nu weight
     std::vector<Double_t> fvtxx;     ///< x position in lab frame
     std::vector<Double_t> fvtxy;     ///< y position in lab frame
@@ -50,7 +48,7 @@ namespace numi {
   public:
     
     simpleAna();
-    simpleAna(const std::string& file_name, const bool& is_normal);
+    simpleAna(const std::vector< std::string >& file_names, const Bool_t& is_normal);
     virtual ~simpleAna();
 
     virtual void PrintNeutrinos();
@@ -80,8 +78,6 @@ namespace numi {
 
     inline const std::vector< std::pair< Int_t, Double_t > >& PdgEnergy() const { return fPdgEnergy; }
 
-    TTree *EntryTree() const { return fEntryTree; }
-    TTree *NuMI_Tree() const { return fNuMI_Tree; }
     
   };
 }

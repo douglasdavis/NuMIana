@@ -6,9 +6,11 @@
 #ifndef ANA_HH
 #define ANA_HH
 
+#include "TROOT.h"
 #include "TH1D.h"
 #include "TPaveText.h"
 #include "TTree.h"
+#include "TChain.h"
 #include <iostream>
 #include <vector>
 #include <map>
@@ -19,12 +21,11 @@ namespace numi {
   
   protected:
 
-    std::string  fFileName;    
-    TFile       *fFile;
-    TTree       *fSimulationNtuple;
-    TTree       *fFluxNtuple;
-    TTree       *fEntryTree;
-    TTree       *fNuMI_Tree;
+    std::string   fFileName;    
+    TFile        *fFile;
+    TTree        *fSimulationNtuple;
+    TTree        *fFluxNtuple;
+    TChain       *fNuMIChain;
 
     Int_t                                    fNEvents;
     std::vector<Double_t>                    fvx;
@@ -43,16 +44,6 @@ namespace numi {
 
     TPaveText *PlotTitle;
     void SetupTitle(const std::string& title_);  
-
-    void FillHist_FluxNtuple(TH1D *hist, const std::string& var_name);
-    void FillVec_FluxNtuple(std::vector<Double_t>& vec, const std::string& var_name);
-    void FillHist_SimulationNtuple(TH1D *hist, const std::string& var_name);
-    void FillVec_SimulationNtuple(std::vector<Double_t>& vec, const std::string& var_name);
-    void FillHist_EntryTree(TH1D *hist, const std::string& var_name);
-    void FillVec_EntryTree(std::vector<Double_t>& vec, const std::string& var_name);
-    void FillHist_NuMI_Tree(TH1D *hist, const std::string& var_name);
-    void FillVec_NuMI_Tree(std::vector<Double_t>& vec, const std::string& var_name);
-    
 
     inline const Int_t NEvents() const;
 

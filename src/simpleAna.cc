@@ -9,50 +9,49 @@ namespace numi {
   
   simpleAna::simpleAna() {}
   
-  simpleAna::simpleAna(const std::string& file_name, const bool& is_normal)
+  simpleAna::simpleAna(const std::vector< std::string >& file_names, const Bool_t& is_normal)
   {
-    fFile      = new TFile(file_name.c_str(),"READ");
-    fEntryTree = (TTree*)fFile->Get("EntryTree");
-    fNuMI_Tree = (TTree*)fFile->Get("NuMI_Tree");
+    fNuMIChain = new TChain("NuMI");
+    for ( auto const& j : file_names )
+      fNuMIChain->Add(j.c_str());
     
-    double wgt, vtxx, vtxy, vtxz;
-    double dist, px, py, pz, E;
-    Int_t pdg;
-    double tpx, tpy, tpz, vx, vy, vz;
-    Int_t ndecay, ptype, ppmedium, tptype;
-    Int_t run, evtno, entryno;
+    Double_t wgt, vtxx, vtxy, vtxz;
+    Double_t dist, px, py, pz, E;
+    Int_t    pdg;
+    Double_t tpx, tpy, tpz, vx, vy, vz;
+    Int_t    ndecay, ptype, ppmedium, tptype;
+    Int_t    run, evtno, entryno;
   
-    fEntryTree->SetBranchAddress("wgt", &wgt);
-    fEntryTree->SetBranchAddress("vtxx",&vtxx);
-    fEntryTree->SetBranchAddress("vtxy",&vtxy);
-    fEntryTree->SetBranchAddress("vtxz",&vtxz);
-    fEntryTree->SetBranchAddress("dist",&dist);
-    fEntryTree->SetBranchAddress("px",  &px);
-    fEntryTree->SetBranchAddress("py",  &py);
-    fEntryTree->SetBranchAddress("pz",  &pz);
-    fEntryTree->SetBranchAddress("E",   &E);
-    fEntryTree->SetBranchAddress("pdg", &pdg);
+    fNuMIChain->SetBranchAddress("wgt", &wgt);
+    fNuMIChain->SetBranchAddress("vtxx",&vtxx);
+    fNuMIChain->SetBranchAddress("vtxy",&vtxy);
+    fNuMIChain->SetBranchAddress("vtxz",&vtxz);
+    fNuMIChain->SetBranchAddress("dist",&dist);
+    fNuMIChain->SetBranchAddress("px",  &px);
+    fNuMIChain->SetBranchAddress("py",  &py);
+    fNuMIChain->SetBranchAddress("pz",  &pz);
+    fNuMIChain->SetBranchAddress("E",   &E);
+    fNuMIChain->SetBranchAddress("pdg", &pdg);
 
-    fNuMI_Tree->SetBranchAddress("tpx",&tpx);
-    fNuMI_Tree->SetBranchAddress("tpy",&tpy);
-    fNuMI_Tree->SetBranchAddress("tpz",&tpz);
-    fNuMI_Tree->SetBranchAddress("vx", &vx);
-    fNuMI_Tree->SetBranchAddress("vy", &vy);
-    fNuMI_Tree->SetBranchAddress("vz", &vz);
+    fNuMIChain->SetBranchAddress("tpx",&tpx);
+    fNuMIChain->SetBranchAddress("tpy",&tpy);
+    fNuMIChain->SetBranchAddress("tpz",&tpz);
+    fNuMIChain->SetBranchAddress("vx", &vx);
+    fNuMIChain->SetBranchAddress("vy", &vy);
+    fNuMIChain->SetBranchAddress("vz", &vz);
 
-    fNuMI_Tree->SetBranchAddress("ndecay",  &ndecay);
-    fNuMI_Tree->SetBranchAddress("ppmedium",&ppmedium);
-    fNuMI_Tree->SetBranchAddress("tptype",  &tptype);
-    fNuMI_Tree->SetBranchAddress("run",     &run);
-    fNuMI_Tree->SetBranchAddress("evtno",   &evtno);
-    fNuMI_Tree->SetBranchAddress("entryno", &entryno);
+    fNuMIChain->SetBranchAddress("ndecay",  &ndecay);
+    fNuMIChain->SetBranchAddress("ppmedium",&ppmedium);
+    fNuMIChain->SetBranchAddress("tptype",  &tptype);
+    fNuMIChain->SetBranchAddress("run",     &run);
+    fNuMIChain->SetBranchAddress("evtno",   &evtno);
+    fNuMIChain->SetBranchAddress("entryno", &entryno);
     
 
     if ( is_normal ) {
       fNEvents = 0;
-      for ( Int_t i = 0; i < fEntryTree->GetEntries(); ++i ) {
-	fEntryTree->GetEntry(i);
-	fNuMI_Tree->GetEntry(i);
+      for ( Int_t i = 0; i < fNuMIChain->GetEntries(); ++i ) {
+	fNuMIChain->GetEntry(i);
 	if ( pz > 0 ) {
 	  fNEvents++;
 	  fwgt.push_back(wgt);
@@ -84,10 +83,9 @@ namespace numi {
       }
       
     } else {
-      fNEvents = fEntryTree->GetEntries();
-      for ( Int_t i = 0; i < fEntryTree->GetEntries(); ++i ) {
-	fEntryTree->GetEntry(i);
-	fNuMI_Tree->GetEntry(i);
+      fNEvents = fNuMIChain->GetEntries();
+      for ( Int_t i = 0; i < fNuMIChain->GetEntries(); ++i ) {
+	fNuMIChain->GetEntry(i);
 	fwgt.push_back(wgt);
 	fvtxx.push_back(vtxx);
 	fvtxy.push_back(vtxy);
@@ -138,13 +136,13 @@ namespace numi {
       }
     }
     std::cout << " numu    : " << numu    << " :: " 
-	      << 100*(double)numu/(double)counter    << std::endl;
+	      << 100*(Double_t)numu/(Double_t)counter    << std::endl;
     std::cout << " numubar : " << numubar << " :: " 
-	      << 100*(double)numubar/(double)counter << std::endl;
+	      << 100*(Double_t)numubar/(Double_t)counter << std::endl;
     std::cout << " nue     : " << nue     << " :: " 
-	      << 100*(double)nue/(double)counter     << std::endl;
+	      << 100*(Double_t)nue/(Double_t)counter     << std::endl;
     std::cout << " nuebar  : " << nuebar  << " :: " 
-	      << 100*(double)nuebar/(double)counter  << std::endl;
+	      << 100*(Double_t)nuebar/(Double_t)counter  << std::endl;
   }
 
   ///____________________________________________________________________________
