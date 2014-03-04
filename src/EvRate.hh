@@ -78,7 +78,7 @@ namespace numi {
     void SetLowerVzCut(const Double_t& cut) { fLowerVzCut = cut; }
     void SetUpperVzCut(const Double_t& cut) { fUpperVzCut = cut; }
 
-    void MakeHists(const std::string& out_file_name);
+    void MakeHists(const std::string& out_file_name, const Double_t& area_factor);
 
 
     const Double_t BottomArea() const;

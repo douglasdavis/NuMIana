@@ -2,6 +2,7 @@
 *.dylib
 *.o
 *.root
+bin
 build
 larex
 simples_flux

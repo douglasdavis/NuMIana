@@ -42,6 +42,7 @@ namespace numi {
       fDir = (TDirectory*)fGenieFile->Get("nu_e_bar_Ar40");
     
     fXsecGraphs["tot_cc"]  = (TGraph*)fDir->Get("tot_cc");
+    std::cout << fXsecGraphs["tot_cc"]->Eval(6) << std::endl;
     fXsecGraphs["tot_nc"]  = (TGraph*)fDir->Get("tot_nc");
     
     fNuMIChain->SetBranchAddress("wgt",     &fwgt);
@@ -71,7 +72,7 @@ namespace numi {
   
   EvRate::~EvRate() {}
   
-  void EvRate::MakeHists(const std::string& out_file_name)
+  void EvRate::MakeHists(const std::string& out_file_name, const Double_t& area_factor)
   {
     Int_t    nbins     = 120;
     Double_t E_min     = 0;
@@ -89,48 +90,95 @@ namespace numi {
     std::map < std::string, TH1D* > hCC;
     std::map < std::string, TH1D* > hNC;
     
-    std::cout << "ive declared the hists" << std::endl;
-
-    std::string HTB = ";Energy (GeV);";
-    
     hFlux["total"] = new TH1D("FluxTotal",";Energy (GeV);#nu/m^{2}/50 MeV/10^{8} POT",nbins,E_min,E_max);
     hCC["total"]   = new TH1D("CCTotal",  ";Energy (GeV);CC int/50 MeV/6 #times 10^{20} POT",nbins,E_min,E_max);
     hNC["total"]   = new TH1D("NCTotal",  ";Energy (GeV);NC int/50 MeV/6 #times 10^{20} POT",nbins,E_min,E_max);
 
-    std::cout << "beginning loop" << std::endl;
     for ( auto i = 0; i < n_parents; i++ ) {
       
       std::string HNBF  = "Flux";
       std::string HNF    = HNBF+parent_strings[i];
       hFlux[parent_strings[i]] = new TH1D(HNF.c_str(),";Energy (GeV);#nu/m^{2}/50 MeV/10^{8} POT",nbins,E_min,E_max);
-      std::cout << "ive made my flux hists" << std::endl;
 
       std::string HNBCC = "CC";
       std::string HNCC  = HNBCC+parent_strings[i];
       hCC[parent_strings[i]] = new TH1D(HNCC.c_str(),";Energy (GeV);CC int/m^{2}/50 MeV/6 #times 10^{20} POT",nbins,E_min,E_max);
-      std::cout << "ive made my cc hists" << std::endl;
       
       std::string HNBNC = "NC";
       std::string HNNC  = HNBNC+parent_strings[i];
       hNC[parent_strings[i]] = new TH1D(HNNC.c_str(),";Energy (GeV);NC int/m^{2}/50 MeV/6 #times 10^{20} POT",nbins,E_min,E_max);
-      std::cout << "ive made my nc hists" << std::endl;
       
     }
-    std::cout << "ending loop" << std::endl;
+    std::cout << " << Histograms initialized >> " << std::endl;
 
-    std::cout << "making file" << std::endl;
+    std::cout << " << Filling histograms >> "     << std::endl;
+    for ( Int_t i = 0; i < fNuMIChain->GetEntries(); i++ ) {
+      fNuMIChain->GetEntry(i);
+      if ( fIsBottom || fIsLength ) {
+	if ( fpdg == fSelectedPdg ) {
+	  hFlux["total"]->Fill(fE);
+	  if ( fndecay == 1 || fndecay == 2 || fndecay == 3 || fndecay == 4 )
+	    hFlux["K0L"]->Fill(fE);
+	  if ( fndecay == 5 || fndecay == 6 || fndecay == 7 )
+	    hFlux["K+"]->Fill(fE);
+	  if ( fndecay == 8 || fndecay == 9 || fndecay == 10 )
+	    hFlux["K-"]->Fill(fE);
+	  if ( fndecay == 11 )
+	    hFlux["mu+"]->Fill(fE);
+	  if ( fndecay == 12 )
+	    hFlux["mu-"]->Fill(fE);
+	  if ( fndecay == 13 )
+	    hFlux["pi+"]->Fill(fE);
+	  if ( fndecay == 14 )
+	    hFlux["pi-"]->Fill(fE);
+	} // selected pdg
+      } // length or bottom
+      if ( fIsNormal ) {
+	if ( fpz > 0 ) {
+	  if ( fpdg == fSelectedPdg ) {
+	    hFlux["total"]->Fill(fE);
+	    if ( fndecay == 1 || fndecay == 2 || fndecay == 3 || fndecay == 4 )
+	      hFlux["K0L"]->Fill(fE);
+	    if ( fndecay == 5 || fndecay == 6 || fndecay == 7 )
+	      hFlux["K+"]->Fill(fE);
+	    if ( fndecay == 8 || fndecay == 9 || fndecay == 10 )
+	      hFlux["K-"]->Fill(fE);
+	    if ( fndecay == 11 )
+	      hFlux["mu+"]->Fill(fE);
+	    if ( fndecay == 12 )
+	      hFlux["mu-"]->Fill(fE);
+	    if ( fndecay == 13 )
+	      hFlux["pi+"]->Fill(fE);
+	    if ( fndecay == 14 )
+	      hFlux["pi-"]->Fill(fE);
+	  } // pdg = selected pdg
+	} // if pz > 0
+      }	// if isnormal
+    } // for all entries in chain
+
+    for ( auto const& hist : hFlux ) {
+      for ( Int_t i = 0; i < hist.second->GetNbinsX(); i++ ) {
+	Double_t hist_val = hist.second->GetBinContent(i+1);
+	Double_t energy   = hist.second->GetBinCenter(i+1);
+	Double_t filler   = (fXsecGraphs["cc_tot"]->Eval(energy))*energy*hist_val;
+	hCC[hist.first]->SetBinContent(i+1,filler);
+      }
+    }
+
+    std::cout << " << Writing histograms to file >> " << std::endl;
     TFile *out_file = new TFile(out_file_name.c_str(),"RECREATE");
-  
-    for ( auto const& entry : hFlux )
+    
+    for ( auto const& entry : hFlux ) {
+      entry.second->Scale(1.0/(area_factor*fNFluxFiles));
       entry.second->Write();
+    }
     for ( auto const& entry : hCC )
       entry.second->Write();
     for ( auto const& entry : hNC )
       entry.second->Write();
-    std::cout << "wrote hists to file" << std::endl;
 
     out_file->Close();
-    std::cout << "done" << std::endl;
+    std::cout << " << Done >> " << std::endl;
   }
   
 }

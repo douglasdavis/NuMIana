@@ -18,6 +18,7 @@ int main(int argc, char *argv[])
     file_list.push_back(holder);
   infiles.close();
 
+  /*
   numi::EvRate *bottom = new numi::EvRate(dir_bottom,
 					  genie_file,
 					  file_list,
@@ -39,6 +40,7 @@ int main(int argc, char *argv[])
 
   length->MakeHists("length_out_file.root");
   delete length;
+  */
 
   numi::EvRate *normal = new numi::EvRate(dir_normal,
 					  genie_file,
@@ -48,7 +50,7 @@ int main(int argc, char *argv[])
 					  false,
 					  true);
 
-  normal->MakeHists("normal_test_file.root");
+  normal->MakeHists("normal_test_file.root",normal->NormalArea());
   delete normal;
 
   return 0;
