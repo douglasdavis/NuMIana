@@ -25,13 +25,16 @@ namespace numi {
     TFile      *fGenieFile;
     TDirectory *fDir;
 
-    //    std::map< std::string, TGraph* > fXsecGraphs;
-    TGraph     *fCCxsec;
-    TGraph     *fNCxsec;
+    TGraph     *fCCxsec_numu;
+    TGraph     *fNCxsec_numu;
+    TGraph     *fCCxsec_numubar;
+    TGraph     *fNCxsec_numubar;
+    TGraph     *fCCxsec_nue;
+    TGraph     *fNCxsec_nue;
+    TGraph     *fCCxsec_nuebar;
+    TGraph     *fNCxsec_nuebar;
     
-
     UInt_t   fNFluxFiles;
-    Int_t    fSelectedPdg;
     Double_t fLowerVzCut;
     Double_t fUpperVzCut;
     Bool_t   fIsBottom;
@@ -71,7 +74,6 @@ namespace numi {
     EvRate(const std::string& flux_file_dir,
 	   const std::string& genie_file_name,
 	   const std::vector< std::string >& file_vector,
-	   const Int_t& nu_pdg,
 	   const Bool_t& isbottom,
 	   const Bool_t& islength,
 	   const Bool_t& isnormal);
