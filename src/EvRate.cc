@@ -20,8 +20,8 @@ namespace numi {
     
     fNFluxFiles  = file_vector.size();
     
-    fLowerVzCut = -1.0e10;
-    fUpperVzCut =  1.0e10;
+    fLowerVzCut = -1e10;
+    fUpperVzCut =  1e15;
     
     fIsBottom   = isbottom;
     fIsLength   = islength;
@@ -30,17 +30,21 @@ namespace numi {
     for ( auto const& entry : file_vector )
       fNuMIChain->Add((flux_file_dir+"/"+entry).c_str());
     
-    fCCxsec_numu = dynamic_cast<TGraph*> (fGenieFile->Get("nu_mu_Ar40/tot_cc"));
-    fNCxsec_numu = dynamic_cast<TGraph*> (fGenieFile->Get("nu_mu_Ar40/tot_nc"));
-    
-    fCCxsec_numubar = dynamic_cast<TGraph*> (fGenieFile->Get("nu_mu_bar_Ar40/tot_cc"));
-    fNCxsec_numubar = dynamic_cast<TGraph*> (fGenieFile->Get("nu_mu_bar_Ar40/tot_nc"));
-    
-    fCCxsec_nue = dynamic_cast<TGraph*> (fGenieFile->Get("nu_e_Ar40/tot_cc"));
-    fNCxsec_nue = dynamic_cast<TGraph*> (fGenieFile->Get("nu_e_Ar40/tot_nc"));
-    
-    fCCxsec_nuebar = dynamic_cast<TGraph*> (fGenieFile->Get("nu_e_bar_Ar40/tot_cc"));
-    fNCxsec_nuebar = dynamic_cast<TGraph*> (fGenieFile->Get("nu_e_bar_Ar40/tot_nc"));
+    fCCxsec_numu      = dynamic_cast<TGraph*> (fGenieFile->Get("nu_mu_Ar40/tot_cc"));
+    fNCxsec_numu      = dynamic_cast<TGraph*> (fGenieFile->Get("nu_mu_Ar40/tot_nc"));
+    fCCQExsec_numu    = dynamic_cast<TGraph*> (fGenieFile->Get("nu_mu_Ar40/qel_cc_n"));
+
+    fCCxsec_numubar   = dynamic_cast<TGraph*> (fGenieFile->Get("nu_mu_bar_Ar40/tot_cc"));
+    fNCxsec_numubar   = dynamic_cast<TGraph*> (fGenieFile->Get("nu_mu_bar_Ar40/tot_nc"));
+    fCCQExsec_numubar = dynamic_cast<TGraph*> (fGenieFile->Get("nu_mu_bar_Ar40/qel_cc_p"));
+
+    fCCxsec_nue       = dynamic_cast<TGraph*> (fGenieFile->Get("nu_e_Ar40/tot_cc"));
+    fNCxsec_nue       = dynamic_cast<TGraph*> (fGenieFile->Get("nu_e_Ar40/tot_nc"));
+    fCCQExsec_nue     = dynamic_cast<TGraph*> (fGenieFile->Get("nu_e_Ar40/qel_cc_n"));
+
+    fCCxsec_nuebar    = dynamic_cast<TGraph*> (fGenieFile->Get("nu_e_bar_Ar40/tot_cc"));
+    fNCxsec_nuebar    = dynamic_cast<TGraph*> (fGenieFile->Get("nu_e_bar_Ar40/tot_nc"));
+    fCCQExsec_nuebar  = dynamic_cast<TGraph*> (fGenieFile->Get("nu_e_bar_Ar40/qel_cc_p"));
 
     fNuMIChain->SetBranchAddress("wgt",     &fwgt);
     fNuMIChain->SetBranchAddress("vtxx",    &fvtxx);
@@ -79,65 +83,77 @@ namespace numi {
     Double_t CCPOT       = 6e20;
     Double_t XsecExpo    = 1e-42/(40*1.66e-27);
     Double_t POTscaler   = CCPOT/FluxPOT;
-    Double_t Xsec_factor = POTscaler*XsecExpo;
+    Double_t Tonage      = 7e4;
+    Double_t Xsec_factor = POTscaler*XsecExpo*Tonage;
 
-    // Get the parent particle strings
-    // To make the histograms in a loop later
     const Int_t n_parents = 8;
     std::string parent_strings[n_parents] = { "_K0L", "_K+", "_K-", "_mu+", "_mu-", "_pi+", "_pi-" , "_other" };
 
     
-    std::map < std::string, TH1D* > hFlux_numu;        //
-    std::map < std::string, TH1D* > hCC_numu;          // numu histogram map (parent,hist)
-    std::map < std::string, TH1D* > hNC_numu;          //
+    std::map < std::string, TH1D* > hFlux_numu;
+    std::map < std::string, TH1D* > hCC_numu;
+    std::map < std::string, TH1D* > hNC_numu;
+    std::map < std::string, TH1D* > hCCQE_numu;
 
-    std::map < std::string, TH1D* > hFlux_numubar;     //
-    std::map < std::string, TH1D* > hCC_numubar;       // numubar histogram map (parent,hist)
-    std::map < std::string, TH1D* > hNC_numubar;       //
+    std::map < std::string, TH1D* > hFlux_numubar;
+    std::map < std::string, TH1D* > hCC_numubar;
+    std::map < std::string, TH1D* > hNC_numubar;
+    std::map < std::string, TH1D* > hCCQE_numubar;
 
-    std::map < std::string, TH1D* > hFlux_nue;         //
-    std::map < std::string, TH1D* > hCC_nue;           // nue histogram map (parent,hist)
-    std::map < std::string, TH1D* > hNC_nue;           //
+    std::map < std::string, TH1D* > hFlux_nue;
+    std::map < std::string, TH1D* > hCC_nue;
+    std::map < std::string, TH1D* > hNC_nue;
+    std::map < std::string, TH1D* > hCCQE_nue;
 
-    std::map < std::string, TH1D* > hFlux_nuebar;      //
-    std::map < std::string, TH1D* > hCC_nuebar;        // nuebar histogram map (parent,hist)
-    std::map < std::string, TH1D* > hNC_nuebar;        //
+    std::map < std::string, TH1D* > hFlux_nuebar;
+    std::map < std::string, TH1D* > hCC_nuebar;
+    std::map < std::string, TH1D* > hNC_nuebar;
+    std::map < std::string, TH1D* > hCCQE_nuebar;
 
-    std::string flux_title  = ";Energy (GeV);#nu/m^{2}/50 MeV/10^{8} POT";
-    std::string ccint_title = ";Energy (GeV);CC int/50 MeV/6 #times 10^{20} POT";
-    std::string ncint_title = ";Energy (GeV);NC int/50 MeV/6 #times 10^{20} POT";
+    std::string flux_title    = ";Energy (GeV);#nu/m^{2}/50 MeV/10^{8} POT";
+    std::string ccint_title   = ";Energy (GeV);CC int/50 MeV/6 #times 10^{20} POT";
+    std::string ncint_title   = ";Energy (GeV);NC int/50 MeV/6 #times 10^{20} POT";
+    std::string ccqeint_title = ";Energy (GeV);CCQE int/50 MeV/6 #times 10^{20} POT"; 
+
+    hFlux_numu["total"]    = new TH1D("Flux_Total_numu",flux_title.c_str(),   nbins,E_min,E_max);
+    hCC_numu["total"]      = new TH1D("CC_Total_numu",  ccint_title.c_str(),  nbins,E_min,E_max);
+    hNC_numu["total"]      = new TH1D("NC_Total_numu",  ncint_title.c_str(),  nbins,E_min,E_max);
+    hCCQE_numu["total"]    = new TH1D("CCQE_Total_numu",ccqeint_title.c_str(),nbins,E_min,E_max);
+
+    hFlux_numubar["total"] = new TH1D("Flux_Total_numubar",flux_title.c_str(),   nbins,E_min,E_max);
+    hCC_numubar["total"]   = new TH1D("CC_Total_numubar",  ccint_title.c_str(),  nbins,E_min,E_max);
+    hNC_numubar["total"]   = new TH1D("NC_Total_numubar",  ncint_title.c_str(),  nbins,E_min,E_max);
+    hCCQE_numubar["total"] = new TH1D("CCQE_Total_numubar",ccqeint_title.c_str(),nbins,E_min,E_max);
+
+    hFlux_nue["total"]     = new TH1D("Flux_Total_nue",flux_title.c_str(),   nbins,E_min,E_max);
+    hCC_nue["total"]       = new TH1D("CC_Total_nue",  ccint_title.c_str(),  nbins,E_min,E_max);
+    hNC_nue["total"]       = new TH1D("NC_Total_nue",  ncint_title.c_str(),  nbins,E_min,E_max);
+    hCCQE_nue["total"]     = new TH1D("CCQE_Total_nue",ccqeint_title.c_str(),nbins,E_min,E_max);
+
+    hFlux_nuebar["total"]  = new TH1D("Flux_Total_nuebar",flux_title.c_str(),   nbins,E_min,E_max);
+    hCC_nuebar["total"]    = new TH1D("CC_Total_nuebar",  ccint_title.c_str(),  nbins,E_min,E_max);
+    hNC_nuebar["total"]    = new TH1D("NC_Total_nuebar",  ncint_title.c_str(),  nbins,E_min,E_max);
+    hCCQE_nuebar["total"]  = new TH1D("CCQE_Total_nuebar",ccqeint_title.c_str(),nbins,E_min,E_max);
     
-    hFlux_numu["total"] = new TH1D("FluxTotal_numu",flux_title.c_str(), nbins,E_min,E_max);
-    hCC_numu["total"]   = new TH1D("CCTotal_numu",  ccint_title.c_str(),nbins,E_min,E_max);
-    hNC_numu["total"]   = new TH1D("NCTotal_numu",  ncint_title.c_str(),nbins,E_min,E_max);
+    std::string HNBF, HNF, HNBCC, HNCC, HNBNC, HNNC, HNCCQE, HNBCCQE;
+    HNBF    = "Flux";
+    HNBCC   = "CC";
+    HNBNC   = "NC";
+    HNBCCQE = "CCQE";
 
-    hFlux_numubar["total"] = new TH1D("FluxTotal_numubar",flux_title.c_str(), nbins,E_min,E_max);
-    hCC_numubar["total"]   = new TH1D("CCTotal_numubar",  ccint_title.c_str(),nbins,E_min,E_max);
-    hNC_numubar["total"]   = new TH1D("NCTotal_numubar",  ncint_title.c_str(),nbins,E_min,E_max);
-
-    hFlux_nue["total"] = new TH1D("FluxTotal_nue",flux_title.c_str(), nbins,E_min,E_max);
-    hCC_nue["total"]   = new TH1D("CCTotal_nue",  ccint_title.c_str(),nbins,E_min,E_max);
-    hNC_nue["total"]   = new TH1D("NCTotal_nue",  ncint_title.c_str(),nbins,E_min,E_max);
-
-    hFlux_nuebar["total"] = new TH1D("FluxTotal_nuebar",flux_title.c_str(), nbins,E_min,E_max);
-    hCC_nuebar["total"]   = new TH1D("CCTotal_nuebar",  ccint_title.c_str(),nbins,E_min,E_max);
-    hNC_nuebar["total"]   = new TH1D("NCTotal_nuebar",  ncint_title.c_str(),nbins,E_min,E_max);
-    
-    std::string HNBF, HNF, HNBCC, HNCC, HNBNC, HNNC;
-    HNBF  = "Flux";
-    HNBCC = "CC";
-    HNBNC = "NC";
-    
     for ( auto i = 0; i < n_parents; i++ ) {
 
       HNF    = HNBF+parent_strings[i]+"_numu";
       hFlux_numu[parent_strings[i]] = new TH1D(HNF.c_str(),flux_title.c_str(),nbins,E_min,E_max);
 
-      HNCC  = HNBCC+parent_strings[i]+"_numu";
+      HNCC   = HNBCC+parent_strings[i]+"_numu";
       hCC_numu[parent_strings[i]] = new TH1D(HNCC.c_str(),ccint_title.c_str(),nbins,E_min,E_max);
       
-      HNNC  = HNBNC+parent_strings[i]+"_numu";
+      HNNC   = HNBNC+parent_strings[i]+"_numu";
       hNC_numu[parent_strings[i]] = new TH1D(HNNC.c_str(),ncint_title.c_str(),nbins,E_min,E_max);
+
+      HNCCQE = HNBCCQE+parent_strings[i]+"_numu";
+      hCCQE_numu[parent_strings[i]] = new TH1D(HNCCQE.c_str(),ccqeint_title.c_str(),nbins,E_min,E_max);
 
       HNF    = HNBF+parent_strings[i]+"_numubar";
       hFlux_numubar[parent_strings[i]] = new TH1D(HNF.c_str(),flux_title.c_str(),nbins,E_min,E_max);
@@ -148,6 +164,9 @@ namespace numi {
       HNNC  = HNBNC+parent_strings[i]+"_numubar";
       hNC_numubar[parent_strings[i]] = new TH1D(HNNC.c_str(),ncint_title.c_str(),nbins,E_min,E_max);
 
+      HNCCQE = HNBCCQE+parent_strings[i]+"_numubar";
+      hCCQE_numubar[parent_strings[i]] = new TH1D(HNCCQE.c_str(),ccqeint_title.c_str(),nbins,E_min,E_max);
+
       HNF    = HNBF+parent_strings[i]+"_nue";
       hFlux_nue[parent_strings[i]] = new TH1D(HNF.c_str(),flux_title.c_str(),nbins,E_min,E_max);
 
@@ -156,6 +175,9 @@ namespace numi {
       
       HNNC  = HNBNC+parent_strings[i]+"_nue";
       hNC_nue[parent_strings[i]] = new TH1D(HNNC.c_str(),ncint_title.c_str(),nbins,E_min,E_max);
+
+      HNCCQE = HNBCCQE+parent_strings[i]+"_nue";
+      hCCQE_nue[parent_strings[i]] = new TH1D(HNCCQE.c_str(),ccqeint_title.c_str(),nbins,E_min,E_max);
 
       HNF    = HNBF+parent_strings[i]+"_nuebar";
       hFlux_nuebar[parent_strings[i]] = new TH1D(HNF.c_str(),flux_title.c_str(),nbins,E_min,E_max);
@@ -166,61 +188,127 @@ namespace numi {
       HNNC  = HNBNC+parent_strings[i]+"_nuebar";
       hNC_nuebar[parent_strings[i]] = new TH1D(HNNC.c_str(),ncint_title.c_str(),nbins,E_min,E_max);
       
+      HNCCQE = HNBCCQE+parent_strings[i]+"_nuebar";
+      hCCQE_nuebar[parent_strings[i]] = new TH1D(HNCCQE.c_str(),ccqeint_title.c_str(),nbins,E_min,E_max);
+
     }
-
-    std::cout << " << Histograms initialized >> " << std::endl;
-    std::cout << " << Filling histograms >> "     << std::endl;
-
+    
     for ( Int_t i = 0; i < fNuMIChain->GetEntries(); i++ ) {
+
+      if ( i%5000000 == 0 ) std::cout << " >> " << i << " events stored." << std::endl; 
 
       fNuMIChain->GetEntry(i);
 
-      if ( ( fpz > fLowerVzCut ) || ( fpz > fLowerVzCut ) ) {
+      if ( ( fvz > fLowerVzCut ) || ( fvz > fLowerVzCut ) ) {
 
 	if ( fIsBottom || fIsLength ) {
 	  if ( fpdg == 14 ) {
 	    hFlux_numu["total"]->Fill(fE);
-	    if ( fndecay == 1 || fndecay == 2 || fndecay == 3 || fndecay == 4 ) hFlux_numu["_K0L"]->Fill(fE);
-	    if ( fndecay == 5 || fndecay == 6 || fndecay == 7 )                 hFlux_numu["_K+"]->Fill(fE);
-	    if ( fndecay == 8 || fndecay == 9 || fndecay == 10 )                hFlux_numu["_K-"]->Fill(fE);
-	    if ( fndecay == 11 )                                                hFlux_numu["_mu+"]->Fill(fE);
-	    if ( fndecay == 12 )                                                hFlux_numu["_mu-"]->Fill(fE);
-	    if ( fndecay == 13 )                                                hFlux_numu["_pi+"]->Fill(fE);
-	    if ( fndecay == 14 )                                                hFlux_numu["_pi-"]->Fill(fE);
-	    if ( fndecay == 999 )                                               hFlux_numu["_other"]->Fill(fE);
+	    if ( fndecay == 1 || fndecay == 2 || fndecay == 3 || fndecay == 4 ) {
+	      hFlux_numu["_K0L"]->Fill(fE);
+	    }
+	    if ( fndecay == 5 || fndecay == 6 || fndecay == 7 ) {
+	      hFlux_numu["_K+"]->Fill(fE);
+	    }
+	    if ( fndecay == 8 || fndecay == 9 || fndecay == 10 ) {
+	      hFlux_numu["_K-"]->Fill(fE);
+	    }
+	    if ( fndecay == 11 ) {
+	      hFlux_numu["_mu+"]->Fill(fE);
+	    }
+	    if ( fndecay == 12 ) {
+	      hFlux_numu["_mu-"]->Fill(fE);
+	    }
+	    if ( fndecay == 13 ) {
+	      hFlux_numu["_pi+"]->Fill(fE);
+	    }
+	    if ( fndecay == 14 ) {
+	      hFlux_numu["_pi-"]->Fill(fE);
+	    }
+	    if ( fndecay == 999 ) {
+	      hFlux_numu["_other"]->Fill(fE);
+	    }
 	  } // pdg == numu
 	  if ( fpdg == -14 ) {
 	    hFlux_numubar["total"]->Fill(fE);
-	    if ( fndecay == 1 || fndecay == 2 || fndecay == 3 || fndecay == 4 ) hFlux_numubar["_K0L"]->Fill(fE);
-	    if ( fndecay == 5 || fndecay == 6 || fndecay == 7 )                 hFlux_numubar["_K+"]->Fill(fE);
-	    if ( fndecay == 8 || fndecay == 9 || fndecay == 10 )                hFlux_numubar["_K-"]->Fill(fE);
-	    if ( fndecay == 11 )                                                hFlux_numubar["_mu+"]->Fill(fE);
-	    if ( fndecay == 12 )                                                hFlux_numubar["_mu-"]->Fill(fE);
-	    if ( fndecay == 13 )                                                hFlux_numubar["_pi+"]->Fill(fE);
-	    if ( fndecay == 14 )                                                hFlux_numubar["_pi-"]->Fill(fE);
-	    if ( fndecay == 999 )                                               hFlux_numubar["_other"]->Fill(fE);
+	    if ( fndecay == 1 || fndecay == 2 || fndecay == 3 || fndecay == 4 ) {
+	      hFlux_numubar["_K0L"]->Fill(fE);
+	    }
+	    if ( fndecay == 5 || fndecay == 6 || fndecay == 7 ) {
+	      hFlux_numubar["_K+"]->Fill(fE);
+	    }
+	    if ( fndecay == 8 || fndecay == 9 || fndecay == 10 ) {
+	      hFlux_numubar["_K-"]->Fill(fE);
+	    }
+	    if ( fndecay == 11 ) {
+	      hFlux_numubar["_mu+"]->Fill(fE);
+	    }
+	    if ( fndecay == 12 ) {
+	      hFlux_numubar["_mu-"]->Fill(fE);
+	    }
+	    if ( fndecay == 13 ) {
+	      hFlux_numubar["_pi+"]->Fill(fE);
+	    }
+	    if ( fndecay == 14 ) {
+	      hFlux_numubar["_pi-"]->Fill(fE);
+	    }
+	    if ( fndecay == 999 ) {
+	      hFlux_numubar["_other"]->Fill(fE);
+	    }
 	  } // pdg == numubar
 	  if ( fpdg == 12 ) {
 	    hFlux_nue["total"]->Fill(fE);
-	    if ( fndecay == 1 || fndecay == 2 || fndecay == 3 || fndecay == 4 ) hFlux_nue["_K0L"]->Fill(fE);
-	    if ( fndecay == 5 || fndecay == 6 || fndecay == 7 )                 hFlux_nue["_K+"]->Fill(fE);
-	    if ( fndecay == 8 || fndecay == 9 || fndecay == 10 )                hFlux_nue["_K-"]->Fill(fE);
-	    if ( fndecay == 11 )                                                hFlux_nue["_mu+"]->Fill(fE);
-	    if ( fndecay == 12 )                                                hFlux_nue["_mu-"]->Fill(fE);
-	    if ( fndecay == 13 )                                                hFlux_nue["_pi+"]->Fill(fE);
-	    if ( fndecay == 14 )                                                hFlux_nue["_pi-"]->Fill(fE);
-	    if ( fndecay == 999 )                                               hFlux_nue["_other"]->Fill(fE);
+	    if ( fndecay == 1 || fndecay == 2 || fndecay == 3 || fndecay == 4 ) {
+	      hFlux_nue["_K0L"]->Fill(fE);
+	    }
+	    if ( fndecay == 5 || fndecay == 6 || fndecay == 7 ) {
+	      hFlux_nue["_K+"]->Fill(fE);
+	    }
+	    if ( fndecay == 8 || fndecay == 9 || fndecay == 10 ) {
+	      hFlux_nue["_K-"]->Fill(fE);
+	    }
+	    if ( fndecay == 11 ) {
+	      hFlux_nue["_mu+"]->Fill(fE);
+	    }
+	    if ( fndecay == 12 ) {
+	      hFlux_nue["_mu-"]->Fill(fE);
+	    }
+	    if ( fndecay == 13 ) {
+	      hFlux_nue["_pi+"]->Fill(fE);
+	    }
+	    if ( fndecay == 14 ) {
+	      hFlux_nue["_pi-"]->Fill(fE);
+	    }
+	    if ( fndecay == 999 ) {
+	      hFlux_nue["_other"]->Fill(fE);
+	    }
 	  } // pdg == nue
 	  if ( fpdg == -12 ) {
 	    hFlux_nuebar["total"]->Fill(fE);
-	    if ( fndecay == 1 || fndecay == 2 || fndecay == 3 || fndecay == 4 ) hFlux_nuebar["_K0L"]->Fill(fE);
-	    if ( fndecay == 5 || fndecay == 6 || fndecay == 7 )                 hFlux_nuebar["_K+"]->Fill(fE);
-	    if ( fndecay == 8 || fndecay == 9 || fndecay == 10 )                hFlux_nuebar["_K-"]->Fill(fE);
-	    if ( fndecay == 11 )                                                hFlux_nuebar["_mu+"]->Fill(fE);
-	    if ( fndecay == 12 )                                                hFlux_nuebar["_mu-"]->Fill(fE);
-	    if ( fndecay == 13 )                                                hFlux_nuebar["_pi+"]->Fill(fE);
-	    if ( fndecay == 14 )                                                hFlux_nuebar["_pi-"]->Fill(fE);
-	    if ( fndecay == 999 )                                               hFlux_nuebar["_other"]->Fill(fE);
+	    if ( fndecay == 1 || fndecay == 2 || fndecay == 3 || fndecay == 4 ) {
+	      hFlux_nuebar["_K0L"]->Fill(fE);
+	    }
+	    if ( fndecay == 5 || fndecay == 6 || fndecay == 7 ) {
+	      hFlux_nuebar["_K+"]->Fill(fE);
+	    }
+	    if ( fndecay == 8 || fndecay == 9 || fndecay == 10 ) {
+	      hFlux_nuebar["_K-"]->Fill(fE);
+	    }
+	    if ( fndecay == 11 ) {
+	      hFlux_nuebar["_mu+"]->Fill(fE);
+	    }
+	    if ( fndecay == 12 ) {
+	      hFlux_nuebar["_mu-"]->Fill(fE);
+	    }
+	    if ( fndecay == 13 ) {
+	      hFlux_nuebar["_pi+"]->Fill(fE);
+	    }
+	    if ( fndecay == 14 ) {
+	      hFlux_nuebar["_pi-"]->Fill(fE);
+	    }
+	    if ( fndecay == 999 ) {
+	      hFlux_nuebar["_other"]->Fill(fE);
+	    }
 	  } // pdg == nuebar
 	} // length or bottom
 	
@@ -228,53 +316,135 @@ namespace numi {
 	  if ( fpz > 0 ) {
 	    if ( fpdg == 14 ) {
 	      hFlux_numu["total"]->Fill(fE);
-	      if ( fndecay == 1 || fndecay == 2 || fndecay == 3 || fndecay == 4 ) hFlux_numu["_K0L"]->Fill(fE);
-	      if ( fndecay == 5 || fndecay == 6 || fndecay == 7 )                 hFlux_numu["_K+"]->Fill(fE);
-	      if ( fndecay == 8 || fndecay == 9 || fndecay == 10 )                hFlux_numu["_K-"]->Fill(fE);
-	      if ( fndecay == 11 )                                                hFlux_numu["_mu+"]->Fill(fE);
-	      if ( fndecay == 12 )                                                hFlux_numu["_mu-"]->Fill(fE);
-	      if ( fndecay == 13 )                                                hFlux_numu["_pi+"]->Fill(fE);
-	      if ( fndecay == 14 )                                                hFlux_numu["_pi-"]->Fill(fE);
-	      if ( fndecay == 999 )                                               hFlux_numu["_other"]->Fill(fE);
+	      if ( fndecay == 1 || fndecay == 2 || fndecay == 3 || fndecay == 4 ) {
+		hFlux_numu["_K0L"]->Fill(fE);
+	      }
+	      if ( fndecay == 5 || fndecay == 6 || fndecay == 7 ) {
+		hFlux_numu["_K+"]->Fill(fE);
+	      }
+	      if ( fndecay == 8 || fndecay == 9 || fndecay == 10 ) {
+		hFlux_numu["_K-"]->Fill(fE);
+	      }
+	      if ( fndecay == 11 ) {
+		hFlux_numu["_mu+"]->Fill(fE);
+	      }
+	      if ( fndecay == 12 ) {
+		hFlux_numu["_mu-"]->Fill(fE);
+	      }
+	      if ( fndecay == 13 ) {
+		hFlux_numu["_pi+"]->Fill(fE);
+	      }
+	      if ( fndecay == 14 ) {
+		hFlux_numu["_pi-"]->Fill(fE);
+	      }
+	      if ( fndecay == 999 ) {
+		hFlux_numu["_other"]->Fill(fE);
+	      }
 	    } // pdg == numu
 	    if ( fpdg == -14 ) {
 	      hFlux_numubar["total"]->Fill(fE);
-	      if ( fndecay == 1 || fndecay == 2 || fndecay == 3 || fndecay == 4 ) hFlux_numubar["_K0L"]->Fill(fE);
-	      if ( fndecay == 5 || fndecay == 6 || fndecay == 7 )                 hFlux_numubar["_K+"]->Fill(fE);
-	      if ( fndecay == 8 || fndecay == 9 || fndecay == 10 )                hFlux_numubar["_K-"]->Fill(fE);
-	      if ( fndecay == 11 )                                                hFlux_numubar["_mu+"]->Fill(fE);
-	      if ( fndecay == 12 )                                                hFlux_numubar["_mu-"]->Fill(fE);
-	      if ( fndecay == 13 )                                                hFlux_numubar["_pi+"]->Fill(fE);
-	      if ( fndecay == 14 )                                                hFlux_numubar["_pi-"]->Fill(fE);
-	      if ( fndecay == 999 )                                               hFlux_numubar["_other"]->Fill(fE);
+	      if ( fndecay == 1 || fndecay == 2 || fndecay == 3 || fndecay == 4 ) {
+		hFlux_numubar["_K0L"]->Fill(fE);
+	      }
+	      if ( fndecay == 5 || fndecay == 6 || fndecay == 7 ) {
+		hFlux_numubar["_K+"]->Fill(fE);
+	      }
+	      if ( fndecay == 8 || fndecay == 9 || fndecay == 10 ) {
+		hFlux_numubar["_K-"]->Fill(fE);
+	      }
+	      if ( fndecay == 11 ) {
+		hFlux_numubar["_mu+"]->Fill(fE);
+	      }
+	      if ( fndecay == 12 ) {
+		hFlux_numubar["_mu-"]->Fill(fE);
+	      }
+	      if ( fndecay == 13 ) {
+		hFlux_numubar["_pi+"]->Fill(fE);
+	      }
+	      if ( fndecay == 14 ) {
+		hFlux_numubar["_pi-"]->Fill(fE);
+	      }
+	      if ( fndecay == 999 ) {
+		hFlux_numubar["_other"]->Fill(fE);
+	      }
 	    } // pdg == numubar
 	    if ( fpdg == 12 ) {
 	      hFlux_nue["total"]->Fill(fE);
-	      if ( fndecay == 1 || fndecay == 2 || fndecay == 3 || fndecay == 4 ) hFlux_nue["_K0L"]->Fill(fE);
-	      if ( fndecay == 5 || fndecay == 6 || fndecay == 7 )                 hFlux_nue["_K+"]->Fill(fE);
-	      if ( fndecay == 8 || fndecay == 9 || fndecay == 10 )                hFlux_nue["_K-"]->Fill(fE);
-	      if ( fndecay == 11 )                                                hFlux_nue["_mu+"]->Fill(fE);
-	      if ( fndecay == 12 )                                                hFlux_nue["_mu-"]->Fill(fE);
-	      if ( fndecay == 13 )                                                hFlux_nue["_pi+"]->Fill(fE);
-	      if ( fndecay == 14 )                                                hFlux_nue["_pi-"]->Fill(fE);
-	      if ( fndecay == 999 )                                               hFlux_nue["_other"]->Fill(fE);
+	      if ( fndecay == 1 || fndecay == 2 || fndecay == 3 || fndecay == 4 ) {
+		hFlux_nue["_K0L"]->Fill(fE);
+	      }
+	      if ( fndecay == 5 || fndecay == 6 || fndecay == 7 ) {
+		hFlux_nue["_K+"]->Fill(fE);
+	      }
+	      if ( fndecay == 8 || fndecay == 9 || fndecay == 10 ) {
+		hFlux_nue["_K-"]->Fill(fE);
+	      }
+	      if ( fndecay == 11 ) {
+		hFlux_nue["_mu+"]->Fill(fE);
+	      }
+	      if ( fndecay == 12 ) {
+		hFlux_nue["_mu-"]->Fill(fE);
+	      }
+	      if ( fndecay == 13 ) {
+		hFlux_nue["_pi+"]->Fill(fE);
+	      }
+	      if ( fndecay == 14 ) {
+		hFlux_nue["_pi-"]->Fill(fE);
+	      }
+	      if ( fndecay == 999 ) {
+		hFlux_nue["_other"]->Fill(fE);
+	      }
 	    } // pdg == nue
 	    if ( fpdg == -12 ) {
 	      hFlux_nuebar["total"]->Fill(fE);
-	      if ( fndecay == 1 || fndecay == 2 || fndecay == 3 || fndecay == 4 ) hFlux_nuebar["_K0L"]->Fill(fE);
-	      if ( fndecay == 5 || fndecay == 6 || fndecay == 7 )                 hFlux_nuebar["_K+"]->Fill(fE);
-	      if ( fndecay == 8 || fndecay == 9 || fndecay == 10 )                hFlux_nuebar["_K-"]->Fill(fE);
-	      if ( fndecay == 11 )                                                hFlux_nuebar["_mu+"]->Fill(fE);
-	      if ( fndecay == 12 )                                                hFlux_nuebar["_mu-"]->Fill(fE);
-	      if ( fndecay == 13 )                                                hFlux_nuebar["_pi+"]->Fill(fE);
-	      if ( fndecay == 14 )                                                hFlux_nuebar["_pi-"]->Fill(fE);
-	      if ( fndecay == 999 )                                               hFlux_nuebar["_other"]->Fill(fE);
+	      if ( fndecay == 1 || fndecay == 2 || fndecay == 3 || fndecay == 4 ) {
+		hFlux_nuebar["_K0L"]->Fill(fE);
+	      }
+	      if ( fndecay == 5 || fndecay == 6 || fndecay == 7 ) {
+		hFlux_nuebar["_K+"]->Fill(fE);
+	      }
+	      if ( fndecay == 8 || fndecay == 9 || fndecay == 10 ) {
+		hFlux_nuebar["_K-"]->Fill(fE);
+	      }
+	      if ( fndecay == 11 ) {
+		hFlux_nuebar["_mu+"]->Fill(fE);
+	      }
+	      if ( fndecay == 12 ) {
+		hFlux_nuebar["_mu-"]->Fill(fE);
+	      }
+	      if ( fndecay == 13 ) {
+		hFlux_nuebar["_pi+"]->Fill(fE);
+	      }
+	      if ( fndecay == 14 ) {
+		hFlux_nuebar["_pi-"]->Fill(fE);
+	      }
+	      if ( fndecay == 999 ) {
+		hFlux_nuebar["_other"]->Fill(fE);
+	      }
 	    } // pdg == nuebar
 	  } // pz cut
 	}  // if isnormal
       } // vtx cut
     } // for all entries in chain
     
+    TFile *out_file = new TFile(out_file_name.c_str(),"RECREATE");
+    for ( auto const& entry : hFlux_numu ) {
+      entry.second->Scale(1.0/(area_factor*fNFluxFiles));
+      entry.second->Write();
+    }
+    for ( auto const& entry : hFlux_numubar ) {
+      entry.second->Scale(1.0/(area_factor*fNFluxFiles));
+      entry.second->Write();
+    }
+    for ( auto const& entry : hFlux_nue ) {
+      entry.second->Scale(1.0/(area_factor*fNFluxFiles));
+      entry.second->Write();
+    }
+    for ( auto const& entry : hFlux_nuebar ) {
+      entry.second->Scale(1.0/(area_factor*fNFluxFiles));
+      entry.second->Write();
+    }
+
     Double_t hist_val, energy, xsecval, filler;
 
     for ( auto const& hist : hFlux_numu ) {
@@ -284,13 +454,18 @@ namespace numi {
 
 	// CC
 	xsecval  = fCCxsec_numu->Eval(energy);
-	filler   = xsecval*energy*hist_val;
+	filler   = xsecval*hist_val;
 	hCC_numu[hist.first]->SetBinContent(i+1,filler);
 
 	// NC
 	xsecval  = fNCxsec_numu->Eval(energy);
-	filler   = xsecval*energy*hist_val;
+	filler   = xsecval*hist_val;
 	hNC_numu[hist.first]->SetBinContent(i+1,filler);
+
+	// CCQE
+	xsecval  = fCCQExsec_numu->Eval(energy);
+	filler   = xsecval*hist_val;
+	hCCQE_numu[hist.first]->SetBinContent(i+1,filler);
       }
     }
 
@@ -301,13 +476,18 @@ namespace numi {
 
 	// CC
 	xsecval  = fCCxsec_numubar->Eval(energy);
-	filler   = xsecval*energy*hist_val;
+	filler   = xsecval*hist_val;
 	hCC_numubar[hist.first]->SetBinContent(i+1,filler);
 
 	// NC
 	xsecval  = fNCxsec_numubar->Eval(energy);
-	filler   = xsecval*energy*hist_val;
+	filler   = xsecval*hist_val;
 	hNC_numubar[hist.first]->SetBinContent(i+1,filler);
+
+	// CCQE
+	xsecval  = fCCQExsec_numubar->Eval(energy);
+	filler   = xsecval*hist_val;
+	hCCQE_numubar[hist.first]->SetBinContent(i+1,filler);
       }
     }
 
@@ -318,16 +498,21 @@ namespace numi {
 
 	// CC
 	xsecval  = fCCxsec_nue->Eval(energy);
-	filler   = xsecval*energy*hist_val;
+	filler   = xsecval*hist_val;
 	hCC_nue[hist.first]->SetBinContent(i+1,filler);
 
 	// NC
 	xsecval  = fNCxsec_nue->Eval(energy);
-	filler   = xsecval*energy*hist_val;
+	filler   = xsecval*hist_val;
 	hNC_nue[hist.first]->SetBinContent(i+1,filler);
+
+	// CCQE
+	xsecval  = fCCQExsec_nue->Eval(energy);
+	filler   = xsecval*hist_val;
+	hCCQE_nue[hist.first]->SetBinContent(i+1,filler);
       }
     }
-
+    
     for ( auto const& hist : hFlux_nuebar ) {
       for ( Int_t i = 0; i < hist.second->GetNbinsX(); i++ ) {
 	hist_val = hist.second->GetBinContent(i+1);
@@ -335,36 +520,39 @@ namespace numi {
 
 	// CC
 	xsecval  = fCCxsec_nuebar->Eval(energy);
-	filler   = xsecval*energy*hist_val;
+	filler   = xsecval*hist_val;
 	hCC_nuebar[hist.first]->SetBinContent(i+1,filler);
 
 	// NC
 	xsecval  = fNCxsec_nuebar->Eval(energy);
-	filler   = xsecval*energy*hist_val;
+	filler   = xsecval*hist_val;
 	hNC_nuebar[hist.first]->SetBinContent(i+1,filler);
+	
+	// CCQE
+	xsecval  = fCCQExsec_nuebar->Eval(energy);
+	filler   = xsecval*hist_val;
+	hCCQE_nuebar[hist.first]->SetBinContent(i+1,filler);
       }
     }
-
-    std::cout << " << Writing histograms to file >> " << std::endl;
-    TFile *out_file = new TFile(out_file_name.c_str(),"RECREATE");
     
-    for ( auto const& entry : hFlux_numu ) {
-      entry.second->Scale(1.0/(area_factor*fNFluxFiles));
-      entry.second->Write();
-    }
     for ( auto const& entry : hCC_numu ) {
       entry.second->Scale(Xsec_factor);
       entry.second->Write();
     }
-    for ( auto const& entry : hNC_numu ) {
+    for ( auto const& entry : hCC_numubar ) {
       entry.second->Scale(Xsec_factor);
       entry.second->Write();
     }
-    for ( auto const& entry : hFlux_numubar ) {
-      entry.second->Scale(1.0/(area_factor*fNFluxFiles));
+    for ( auto const& entry : hCC_nue ) {
+      entry.second->Scale(Xsec_factor);
       entry.second->Write();
     }
-    for ( auto const& entry : hCC_numubar ) {
+    for ( auto const& entry : hCC_nuebar ) {
+      entry.second->Scale(Xsec_factor);
+      entry.second->Write();
+    }
+
+    for ( auto const& entry : hNC_numu ) {
       entry.second->Scale(Xsec_factor);
       entry.second->Write();
     }
@@ -372,23 +560,7 @@ namespace numi {
       entry.second->Scale(Xsec_factor);
       entry.second->Write();
     }
-    for ( auto const& entry : hFlux_nue ) {
-      entry.second->Scale(1.0/(area_factor*fNFluxFiles));
-      entry.second->Write();
-    }
-    for ( auto const& entry : hCC_nue ) {
-      entry.second->Scale(Xsec_factor);
-      entry.second->Write();
-    }
     for ( auto const& entry : hNC_nue ) {
-      entry.second->Scale(Xsec_factor);
-      entry.second->Write();
-    }
-    for ( auto const& entry : hFlux_nuebar ) {
-      entry.second->Scale(1.0/(area_factor*fNFluxFiles));
-      entry.second->Write();
-    }
-    for ( auto const& entry : hCC_nuebar ) {
       entry.second->Scale(Xsec_factor);
       entry.second->Write();
     }
@@ -397,8 +569,24 @@ namespace numi {
       entry.second->Write();
     }
 
+    for ( auto const& entry : hCCQE_numu ) {
+      entry.second->Scale(Xsec_factor);
+      entry.second->Write();
+    }
+    for ( auto const& entry : hCCQE_numubar ) {
+      entry.second->Scale(Xsec_factor);
+      entry.second->Write();
+    }
+    for ( auto const& entry : hCCQE_nue ) {
+      entry.second->Scale(Xsec_factor);
+      entry.second->Write();
+    }
+    for ( auto const& entry : hCCQE_nuebar ) {
+      entry.second->Scale(Xsec_factor);
+      entry.second->Write();
+    }
+
     out_file->Close();
-    std::cout << " << Done >> " << std::endl;
 
   }
   

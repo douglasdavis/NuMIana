@@ -27,12 +27,16 @@ namespace numi {
 
     TGraph     *fCCxsec_numu;
     TGraph     *fNCxsec_numu;
+    TGraph     *fCCQExsec_numu;
     TGraph     *fCCxsec_numubar;
     TGraph     *fNCxsec_numubar;
+    TGraph     *fCCQExsec_numubar;
     TGraph     *fCCxsec_nue;
     TGraph     *fNCxsec_nue;
+    TGraph     *fCCQExsec_nue;
     TGraph     *fCCxsec_nuebar;
     TGraph     *fNCxsec_nuebar;
+    TGraph     *fCCQExsec_nuebar;
     
     UInt_t   fNFluxFiles;
     Double_t fLowerVzCut;

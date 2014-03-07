@@ -19,20 +19,26 @@ int main(int argc, char *argv[])
   infiles.close();
 
   numi::EvRate *bottom = new numi::EvRate(dir_bottom,genie_file,file_list,true,false,false);
-  bottom->SetLowerVzCut(70000);
-  bottom->MakeHists("bottom_dump_cut_out_file.root",bottom->BottomArea());
+  bottom->MakeHists("DATA_NEW/bottom_2010.root",bottom->BottomArea());
   delete bottom;
 
   numi::EvRate *length = new numi::EvRate(dir_length,genie_file,file_list,false,true,false);
-  length->SetLowerVzCut(70000);
-  length->MakeHists("length_dump_cut_out_file.root",length->LengthArea());
+  length->MakeHists("DATA_NEW/length_2010.root",length->LengthArea());
   delete length;
 
-  /*
   numi::EvRate *normal = new numi::EvRate(dir_normal,genie_file,file_list,false,false,true);
-  normal->MakeHists("normal_out_file.root",normal->NormalArea());
+  normal->MakeHists("DATA_NEW/normal_2010.root",normal->NormalArea());
   delete normal;
-  */
+
+  numi::EvRate *bcut = new numi::EvRate(dir_bottom,genie_file,file_list,true,false,false);
+  bcut->SetLowerVzCut(7e4);
+  bcut->MakeHists("DATA_NEW/bottom_2010_dump_cut.root",bcut->BottomArea());
+  delete bcut;
+
+  numi::EvRate *lcut = new numi::EvRate(dir_length,genie_file,file_list,false,true,false);
+  lcut->SetLowerVzCut(7e4);
+  lcut->MakeHists("DATA_NEW/length_2010_dump_cut.root",lcut->LengthArea());
+  delete lcut;
 
   return 0;
 }
