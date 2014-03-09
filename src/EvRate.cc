@@ -111,9 +111,9 @@ namespace numi {
     std::map < std::string, TH1D* > hCCQE_nuebar;
 
     std::string flux_title    = ";Energy (GeV);#nu/m^{2}/50 MeV/10^{8} POT";
-    std::string ccint_title   = ";Energy (GeV);CC int/50 MeV/6 #times 10^{20} POT";
-    std::string ncint_title   = ";Energy (GeV);NC int/50 MeV/6 #times 10^{20} POT";
-    std::string ccqeint_title = ";Energy (GeV);CCQE int/50 MeV/6 #times 10^{20} POT"; 
+    std::string ccint_title   = ";Energy (GeV);Events/50 MeV/6 #times 10^{20} POT";
+    std::string ncint_title   = ";Energy (GeV);Events/50 MeV/6 #times 10^{20} POT";
+    std::string ccqeint_title = ";Energy (GeV);Events/50 MeV/6 #times 10^{20} POT"; 
 
     hFlux_numu["total"]    = new TH1D("Flux_Total_numu",flux_title.c_str(),   nbins,E_min,E_max);
     hCC_numu["total"]      = new TH1D("CC_Total_numu",  ccint_title.c_str(),  nbins,E_min,E_max);
@@ -204,111 +204,47 @@ namespace numi {
 	if ( fIsBottom || fIsLength ) {
 	  if ( fpdg == 14 ) {
 	    hFlux_numu["total"]->Fill(fE);
-	    if ( fndecay == 1 || fndecay == 2 || fndecay == 3 || fndecay == 4 ) {
-	      hFlux_numu["_K0L"]->Fill(fE);
-	    }
-	    if ( fndecay == 5 || fndecay == 6 || fndecay == 7 ) {
-	      hFlux_numu["_K+"]->Fill(fE);
-	    }
-	    if ( fndecay == 8 || fndecay == 9 || fndecay == 10 ) {
-	      hFlux_numu["_K-"]->Fill(fE);
-	    }
-	    if ( fndecay == 11 ) {
-	      hFlux_numu["_mu+"]->Fill(fE);
-	    }
-	    if ( fndecay == 12 ) {
-	      hFlux_numu["_mu-"]->Fill(fE);
-	    }
-	    if ( fndecay == 13 ) {
-	      hFlux_numu["_pi+"]->Fill(fE);
-	    }
-	    if ( fndecay == 14 ) {
-	      hFlux_numu["_pi-"]->Fill(fE);
-	    }
-	    if ( fndecay == 999 ) {
-	      hFlux_numu["_other"]->Fill(fE);
-	    }
+	    if ( fndecay == 1 || fndecay == 2 || fndecay == 3 || fndecay == 4 ) hFlux_numu["_K0L"]->Fill(fE);
+	    if ( fndecay == 5 || fndecay == 6 || fndecay == 7 )                 hFlux_numu["_K+"]->Fill(fE);
+	    if ( fndecay == 8 || fndecay == 9 || fndecay == 10 )                hFlux_numu["_K-"]->Fill(fE);
+	    if ( fndecay == 11 )                                                hFlux_numu["_mu+"]->Fill(fE);
+	    if ( fndecay == 12 )                                                hFlux_numu["_mu-"]->Fill(fE);
+	    if ( fndecay == 13 )                                                hFlux_numu["_pi+"]->Fill(fE);
+	    if ( fndecay == 14 )                                                hFlux_numu["_pi-"]->Fill(fE);
+	    if ( fndecay == 999 )                                               hFlux_numu["_other"]->Fill(fE);
 	  } // pdg == numu
 	  if ( fpdg == -14 ) {
 	    hFlux_numubar["total"]->Fill(fE);
-	    if ( fndecay == 1 || fndecay == 2 || fndecay == 3 || fndecay == 4 ) {
-	      hFlux_numubar["_K0L"]->Fill(fE);
-	    }
-	    if ( fndecay == 5 || fndecay == 6 || fndecay == 7 ) {
-	      hFlux_numubar["_K+"]->Fill(fE);
-	    }
-	    if ( fndecay == 8 || fndecay == 9 || fndecay == 10 ) {
-	      hFlux_numubar["_K-"]->Fill(fE);
-	    }
-	    if ( fndecay == 11 ) {
-	      hFlux_numubar["_mu+"]->Fill(fE);
-	    }
-	    if ( fndecay == 12 ) {
-	      hFlux_numubar["_mu-"]->Fill(fE);
-	    }
-	    if ( fndecay == 13 ) {
-	      hFlux_numubar["_pi+"]->Fill(fE);
-	    }
-	    if ( fndecay == 14 ) {
-	      hFlux_numubar["_pi-"]->Fill(fE);
-	    }
-	    if ( fndecay == 999 ) {
-	      hFlux_numubar["_other"]->Fill(fE);
-	    }
+	    if ( fndecay == 1 || fndecay == 2 || fndecay == 3 || fndecay == 4 ) hFlux_numubar["_K0L"]->Fill(fE);
+	    if ( fndecay == 5 || fndecay == 6 || fndecay == 7 )                 hFlux_numubar["_K+"]->Fill(fE);
+	    if ( fndecay == 8 || fndecay == 9 || fndecay == 10 )                hFlux_numubar["_K-"]->Fill(fE);
+	    if ( fndecay == 11 )                                                hFlux_numubar["_mu+"]->Fill(fE);
+	    if ( fndecay == 12 )                                                hFlux_numubar["_mu-"]->Fill(fE);
+	    if ( fndecay == 13 )                                                hFlux_numubar["_pi+"]->Fill(fE);
+	    if ( fndecay == 14 )                                                hFlux_numubar["_pi-"]->Fill(fE);
+	    if ( fndecay == 999 )                                               hFlux_numubar["_other"]->Fill(fE);
 	  } // pdg == numubar
 	  if ( fpdg == 12 ) {
 	    hFlux_nue["total"]->Fill(fE);
-	    if ( fndecay == 1 || fndecay == 2 || fndecay == 3 || fndecay == 4 ) {
-	      hFlux_nue["_K0L"]->Fill(fE);
-	    }
-	    if ( fndecay == 5 || fndecay == 6 || fndecay == 7 ) {
-	      hFlux_nue["_K+"]->Fill(fE);
-	    }
-	    if ( fndecay == 8 || fndecay == 9 || fndecay == 10 ) {
-	      hFlux_nue["_K-"]->Fill(fE);
-	    }
-	    if ( fndecay == 11 ) {
-	      hFlux_nue["_mu+"]->Fill(fE);
-	    }
-	    if ( fndecay == 12 ) {
-	      hFlux_nue["_mu-"]->Fill(fE);
-	    }
-	    if ( fndecay == 13 ) {
-	      hFlux_nue["_pi+"]->Fill(fE);
-	    }
-	    if ( fndecay == 14 ) {
-	      hFlux_nue["_pi-"]->Fill(fE);
-	    }
-	    if ( fndecay == 999 ) {
-	      hFlux_nue["_other"]->Fill(fE);
-	    }
+	    if ( fndecay == 1 || fndecay == 2 || fndecay == 3 || fndecay == 4 ) hFlux_nue["_K0L"]->Fill(fE);
+	    if ( fndecay == 5 || fndecay == 6 || fndecay == 7 )                 hFlux_nue["_K+"]->Fill(fE);
+	    if ( fndecay == 8 || fndecay == 9 || fndecay == 10 )                hFlux_nue["_K-"]->Fill(fE);
+	    if ( fndecay == 11 )                                                hFlux_nue["_mu+"]->Fill(fE);
+	    if ( fndecay == 12 )                                                hFlux_nue["_mu-"]->Fill(fE);
+	    if ( fndecay == 13 )                                                hFlux_nue["_pi+"]->Fill(fE);
+	    if ( fndecay == 14 )                                                hFlux_nue["_pi-"]->Fill(fE);
+	    if ( fndecay == 999 )                                               hFlux_nue["_other"]->Fill(fE);
 	  } // pdg == nue
 	  if ( fpdg == -12 ) {
 	    hFlux_nuebar["total"]->Fill(fE);
-	    if ( fndecay == 1 || fndecay == 2 || fndecay == 3 || fndecay == 4 ) {
-	      hFlux_nuebar["_K0L"]->Fill(fE);
-	    }
-	    if ( fndecay == 5 || fndecay == 6 || fndecay == 7 ) {
-	      hFlux_nuebar["_K+"]->Fill(fE);
-	    }
-	    if ( fndecay == 8 || fndecay == 9 || fndecay == 10 ) {
-	      hFlux_nuebar["_K-"]->Fill(fE);
-	    }
-	    if ( fndecay == 11 ) {
-	      hFlux_nuebar["_mu+"]->Fill(fE);
-	    }
-	    if ( fndecay == 12 ) {
-	      hFlux_nuebar["_mu-"]->Fill(fE);
-	    }
-	    if ( fndecay == 13 ) {
-	      hFlux_nuebar["_pi+"]->Fill(fE);
-	    }
-	    if ( fndecay == 14 ) {
-	      hFlux_nuebar["_pi-"]->Fill(fE);
-	    }
-	    if ( fndecay == 999 ) {
-	      hFlux_nuebar["_other"]->Fill(fE);
-	    }
+	    if ( fndecay == 1 || fndecay == 2 || fndecay == 3 || fndecay == 4 ) hFlux_nuebar["_K0L"]->Fill(fE);
+	    if ( fndecay == 5 || fndecay == 6 || fndecay == 7 )                 hFlux_nuebar["_K+"]->Fill(fE);
+	    if ( fndecay == 8 || fndecay == 9 || fndecay == 10 )                hFlux_nuebar["_K-"]->Fill(fE);
+	    if ( fndecay == 11 )                                                hFlux_nuebar["_mu+"]->Fill(fE);
+	    if ( fndecay == 12 )                                                hFlux_nuebar["_mu-"]->Fill(fE);
+	    if ( fndecay == 13 )                                                hFlux_nuebar["_pi+"]->Fill(fE);
+	    if ( fndecay == 14 )                                                hFlux_nuebar["_pi-"]->Fill(fE);
+	    if ( fndecay == 999 )                                               hFlux_nuebar["_other"]->Fill(fE);
 	  } // pdg == nuebar
 	} // length or bottom
 	
@@ -316,111 +252,47 @@ namespace numi {
 	  if ( fpz > 0 ) {
 	    if ( fpdg == 14 ) {
 	      hFlux_numu["total"]->Fill(fE);
-	      if ( fndecay == 1 || fndecay == 2 || fndecay == 3 || fndecay == 4 ) {
-		hFlux_numu["_K0L"]->Fill(fE);
-	      }
-	      if ( fndecay == 5 || fndecay == 6 || fndecay == 7 ) {
-		hFlux_numu["_K+"]->Fill(fE);
-	      }
-	      if ( fndecay == 8 || fndecay == 9 || fndecay == 10 ) {
-		hFlux_numu["_K-"]->Fill(fE);
-	      }
-	      if ( fndecay == 11 ) {
-		hFlux_numu["_mu+"]->Fill(fE);
-	      }
-	      if ( fndecay == 12 ) {
-		hFlux_numu["_mu-"]->Fill(fE);
-	      }
-	      if ( fndecay == 13 ) {
-		hFlux_numu["_pi+"]->Fill(fE);
-	      }
-	      if ( fndecay == 14 ) {
-		hFlux_numu["_pi-"]->Fill(fE);
-	      }
-	      if ( fndecay == 999 ) {
-		hFlux_numu["_other"]->Fill(fE);
-	      }
+	      if ( fndecay == 1 || fndecay == 2 || fndecay == 3 || fndecay == 4 ) hFlux_numu["_K0L"]->Fill(fE);
+	      if ( fndecay == 5 || fndecay == 6 || fndecay == 7 )                 hFlux_numu["_K+"]->Fill(fE);
+	      if ( fndecay == 8 || fndecay == 9 || fndecay == 10 )                hFlux_numu["_K-"]->Fill(fE);
+	      if ( fndecay == 11 )                                                hFlux_numu["_mu+"]->Fill(fE);
+	      if ( fndecay == 12 )                                                hFlux_numu["_mu-"]->Fill(fE);
+	      if ( fndecay == 13 )                                                hFlux_numu["_pi+"]->Fill(fE);
+	      if ( fndecay == 14 )                                                hFlux_numu["_pi-"]->Fill(fE);
+	      if ( fndecay == 999 )                                               hFlux_numu["_other"]->Fill(fE);
 	    } // pdg == numu
 	    if ( fpdg == -14 ) {
 	      hFlux_numubar["total"]->Fill(fE);
-	      if ( fndecay == 1 || fndecay == 2 || fndecay == 3 || fndecay == 4 ) {
-		hFlux_numubar["_K0L"]->Fill(fE);
-	      }
-	      if ( fndecay == 5 || fndecay == 6 || fndecay == 7 ) {
-		hFlux_numubar["_K+"]->Fill(fE);
-	      }
-	      if ( fndecay == 8 || fndecay == 9 || fndecay == 10 ) {
-		hFlux_numubar["_K-"]->Fill(fE);
-	      }
-	      if ( fndecay == 11 ) {
-		hFlux_numubar["_mu+"]->Fill(fE);
-	      }
-	      if ( fndecay == 12 ) {
-		hFlux_numubar["_mu-"]->Fill(fE);
-	      }
-	      if ( fndecay == 13 ) {
-		hFlux_numubar["_pi+"]->Fill(fE);
-	      }
-	      if ( fndecay == 14 ) {
-		hFlux_numubar["_pi-"]->Fill(fE);
-	      }
-	      if ( fndecay == 999 ) {
-		hFlux_numubar["_other"]->Fill(fE);
-	      }
+	      if ( fndecay == 1 || fndecay == 2 || fndecay == 3 || fndecay == 4 ) hFlux_numubar["_K0L"]->Fill(fE);
+	      if ( fndecay == 5 || fndecay == 6 || fndecay == 7 )                 hFlux_numubar["_K+"]->Fill(fE);
+	      if ( fndecay == 8 || fndecay == 9 || fndecay == 10 )                hFlux_numubar["_K-"]->Fill(fE);
+	      if ( fndecay == 11 )                                                hFlux_numubar["_mu+"]->Fill(fE);
+	      if ( fndecay == 12 )                                                hFlux_numubar["_mu-"]->Fill(fE);
+	      if ( fndecay == 13 )                                                hFlux_numubar["_pi+"]->Fill(fE);
+	      if ( fndecay == 14 )                                                hFlux_numubar["_pi-"]->Fill(fE);
+	      if ( fndecay == 999 )                                               hFlux_numubar["_other"]->Fill(fE);
 	    } // pdg == numubar
 	    if ( fpdg == 12 ) {
 	      hFlux_nue["total"]->Fill(fE);
-	      if ( fndecay == 1 || fndecay == 2 || fndecay == 3 || fndecay == 4 ) {
-		hFlux_nue["_K0L"]->Fill(fE);
-	      }
-	      if ( fndecay == 5 || fndecay == 6 || fndecay == 7 ) {
-		hFlux_nue["_K+"]->Fill(fE);
-	      }
-	      if ( fndecay == 8 || fndecay == 9 || fndecay == 10 ) {
-		hFlux_nue["_K-"]->Fill(fE);
-	      }
-	      if ( fndecay == 11 ) {
-		hFlux_nue["_mu+"]->Fill(fE);
-	      }
-	      if ( fndecay == 12 ) {
-		hFlux_nue["_mu-"]->Fill(fE);
-	      }
-	      if ( fndecay == 13 ) {
-		hFlux_nue["_pi+"]->Fill(fE);
-	      }
-	      if ( fndecay == 14 ) {
-		hFlux_nue["_pi-"]->Fill(fE);
-	      }
-	      if ( fndecay == 999 ) {
-		hFlux_nue["_other"]->Fill(fE);
-	      }
+	      if ( fndecay == 1 || fndecay == 2 || fndecay == 3 || fndecay == 4 ) hFlux_nue["_K0L"]->Fill(fE);
+	      if ( fndecay == 5 || fndecay == 6 || fndecay == 7 )                 hFlux_nue["_K+"]->Fill(fE);
+	      if ( fndecay == 8 || fndecay == 9 || fndecay == 10 )                hFlux_nue["_K-"]->Fill(fE);
+	      if ( fndecay == 11 )                                                hFlux_nue["_mu+"]->Fill(fE);
+	      if ( fndecay == 12 )                                                hFlux_nue["_mu-"]->Fill(fE);
+	      if ( fndecay == 13 )                                                hFlux_nue["_pi+"]->Fill(fE);
+	      if ( fndecay == 14 )                                                hFlux_nue["_pi-"]->Fill(fE);
+	      if ( fndecay == 999 )                                               hFlux_nue["_other"]->Fill(fE);
 	    } // pdg == nue
 	    if ( fpdg == -12 ) {
 	      hFlux_nuebar["total"]->Fill(fE);
-	      if ( fndecay == 1 || fndecay == 2 || fndecay == 3 || fndecay == 4 ) {
-		hFlux_nuebar["_K0L"]->Fill(fE);
-	      }
-	      if ( fndecay == 5 || fndecay == 6 || fndecay == 7 ) {
-		hFlux_nuebar["_K+"]->Fill(fE);
-	      }
-	      if ( fndecay == 8 || fndecay == 9 || fndecay == 10 ) {
-		hFlux_nuebar["_K-"]->Fill(fE);
-	      }
-	      if ( fndecay == 11 ) {
-		hFlux_nuebar["_mu+"]->Fill(fE);
-	      }
-	      if ( fndecay == 12 ) {
-		hFlux_nuebar["_mu-"]->Fill(fE);
-	      }
-	      if ( fndecay == 13 ) {
-		hFlux_nuebar["_pi+"]->Fill(fE);
-	      }
-	      if ( fndecay == 14 ) {
-		hFlux_nuebar["_pi-"]->Fill(fE);
-	      }
-	      if ( fndecay == 999 ) {
-		hFlux_nuebar["_other"]->Fill(fE);
-	      }
+	      if ( fndecay == 1 || fndecay == 2 || fndecay == 3 || fndecay == 4 ) hFlux_nuebar["_K0L"]->Fill(fE);
+	      if ( fndecay == 5 || fndecay == 6 || fndecay == 7 )                 hFlux_nuebar["_K+"]->Fill(fE);
+	      if ( fndecay == 8 || fndecay == 9 || fndecay == 10 )                hFlux_nuebar["_K-"]->Fill(fE);
+	      if ( fndecay == 11 )                                                hFlux_nuebar["_mu+"]->Fill(fE);
+	      if ( fndecay == 12 )                                                hFlux_nuebar["_mu-"]->Fill(fE);
+	      if ( fndecay == 13 )                                                hFlux_nuebar["_pi+"]->Fill(fE);
+	      if ( fndecay == 14 )                                                hFlux_nuebar["_pi-"]->Fill(fE);
+	      if ( fndecay == 999 )                                               hFlux_nuebar["_other"]->Fill(fE);
 	    } // pdg == nuebar
 	  } // pz cut
 	}  // if isnormal
