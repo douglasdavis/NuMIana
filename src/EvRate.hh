@@ -38,40 +38,42 @@ namespace numi {
     TGraph     *fNCxsec_nuebar;
     TGraph     *fCCQExsec_nuebar;
     
-    UInt_t   fNFluxFiles;
-    Double_t fLowerVzCut;
-    Double_t fUpperVzCut;
-    Bool_t   fIsBottom;
-    Bool_t   fIsLength;
-    Bool_t   fIsNormal;
+    UInt_t      fNFluxFiles;
+    Double_t    fLowerVzCut;
+    Double_t    fUpperVzCut;
+    Double_t    fEnergyCut;
 
-    Double_t fwgt;
-    Double_t fvtxx;
-    Double_t fvtxy;
-    Double_t fvtxz;
-    Double_t fdist;
-    Double_t fpx;
-    Double_t fpy;
-    Double_t fpz;
-    Double_t fE;
-    Int_t    fpdg;
+    Bool_t      fIsBottom;
+    Bool_t      fIsLength;
+    Bool_t      fIsNormal;
 
-    Double_t ftpx;
-    Double_t ftpy;
-    Double_t ftpz;
-    Double_t fvx;
-    Double_t fvy;
-    Double_t fvz;
-    Int_t    fppmedium;
-    Int_t    fndecay;
-    Int_t    ftptype;
-    Int_t    frun;
-    Int_t    fevtno;
-    Int_t    fentryno;
+    Double_t    fwgt;
+    Double_t    fvtxx;
+    Double_t    fvtxy;
+    Double_t    fvtxz;
+    Double_t    fdist;
+    Double_t    fpx;
+    Double_t    fpy;
+    Double_t    fpz;
+    Double_t    fE;
+    Int_t       fpdg;
 
-    Double_t fBottomArea = 51.926;
-    Double_t fLengthArea = 51.600;
-    Double_t fNormalArea = 11.920;
+    Double_t    ftpx;
+    Double_t    ftpy;
+    Double_t    ftpz;
+    Double_t    fvx;
+    Double_t    fvy;
+    Double_t    fvz;
+    Int_t       fppmedium;
+    Int_t       fndecay;
+    Int_t       ftptype;
+    Int_t       frun;
+    Int_t       fevtno;
+    Int_t       fentryno;
+
+    Double_t    fBottomArea = 51.926;
+    Double_t    fLengthArea = 51.600;
+    Double_t    fNormalArea = 11.920;
 
   public:
     
@@ -86,9 +88,9 @@ namespace numi {
 
     void SetLowerVzCut(const Double_t& cut) { fLowerVzCut = cut; }
     void SetUpperVzCut(const Double_t& cut) { fUpperVzCut = cut; }
+    void SetEnergyCut(const Double_t& cut)  { fEnergyCut  = cut; }
 
     void MakeHists(const std::string& out_file_name, const Double_t& area_factor);
-
 
     const Double_t BottomArea() const;
     const Double_t LengthArea() const;

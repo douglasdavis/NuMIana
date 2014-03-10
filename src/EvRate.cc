@@ -22,6 +22,7 @@ namespace numi {
     
     fLowerVzCut = -1e10;
     fUpperVzCut =  1e15;
+    fEnergyCut  =  0.0;
     
     fIsBottom   = isbottom;
     fIsLength   = islength;
@@ -199,7 +200,7 @@ namespace numi {
 
       fNuMIChain->GetEntry(i);
 
-      if ( ( fvz > fLowerVzCut ) || ( fvz > fLowerVzCut ) ) {
+      if ( ( fvz > fLowerVzCut ) && ( fvz < fUpperVzCut ) && ( fE > fEnergyCut ) ) {
 
 	if ( fIsBottom || fIsLength ) {
 	  if ( fpdg == 14 ) {
@@ -301,19 +302,19 @@ namespace numi {
     
     TFile *out_file = new TFile(out_file_name.c_str(),"RECREATE");
     for ( auto const& entry : hFlux_numu ) {
-      entry.second->Scale(1.0/(area_factor*fNFluxFiles));
+      entry.second->Scale(1.0/(area_factor*fNFluxFiles*3.14159265));
       entry.second->Write();
     }
     for ( auto const& entry : hFlux_numubar ) {
-      entry.second->Scale(1.0/(area_factor*fNFluxFiles));
+      entry.second->Scale(1.0/(area_factor*fNFluxFiles*3.14159265));
       entry.second->Write();
     }
     for ( auto const& entry : hFlux_nue ) {
-      entry.second->Scale(1.0/(area_factor*fNFluxFiles));
+      entry.second->Scale(1.0/(area_factor*fNFluxFiles*3.14159265));
       entry.second->Write();
     }
     for ( auto const& entry : hFlux_nuebar ) {
-      entry.second->Scale(1.0/(area_factor*fNFluxFiles));
+      entry.second->Scale(1.0/(area_factor*fNFluxFiles*3.14159265));
       entry.second->Write();
     }
 
