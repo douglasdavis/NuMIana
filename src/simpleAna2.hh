@@ -55,9 +55,13 @@ namespace numi {
     simpleAna2(const std::string& file_name);
 
     virtual ~simpleAna2();
-
-    std::vector< Double_t > VectorOfV(const std::string& var);
-
+    
+    std::vector< Double_t > Vector_D(const std::string& var) const;
+    
+    std::vector< std::pair< Int_t, Double_t > > VectorPair_I_D(const std::string& var1,
+							       const std::string& var2) const;
+    
+    
   };
 
 }
