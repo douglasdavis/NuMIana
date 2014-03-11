@@ -27,15 +27,15 @@ namespace numi {
     TTree        *fFluxNtuple;
     TChain       *fNuMIChain;
 
-    Int_t                                    fNEvents;
+    Int_t                                      fNEvents;
     std::vector< Double_t >                    fvx;
     std::vector< Double_t >                    fvy;
     std::vector< Double_t >                    fvz;
     std::vector< Int_t >                       fppmedium;
     std::vector< Int_t >                       fndecay;
-    std::vector< std::pair< Int_t, Int_t > > fppmediumndecay;
-    std::map< Int_t, std::string >           fppmediumCodeMap;
-    std::map< Int_t, std::string >           fndecayCodeMap;
+    std::vector< std::pair< Int_t, Int_t > >   fppmediumndecay;
+    std::map< Int_t, std::string >             fppmediumCodeMap;
+    std::map< Int_t, std::string >             fndecayCodeMap;
 
   public:
   

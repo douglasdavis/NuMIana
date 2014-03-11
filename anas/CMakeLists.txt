@@ -14,3 +14,6 @@ target_link_libraries(simples_flux ${ROOT_LIBS} NuMIana)
 
 add_executable(numiEvRate numiEvRate.cpp)
 target_link_libraries(numiEvRate ${ROOT_LIBS} NuMIana)
+
+add_executable(simple2 simple2.cpp)
+target_link_libraries(simple2 ${ROOT_LIBS} NuMIana)
