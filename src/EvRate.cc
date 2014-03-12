@@ -20,9 +20,9 @@ namespace numi {
     
     fNFluxFiles  = file_vector.size();
     
-    fLowerVzCut = -1e10;
-    fUpperVzCut =  1e15;
-    fEnergyCut  =  0.0;
+    fLowerVzLimit = -1e10;
+    fUpperVzLimit =  1e15;
+    fEnergyCut    =  0.0;
     
     fIsBottom   = isbottom;
     fIsLength   = islength;
@@ -74,6 +74,21 @@ namespace numi {
   
   EvRate::~EvRate() {}
   
+  void EvRate::SetLowerVzLimit(const Double_t& lim)
+  {
+    fLowerVzLimit = lim;
+  }
+
+  void EvRate::SetUpperVzLimit(const Double_t& lim)
+  {
+    fUpperVzLimit = lim;
+  }
+
+  void EvRate::SetEnergyCut(const Double_t& cut)
+  {
+    fEnergyCut  = cut;
+  }
+
   void EvRate::MakeHists(const std::string& out_file_name, const Double_t& area_factor)
   {
     Int_t    nbins       = 120;
@@ -84,7 +99,7 @@ namespace numi {
     Double_t CCPOT       = 6e20;
     Double_t XsecExpo    = 1e-42/(40*1.66e-27);
     Double_t POTscaler   = CCPOT/FluxPOT;
-    Double_t Tonage      = 7e4;
+    Double_t Tonage      = 6.14e4;
     Double_t Xsec_factor = POTscaler*XsecExpo*Tonage;
 
     const Int_t n_parents = 8;
@@ -112,9 +127,9 @@ namespace numi {
     std::map < std::string, TH1D* > hCCQE_nuebar;
 
     std::string flux_title    = ";Energy (GeV);#nu/m^{2}/50 MeV/10^{8} POT";
-    std::string ccint_title   = ";Energy (GeV);Events/50 MeV/6 #times 10^{20} POT";
-    std::string ncint_title   = ";Energy (GeV);Events/50 MeV/6 #times 10^{20} POT";
-    std::string ccqeint_title = ";Energy (GeV);Events/50 MeV/6 #times 10^{20} POT"; 
+    std::string ccint_title   = ";Energy (GeV);Events/50 MeV/6 #times 10^{20} POT/61.4 t";
+    std::string ncint_title   = ";Energy (GeV);Events/50 MeV/6 #times 10^{20} POT/61.4 t";
+    std::string ccqeint_title = ";Energy (GeV);Events/50 MeV/6 #times 10^{20} POT/61.4 t"; 
 
     hFlux_numu["total"]    = new TH1D("Flux_Total_numu",flux_title.c_str(),   nbins,E_min,E_max);
     hCC_numu["total"]      = new TH1D("CC_Total_numu",  ccint_title.c_str(),  nbins,E_min,E_max);
@@ -200,7 +215,7 @@ namespace numi {
 
       fNuMIChain->GetEntry(i);
 
-      if ( ( fvz > fLowerVzCut ) && ( fvz < fUpperVzCut ) && ( fE > fEnergyCut ) ) {
+      if ( ( fvz > fLowerVzLimit ) && ( fvz < fUpperVzLimit ) && ( fE > fEnergyCut ) ) {
 
 	if ( fIsBottom || fIsLength ) {
 	  if ( fpdg == 14 ) {

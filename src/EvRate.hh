@@ -39,8 +39,8 @@ namespace numi {
     TGraph     *fCCQExsec_nuebar;
     
     UInt_t      fNFluxFiles;
-    Double_t    fLowerVzCut;
-    Double_t    fUpperVzCut;
+    Double_t    fLowerVzLimit;
+    Double_t    fUpperVzLimit;
     Double_t    fEnergyCut;
 
     Bool_t      fIsBottom;
@@ -86,22 +86,22 @@ namespace numi {
     
     virtual ~EvRate();
 
-    void SetLowerVzCut(const Double_t& cut) { fLowerVzCut = cut; }
-    void SetUpperVzCut(const Double_t& cut) { fUpperVzCut = cut; }
-    void SetEnergyCut(const Double_t& cut)  { fEnergyCut  = cut; }
+    void SetLowerVzLimit(const Double_t& lim);
+    void SetUpperVzLimit(const Double_t& lim);
+    void SetEnergyCut(const Double_t& cut);
 
     void MakeHists(const std::string& out_file_name, const Double_t& area_factor);
 
-    const Double_t BottomArea() const;
-    const Double_t LengthArea() const;
-    const Double_t NormalArea() const;
+    Double_t BottomArea() const;
+    Double_t LengthArea() const;
+    Double_t NormalArea() const;
   
   };
 
 }
 
-inline const Double_t numi::EvRate::BottomArea() const { return fBottomArea; }
-inline const Double_t numi::EvRate::LengthArea() const { return fLengthArea; }
-inline const Double_t numi::EvRate::NormalArea() const { return fNormalArea; }
+inline Double_t numi::EvRate::BottomArea() const { return fBottomArea; }
+inline Double_t numi::EvRate::LengthArea() const { return fLengthArea; }
+inline Double_t numi::EvRate::NormalArea() const { return fNormalArea; }
 
 #endif
