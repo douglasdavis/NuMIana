@@ -1,4 +1,5 @@
 #include "LArTree.hh"
+#include "looks.hh"
 #include <TH2.h>
 #include <TStyle.h>
 #include <TCanvas.h>
@@ -153,11 +154,17 @@ namespace numi {
     return 1;
   }
 
+
   void LArTree::Loop()
   {
+
+    looks();
+    gStyle->SetOptStat(0);
     if (fChain == 0) return;
 
-    TH1D *j = new TH1D("j","test",100,1,0);
+    TH1D *hccqe = new TH1D("hccqe",";E_{#nu} (GeV);Events/200 MeV/6#times10^{20} POT",50,0,10);
+    fChain->GetEntry(0);
+    double scale_it = 6.0e20/POT;
 
     Long64_t nentries = fChain->GetEntriesFast();
 
@@ -167,15 +174,17 @@ namespace numi {
       if (ientry < 0) break;
       nb = fChain->GetEntry(jentry);   nbytes += nb;
       // if (Cut(ientry) < 0) continue;
-
-      for ( auto const& entry : *StartPz )
-	j->Fill(entry);
-
+      if ( NuPdgCode == 14 )
+	if ( CCQEint )
+	  hccqe->Fill(NuE);
+      
     }
     
     TCanvas *c = new TCanvas();
-    j->Draw();
-
+    hccqe->Scale(scale_it);
+    fix_hist(*hccqe);
+    hccqe->Draw();
+    std::cout << hccqe->Integral() << std::endl;
   }
 
 }

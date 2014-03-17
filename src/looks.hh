@@ -19,13 +19,13 @@ void looks()
   gStyle->SetPadBorderMode(0);
   gStyle->SetPadColor(0);
   gStyle->SetStatColor(0);
-  gStyle->SetTitleFont(22,"");
-  gStyle->SetLabelFont(22,"x");
-  gStyle->SetTitleFont(22,"x");
-  gStyle->SetLabelFont(22,"y");
-  gStyle->SetTitleFont(22,"y");
-  gStyle->SetLabelFont(22,"z");
-  gStyle->SetTitleFont(22,"z");
+  gStyle->SetTitleFont(42,"");
+  gStyle->SetLabelFont(42,"x");
+  gStyle->SetTitleFont(42,"x");
+  gStyle->SetLabelFont(42,"y");
+  gStyle->SetTitleFont(42,"y");
+  gStyle->SetLabelFont(42,"z");
+  gStyle->SetTitleFont(42,"z");
   gStyle->SetLabelSize(0.048,"x");
   gStyle->SetTitleSize(0.048,"x");
   gStyle->SetLabelSize(0.048,"y");
@@ -40,7 +40,7 @@ void looks()
   gStyle->SetTitleStyle(0);
   gStyle->SetOptStat("emr");
   gStyle->SetStatBorderSize(0);
-  gStyle->SetStatFont(22);
+  gStyle->SetStatFont(42);
   gStyle->SetStatFontSize(0.048);
   gStyle->SetStatY(0.9);
   gStyle->SetStatX(0.86);
@@ -50,9 +50,9 @@ void looks()
   gStyle->SetFuncWidth(2);
   gStyle->SetFuncColor(2);
   gStyle->SetPadTopMargin(0.08);
-  gStyle->SetPadBottomMargin(0.142);
+  gStyle->SetPadBottomMargin(0.12);
   gStyle->SetPadLeftMargin(0.12);
-  gStyle->SetPadRightMargin(0.12);  
+  gStyle->SetPadRightMargin(0.06);  
   gStyle->SetCanvasDefX(400);
   gStyle->SetCanvasDefY(20);
   gStyle->SetCanvasDefH(420);
@@ -60,6 +60,6 @@ void looks()
   gStyle->SetFrameBorderMode(0);
   gStyle->SetFrameLineWidth(2);
   gStyle->SetHistLineWidth(2);
-  gStyle->SetTitleOffset(1.07,"y");
-  gStyle->SetTitleOffset(1.14,"x");
+  gStyle->SetTitleOffset(1.16,"y");
+  gStyle->SetTitleOffset(1.20,"x");
 }
