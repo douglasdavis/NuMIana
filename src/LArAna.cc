@@ -28,11 +28,11 @@ namespace numi {
     bool     _CCint, _CCQEint, _NCint, _NCQEint;
     Int_t    _Event, _SubRun, _Run;
 
-    std::vector<Int_t>  *_TrackID = 0;
-    std::vector<Int_t>  *_PdgCode = 0;
-    std::vector<Double_t> *_StartVx  = 0;
-    std::vector<Double_t> *_StartVy  = 0;
-    std::vector<Double_t> *_StartVz  = 0;
+    std::vector<Int_t>    *_TrackID = 0;
+    std::vector<Int_t>    *_PdgCode = 0;
+    std::vector<Double_t> *_StartVx = 0;
+    std::vector<Double_t> *_StartVy = 0;
+    std::vector<Double_t> *_StartVz = 0;
     std::vector<Double_t> *_StartPx = 0;
     std::vector<Double_t> *_StartPy = 0;
     std::vector<Double_t> *_StartPz = 0;

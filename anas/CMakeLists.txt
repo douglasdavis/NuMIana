@@ -17,3 +17,6 @@ target_link_libraries(numiEvRate ${ROOT_LIBS} NuMIana)
 
 add_executable(simple2 simple2.cpp)
 target_link_libraries(simple2 ${ROOT_LIBS} NuMIana)
+
+add_executable(lartreeana lartreeana.cpp)
+target_link_libraries(lartreeana ${ROOT_LIBS} NuMIana)
