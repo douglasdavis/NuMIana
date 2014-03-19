@@ -4,6 +4,7 @@
 #include <TStyle.h>
 #include <TCanvas.h>
 #include <TApplication.h>
+#include <cmath>
 
 namespace numi {
 
@@ -155,36 +156,39 @@ namespace numi {
   }
 
 
-  void LArTree::Loop()
-  {
-
-    looks();
-    gStyle->SetOptStat(0);
-    if (fChain == 0) return;
-
-    TH1D *hccqe = new TH1D("hccqe",";E_{#nu} (GeV);Events/200 MeV/6#times10^{20} POT",50,0,10);
-    fChain->GetEntry(0);
-    double scale_it = 6.0e20/POT;
-
-    Long64_t nentries = fChain->GetEntriesFast();
-
-    Long64_t nbytes = 0, nb = 0;
-    for (Long64_t jentry=0; jentry<nentries;jentry++) {
-      Long64_t ientry = LoadTree(jentry);
-      if (ientry < 0) break;
-      nb = fChain->GetEntry(jentry);   nbytes += nb;
-      // if (Cut(ientry) < 0) continue;
-      if ( NuPdgCode == 14 )
-	if ( CCQEint )
-	  hccqe->Fill(NuE);
-      
-    }
-    
-    TCanvas *c = new TCanvas();
-    hccqe->Scale(scale_it);
-    fix_hist(*hccqe);
-    hccqe->Draw();
-    std::cout << hccqe->Integral() << std::endl;
-  }
-
 }
+
+void numi::LArTree::Loop()
+{
+
+  looks();
+  gStyle->SetOptStat(0);
+  if (fChain == 0) return;
+
+  TH1D *hccqe = new TH1D("hccqe",";E_{#nu} (GeV);Events/200 MeV/6#times10^{20} POT",50,0,10);
+  fChain->GetEntry(0);
+  double scale_it = 6.0e20/POT;
+
+
+  TH2D *ptpz = new TH2D("ptpz",";p_{z};p_{T}",50,1,0,50,1,0);
+  Long64_t nentries = fChain->GetEntriesFast();
+
+  Long64_t nbytes = 0, nb = 0;
+  for (Long64_t jentry=0; jentry<nentries;jentry++) {
+    Long64_t ientry = LoadTree(jentry);
+    if (ientry < 0) break;
+    nb = fChain->GetEntry(jentry);   nbytes += nb;
+    // if (Cut(ientry) < 0) continue;
+    double pt = std::sqrt(flux_tpx*flux_tpx+flux_tpy*flux_tpy);
+    double pz = flux_tpz;
+    ptpz->Fill(pz,pt);
+  }
+    
+  TCanvas *c = new TCanvas();
+  //  hccqe->Scale(scale_it);
+  //  fix_hist(*hccqe);
+  //  hccqe->Draw();
+  //  std::cout << hccqe->Integral() << std::endl;
+  ptpz->Draw("colz");
+}
+
