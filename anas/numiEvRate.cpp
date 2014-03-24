@@ -19,11 +19,11 @@ int main(int argc, char *argv[])
   infiles.close();
 
   numi::EvRate *bottom = new numi::EvRate(dir_bottom,genie_file,file_list,true,false,false);
-  //  bottom->MakeHists("histogram_files/bottom_2013.root",bottom->BottomArea());
+  bottom->MakeHists("histogram_files/bottom_2013.root",bottom->BottomArea());
   delete bottom;
 
   numi::EvRate *length = new numi::EvRate(dir_length,genie_file,file_list,false,true,false);
-  //  length->MakeHists("histogram_files/length_2013.root",length->LengthArea());
+  length->MakeHists("histogram_files/length_2013.root",length->LengthArea());
   delete length;
   
   numi::EvRate *normal = new numi::EvRate(dir_normal,genie_file,file_list,false,false,true);
@@ -32,15 +32,14 @@ int main(int argc, char *argv[])
 
   numi::EvRate *bcut = new numi::EvRate(dir_bottom,genie_file,file_list,true,false,false);
   bcut->SetLowerVzLimit(7e4);
-  //  bcut->MakeHists("histogram_files/bottom_2013_absorber_cut.root",bcut->BottomArea());
+  bcut->MakeHists("histogram_files/bottom_2013_absorber_cut.root",bcut->BottomArea());
   delete bcut;
 
   numi::EvRate *lcut = new numi::EvRate(dir_length,genie_file,file_list,false,true,false);
   lcut->SetLowerVzLimit(7e4);
-  //  lcut->MakeHists("histogram_files/length_2013_absorber_cut.root",lcut->LengthArea());
+  lcut->MakeHists("histogram_files/length_2013_absorber_cut.root",lcut->LengthArea());
   delete lcut;
 
-  /*
   numi::EvRate *bottomt = new numi::EvRate(dir_bottom,genie_file,file_list,true,false,false);
   bottomt->SetUpperVzLimit(1e4);
   bottomt->MakeHists("histogram_files/bottom_2013_target_cut.root",bottom->BottomArea());
@@ -73,6 +72,6 @@ int main(int argc, char *argv[])
   normalp->SetLowerVzLimit(1e4);
   normalp->MakeHists("histogram_files/normal_2013_pipe_cut.root",normal->NormalArea());
   delete normalp;
-  */
+
   return 0;
 }

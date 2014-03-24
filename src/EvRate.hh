@@ -23,7 +23,6 @@ namespace numi {
     
     TChain     *fNuMIChain;
     TFile      *fGenieFile;
-    TDirectory *fDir;
 
     TGraph     *fCCxsec_numu;
     TGraph     *fNCxsec_numu;
@@ -37,6 +36,7 @@ namespace numi {
     TGraph     *fCCxsec_nuebar;
     TGraph     *fNCxsec_nuebar;
     TGraph     *fCCQExsec_nuebar;
+    TGraph     *fLowExsec_nue;
     
     UInt_t      fNFluxFiles;
     Double_t    fLowerVzLimit;
@@ -71,9 +71,9 @@ namespace numi {
     Int_t       fevtno;
     Int_t       fentryno;
 
-    Double_t    fBottomArea = 51.926;
-    Double_t    fLengthArea = 51.600;
-    Double_t    fNormalArea = 11.920;
+    Double_t    fBottomArea;
+    Double_t    fLengthArea;
+    Double_t    fNormalArea;
 
   public:
     

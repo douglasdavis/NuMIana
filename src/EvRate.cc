@@ -5,6 +5,8 @@
 
 #include "EvRate.hh"
 #include "TTree.h"
+#include <iostream>
+#include <fstream>
 
 namespace numi {
   
@@ -15,6 +17,10 @@ namespace numi {
 		 const Bool_t& islength,
 		 const Bool_t& isnormal) {
     
+    fBottomArea = 51.926;
+    fLengthArea = 51.600;
+    fNormalArea = 11.920;
+
     fNuMIChain = new TChain("NuMI");
     fGenieFile = new TFile(genie_file_name.c_str());
     
@@ -46,6 +52,20 @@ namespace numi {
     fCCxsec_nuebar    = dynamic_cast<TGraph*> (fGenieFile->Get("nu_e_bar_Ar40/tot_cc"));
     fNCxsec_nuebar    = dynamic_cast<TGraph*> (fGenieFile->Get("nu_e_bar_Ar40/tot_nc"));
     fCCQExsec_nuebar  = dynamic_cast<TGraph*> (fGenieFile->Get("nu_e_bar_Ar40/qel_cc_p"));
+
+    Double_t LowE_energy[74];
+    Double_t LowE_xsec[74];
+    Double_t LowE_efiller;
+    Double_t LowE_xfiller;
+    std::ifstream LowE_file;
+    LowE_file.open("config/lowe_nue_Ar40_xsec.dat");
+    Int_t counterint = 0;
+    while ( LowE_file >> LowE_efiller >> LowE_xfiller ) {
+      LowE_energy[counterint] = LowE_efiller/1.0e3;
+      LowE_xsec[counterint]   = LowE_xfiller/1.0e4;
+    }
+    
+    fLowExsec_nue = new TGraph(74,LowE_energy,LowE_xsec);
 
     fNuMIChain->SetBranchAddress("wgt",     &fwgt);
     fNuMIChain->SetBranchAddress("vtxx",    &fvtxx);
@@ -386,6 +406,8 @@ namespace numi {
 
 	// CC
 	xsecval  = fCCxsec_nue->Eval(energy);
+	if ( energy < 0.100 )
+	  xsecval = fLowExsec_nue->Eval(energy);
 	filler   = xsecval*hist_val;
 	hCC_nue[hist.first]->SetBinContent(i+1,filler);
 
@@ -396,6 +418,8 @@ namespace numi {
 
 	// CCQE
 	xsecval  = fCCQExsec_nue->Eval(energy);
+	if ( energy < 0.100 )
+	  xsecval = fLowExsec_nue->Eval(energy);
 	filler   = xsecval*hist_val;
 	hCCQE_nue[hist.first]->SetBinContent(i+1,filler);
       }
