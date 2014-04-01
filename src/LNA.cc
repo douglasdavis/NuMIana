@@ -1,14 +1,12 @@
-#include "LArTree.hh"
-#include "looks.hh"
+#include "LNA.hh"
 #include <TH2.h>
 #include <TStyle.h>
 #include <TCanvas.h>
-#include <TApplication.h>
 #include <cmath>
 
 namespace numi {
 
-  LArTree::LArTree(TTree *tree, std::string file_name) : fChain(0) 
+  LNA::LNA(TTree *tree, std::string file_name) : fChain(0) 
   {
     // if parameter tree is not specified (or zero), connect the file
     // used to generate this class and read the Tree.
@@ -20,25 +18,26 @@ namespace numi {
       std::string dir_string = file_name+":/LArNuMIana";
       TDirectory * dir = (TDirectory*)f->Get(dir_string.c_str());
       dir->GetObject("LArNuMIanaSimulation",tree);
-
+      fPOTHist  = (TH1D*)f->Get("POT");
+      fTotalPOT = fPOTHist->GetMean()*fPOTHist->GetEntries();
+      Init(tree);
     }
-    Init(tree);
   }
 
-  LArTree::~LArTree()
+  LNA::~LNA()
   {
     if (!fChain) return;
     delete fChain->GetCurrentFile();
   }
 
-  Int_t LArTree::GetEntry(Long64_t entry)
+  Int_t LNA::GetEntry(Long64_t entry)
   {
     // Read contents of entry.
     if (!fChain) return 0;
     return fChain->GetEntry(entry);
   }
 
-  Long64_t LArTree::LoadTree(Long64_t entry)
+  Long64_t LNA::LoadTree(Long64_t entry)
   {
     // Set the environment to read one entry
     if (!fChain) return -5;
@@ -51,7 +50,7 @@ namespace numi {
     return centry;
   }
 
-  void LArTree::Init(TTree *tree)
+  void LNA::Init(TTree *tree)
   {
     // The Init() function is called when the selector needs to initialize
     // a new tree or chain. Typically here the branch addresses and branch
@@ -62,7 +61,13 @@ namespace numi {
     // (once per file to be processed).
 
     // Set object pointer
+    Process = 0;
+    ProdMaterial = 0;
+    EndMaterial = 0;
+    ProdVolume = 0;
+    EndVolume = 0;
     TrackID = 0;
+    ParentID = 0;
     PdgCode = 0;
     StartVx = 0;
     StartVy = 0;
@@ -71,6 +76,7 @@ namespace numi {
     StartPy = 0;
     StartPz = 0;
     StartE = 0;
+    InTPC = 0;
     // Set branch addresses and branch pointers
     if (!tree) return;
     fChain = tree;
@@ -84,6 +90,7 @@ namespace numi {
     fChain->SetBranchAddress("NuVx", &NuVx, &b_NuVx);
     fChain->SetBranchAddress("NuVy", &NuVy, &b_NuVy);
     fChain->SetBranchAddress("NuVz", &NuVz, &b_NuVz);
+    fChain->SetBranchAddress("VertexInTPC", &VertexInTPC, &b_VertexInTPC);
     fChain->SetBranchAddress("NuE", &NuE, &b_NuE);
     fChain->SetBranchAddress("LeptonPdgCode", &LeptonPdgCode, &b_LeptonPdgCode);
     fChain->SetBranchAddress("LeptonVx", &LeptonVx, &b_LeptonVx);
@@ -104,8 +111,13 @@ namespace numi {
     fChain->SetBranchAddress("Event", &Event, &b_Event);
     fChain->SetBranchAddress("SubRun", &SubRun, &b_SubRun);
     fChain->SetBranchAddress("Run", &Run, &b_Run);
-    fChain->SetBranchAddress("POT", &POT, &b_POT);
+    fChain->SetBranchAddress("Process", &Process, &b_Process);
+    fChain->SetBranchAddress("ProdMaterial", &ProdMaterial, &b_ProdMaterial);
+    fChain->SetBranchAddress("EndMaterial", &EndMaterial, &b_EndMaterial);
+    fChain->SetBranchAddress("ProdVolume", &ProdVolume, &b_ProdVolume);
+    fChain->SetBranchAddress("EndVolume", &EndVolume, &b_EndVolume);
     fChain->SetBranchAddress("TrackID", &TrackID, &b_TrackID);
+    fChain->SetBranchAddress("ParentID", &ParentID, &b_ParentID);
     fChain->SetBranchAddress("PdgCode", &PdgCode, &b_PdgCode);
     fChain->SetBranchAddress("StartVx", &StartVx, &b_StartVx);
     fChain->SetBranchAddress("StartVy", &StartVy, &b_StartVy);
@@ -114,6 +126,7 @@ namespace numi {
     fChain->SetBranchAddress("StartPy", &StartPy, &b_StartPy);
     fChain->SetBranchAddress("StartPz", &StartPz, &b_StartPz);
     fChain->SetBranchAddress("StartE", &StartE, &b_StartE);
+    fChain->SetBranchAddress("InTPC", &InTPC, &b_InTPC);
     fChain->SetBranchAddress("flux_run", &flux_run, &b_flux_run);
     fChain->SetBranchAddress("flux_evtno", &flux_evtno, &b_flux_evtno);
     fChain->SetBranchAddress("flux_tpx", &flux_tpx, &b_flux_tpx);
@@ -128,69 +141,46 @@ namespace numi {
     Notify();
   }
 
-  Bool_t LArTree::Notify()
+  Bool_t LNA::Notify()
   {
-    // The Notify() function is called when a new file is opened. This
-    // can be either for a new TTree in a TChain or when when a new TTree
-    // is started when using PROOF. It is normally not necessary to make changes
-    // to the generated code, but the routine can be extended by the
-    // user if needed. The return value is currently not used.
-
     return kTRUE;
   }
 
-  void LArTree::Show(Long64_t entry)
+  void LNA::Show(Long64_t entry)
   {
-    // Print contents of entry.
-    // If entry is not specified, print current entry
     if (!fChain) return;
     fChain->Show(entry);
   }
 
-  Int_t LArTree::Cut(Long64_t entry)
+  Int_t LNA::Cut(Long64_t entry)
   {
-    // This function may be called from Loop.
-    // returns  1 if entry is accepted.
-    // returns -1 otherwise.
     return 1;
   }
 
+  void LNA::Loop()
+  {
+    if (fChain == 0) return;
+    TH2D *h   = new TH2D("h",";p_{z};p_{T}",100,0,20,100,0,2);
+    TH1D *pzh = new TH1D("pzh",";p_{z};",100,1,0);
+    Long64_t nentries = fChain->GetEntriesFast();
 
-}
-
-void numi::LArTree::Loop()
-{
-
-  looks();
-  gStyle->SetOptStat(0);
-  if (fChain == 0) return;
-
-  TH1D *hccqe = new TH1D("hccqe",";E_{#nu} (GeV);Events/200 MeV/6#times10^{20} POT",50,0,10);
-  fChain->GetEntry(0);
-  double scale_it = 6.0e20/POT;
-
-
-  TH2D *ptpz = new TH2D("ptpz",";p_{z};p_{T}",50,1,0,50,1,0);
-  Long64_t nentries = fChain->GetEntriesFast();
-
-  Long64_t nbytes = 0, nb = 0;
-  for (Long64_t jentry=0; jentry<nentries;jentry++) {
-    Long64_t ientry = LoadTree(jentry);
-    if (ientry < 0) break;
-    nb = fChain->GetEntry(jentry);   nbytes += nb;
-    // if (Cut(ientry) < 0) continue;
-    if ( flux_evtno != 0 ) {
-      double pt = std::sqrt(flux_tpx*flux_tpx+flux_tpy*flux_tpy);
-      double pz = flux_tpz;
-      ptpz->Fill(pz,pt);
+    Long64_t nbytes = 0, nb = 0;
+    for (Long64_t jentry=0; jentry<nentries;jentry++) {
+      Long64_t ientry = LoadTree(jentry);
+      if (ientry < 0) break;
+      nb = fChain->GetEntry(jentry);   nbytes += nb;
+      if ( flux_evtno != 0 ) {
+	double pt = std::sqrt(flux_tpx*flux_tpx+flux_tpy*flux_tpy);
+	double pz = flux_tpz;
+	h->Fill(pz,pt);
+	pzh->Fill(NuPz);
+      }
+      
     }
+    TCanvas *ch = new TCanvas();
+    h->Draw("colz");
+    TCanvas* cpzh = new TCanvas();
+    pzh->Draw();
   }
-    
-  TCanvas *c = new TCanvas();
-  //  hccqe->Scale(scale_it);
-  //  fix_hist(*hccqe);
-  //  hccqe->Draw();
-  //  std::cout << hccqe->Integral() << std::endl;
-  ptpz->Draw("colz");
-}
 
+}
