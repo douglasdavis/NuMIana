@@ -172,6 +172,7 @@ namespace numi {
       
     }
     TCanvas *ch = new TCanvas();
+    h->Scale(1/fPOTScaler);
     h->Draw("colz");
     TCanvas* cpzh = new TCanvas();
     pzh->Draw();
