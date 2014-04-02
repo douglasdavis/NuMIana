@@ -1,3 +1,6 @@
+#ifndef LOOKS_HH
+#define LOOKS_HH
+
 #include "TGaxis.h"
 #include "TH1D.h"
 #include "TStyle.h"
@@ -63,3 +66,5 @@ void looks()
   gStyle->SetTitleOffset(1.16,"y");
   gStyle->SetTitleOffset(1.20,"x");
 }
+
+#endif
