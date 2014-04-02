@@ -8,6 +8,7 @@ namespace numi {
 
   LNA::LNA(TTree *tree, std::string file_name) : fChain(0) 
   {
+    TFile *fhist = new TFile(file_name.c_str());
     // if parameter tree is not specified (or zero), connect the file
     // used to generate this class and read the Tree.
     if (tree == 0) {
@@ -15,11 +16,13 @@ namespace numi {
       if (!f || !f->IsOpen()) {
 	f = new TFile(file_name.c_str());
       }
+      fPOTHist     = dynamic_cast<TH1D*> (f->Get("LArNuMIana/POT"));
+      fTotalPOT    = (double)(fPOTHist->GetMean())*(double)(fPOTHist->GetEntries());
+      fDesiredPOT  = 6.0e20;
+      fPOTScaler   = fTotalPOT/fDesiredPOT;
       std::string dir_string = file_name+":/LArNuMIana";
-      TDirectory * dir = (TDirectory*)f->Get(dir_string.c_str());
+      TDirectory *dir = (TDirectory*)f->Get(dir_string.c_str());
       dir->GetObject("LArNuMIanaSimulation",tree);
-      fPOTHist  = (TH1D*)f->Get("POT");
-      fTotalPOT = fPOTHist->GetMean()*fPOTHist->GetEntries();
       Init(tree);
     }
   }
@@ -52,15 +55,6 @@ namespace numi {
 
   void LNA::Init(TTree *tree)
   {
-    // The Init() function is called when the selector needs to initialize
-    // a new tree or chain. Typically here the branch addresses and branch
-    // pointers of the tree will be set.
-    // It is normally not necessary to make changes to the generated
-    // code, but the routine can be extended by the user if needed.
-    // Init() will be called many times when running on PROOF
-    // (once per file to be processed).
-
-    // Set object pointer
     Process = 0;
     ProdMaterial = 0;
     EndMaterial = 0;
@@ -77,7 +71,7 @@ namespace numi {
     StartPz = 0;
     StartE = 0;
     InTPC = 0;
-    // Set branch addresses and branch pointers
+
     if (!tree) return;
     fChain = tree;
     fCurrent = -1;

@@ -19,6 +19,8 @@ namespace numi {
 
     TH1D                      *fPOTHist;
     Double_t                   fTotalPOT;
+    Double_t                   fDesiredPOT;
+    Double_t                   fPOTScaler;
     Int_t                      NuPdgCode;
     Double_t                   NuPx;
     Double_t                   NuPy;
