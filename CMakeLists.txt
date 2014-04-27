@@ -25,6 +25,7 @@ add_library(
   src/simpleAna2.cc
   src/LArTree.cc
   src/LNA.cc
+  src/DistEnergy.cc
   )
 
 target_link_libraries(NuMIana ${ROOT_LIBS})

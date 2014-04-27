@@ -23,3 +23,6 @@ target_link_libraries(lartreeana ${ROOT_LIBS} NuMIana)
 
 add_executable(lna lna.cpp)
 target_link_libraries(lna ${ROOT_LIBS} NuMIana)
+
+add_executable(de DEhist.cpp)
+target_link_libraries(de ${ROOT_LIBS} NuMIana)
