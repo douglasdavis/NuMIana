@@ -2,6 +2,7 @@
 #include "TFile.h"
 #include <iostream>
 #include <stdlib.h>
+#include <cmath>
 
 double osc_prob(const double& LoverE, const double& dm2, const double& s22t)
 {
