@@ -18,11 +18,6 @@ namespace numi {
     TChain    *fNuMIChain;
     TFile     *fGENIEFile;
 
-    TGraph    *fCCxsec_nue;
-    TGraph    *fNCxsec_nue;
-    TGraph    *fCCQExsec_nue;
-    TGraph    *fLowExsec_nue;
-    
     Bool_t     fIsNormal;
     Bool_t     fIsBottom;
     Bool_t     fIsLength;
@@ -58,6 +53,16 @@ namespace numi {
     Double_t   fLengthArea;
     Double_t   fNormalArea;
 
+    TFile     *fOutFile;
+    TH2D      *fNumuDistEnergy;
+    TH2D      *fNumuFluxDistEnergy;
+    TH2D      *fNueDistEnergy;
+    TH2D      *fNueFluxDistEnergy;
+    TGraph    *fCCxsec_nue;
+    TGraph    *fNCxsec_nue;
+    TGraph    *fCCQExsec_nue;
+    TGraph    *fLowExsec_nue;
+
   public:
     
     DistEnergy(const std::string& flux_file_dir,
@@ -70,12 +75,17 @@ namespace numi {
     virtual ~DistEnergy();
 
     void MakeHists(const std::string& out_file_name,
-		   const Double_t& area_factor);
-
+		   const Double_t& area_factor,
+		   const Double_t& dm2,
+		   const Double_t& s22theta);
+    
+    Double_t OscProb(const Double_t& LoverE,
+		     const Double_t& dm2,
+		     const Double_t& s22theta);
+    
     Double_t BottomArea() const;
     Double_t LengthArea() const;
     Double_t NormalArea() const;
-
 
   };
 

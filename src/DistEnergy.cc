@@ -4,6 +4,7 @@
 
 namespace numi {
 
+  // _____________________________________________________________________________________________________
   
   DistEnergy::DistEnergy(const std::string& flux_file_dir,
 			 const std::string& genie_file_name,
@@ -70,21 +71,27 @@ namespace numi {
     fNuMIChain->SetBranchAddress("entryno", &fentryno);
 
   }
+
+  // _____________________________________________________________________________________________________
   
   DistEnergy::~DistEnergy() {}
 
+  // _____________________________________________________________________________________________________
+
   void DistEnergy::MakeHists(const std::string& out_file_name,
-			     const Double_t& area_factor)
+			     const Double_t& area_factor,
+			     const Double_t& dm2,
+			     const Double_t& s22theta)
   {
 
-    TFile *out_file        = new TFile(out_file_name.c_str(),"RECREATE");
+    fOutFile            = new TFile(out_file_name.c_str(),"RECREATE");
     
-    TH2D  *dist_energy     = new TH2D("dist_energy",
-				      ";Energy (MeV);Distance from origin to uB center",
-				      20,0,100,150,0,750);
-    TH2D  *fluxdist_energy = new TH2D("fluxdist_energy",
-				      ";Energy (MeV);Flux dist value",
-				      20,0,100,150,0,750);
+    fNumuDistEnergy     = new TH2D("NumuDistEnergy",
+				   ";Energy (MeV);Distance from origin to uB center",
+				   20,0,100,150,0,750);
+    fNumuFluxDistEnergy = new TH2D("NumuFluxDistEnergy",
+				   ";Energy (MeV);Flux dist value",
+				   20,0,100,150,0,750);
 
     Double_t distfiller;
     Double_t xmx02;
@@ -104,23 +111,23 @@ namespace numi {
 	  }
 	  else {
 	    if (fE < .1 ) {
-	      fluxdist_energy->Fill(fE*1000,fdist);
+	      fNumuFluxDistEnergy->Fill(fE*1000,fdist);
 	      xmx02 = pow((ubx - (fvx/1.0e2)),2);
 	      ymy02 = pow((uby - (fvy/1.0e2)),2);
 	      zmz02 = pow((ubz - (fvz/1.0e2)),2);
 	      distfiller = std::sqrt(xmx02+ymy02+zmz02);
-	      dist_energy->Fill(fE*1000,distfiller);
+	      fNumuDistEnergy->Fill(fE*1000,distfiller);
 	    }
 	  }
 	}
 	else {
 	  if (fE < .1 ) {
-	    fluxdist_energy->Fill(fE*1000,fdist);
+	    fNumuFluxDistEnergy->Fill(fE*1000,fdist);
 	    xmx02 = pow((ubx - (fvx/1.0e2)),2);
 	    ymy02 = pow((uby - (fvy/1.0e2)),2);
 	    zmz02 = pow((ubz - (fvz/1.0e2)),2);
 	    distfiller = std::sqrt(xmx02+ymy02+zmz02);
-	    dist_energy->Fill(fE*1000,distfiller);
+	    fNumuDistEnergy->Fill(fE*1000,distfiller);
 	  }
 	}
       }
@@ -130,21 +137,32 @@ namespace numi {
     Double_t totalPOT   = fPOTPerFluxFile*fNFluxFiles;
     Double_t scaler     = desiredPOT/totalPOT;
 
-    dist_energy->Scale(scaler);
-    fluxdist_energy->Scale(scaler);
+    fNumuDistEnergy->Scale(scaler);
+    fNumuFluxDistEnergy->Scale(scaler);
 
-    dist_energy->Scale(1/area_factor);
-    fluxdist_energy->Scale(1/area_factor);
+    fNumuDistEnergy->Scale(1/area_factor);
+    fNumuFluxDistEnergy->Scale(1/area_factor);
 
-    dist_energy->Write();
-    fluxdist_energy->Write();
+    fNumuDistEnergy->Write();
+    fNumuFluxDistEnergy->Write();
     fLowExsec_nue->Write();
     fCCxsec_nue->Write();
     fNCxsec_nue->Write();
     fCCQExsec_nue->Write();
 
-    out_file->Close();
+    fOutFile->Close();
 
   }
+  
+  // _____________________________________________________________________________________________________
+
+  Double_t DistEnergy::OscProb(const Double_t& LoverE,
+			       const Double_t& dm2,
+			       const Double_t& s22theta)
+  {
+    return s22theta*std::sin(1.267*dm2*LoverE);
+  }
+
+  // _____________________________________________________________________________________________________
 
 }
