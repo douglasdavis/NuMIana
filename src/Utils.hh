@@ -11,6 +11,7 @@
 #include <utility>
 
 namespace numi {
+
   namespace utils {
 
     void FillTH1DFromVec(TH1D& histogram, const std::vector<Double_t>& values);
@@ -37,7 +38,11 @@ namespace numi {
     void Print_ppmediumndecay(const std::vector< std::pair<Int_t,Int_t> >& ana_data,
 			      const std::map< Int_t, std::string >& p_code_map,
 			      const std::map< Int_t, std::string >& n_code_map);
-
+    
+    Double_t OscProb(const Double_t& LoverE,
+		     const Double_t& dm2,
+		     const Double_t& s22theta);
+    
   }
 }
 

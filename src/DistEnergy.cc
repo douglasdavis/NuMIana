@@ -79,9 +79,7 @@ namespace numi {
   // _____________________________________________________________________________________________________
 
   void DistEnergy::MakeHists(const std::string& out_file_name,
-			     const Double_t& area_factor,
-			     const Double_t& dm2,
-			     const Double_t& s22theta)
+			     const Double_t& area_factor)
   {
 
     fOutFile            = new TFile(out_file_name.c_str(),"RECREATE");
@@ -154,15 +152,6 @@ namespace numi {
 
   }
   
-  // _____________________________________________________________________________________________________
-
-  Double_t DistEnergy::OscProb(const Double_t& LoverE,
-			       const Double_t& dm2,
-			       const Double_t& s22theta)
-  {
-    return s22theta*std::sin(1.267*dm2*LoverE);
-  }
-
   // _____________________________________________________________________________________________________
 
 }

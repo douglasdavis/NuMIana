@@ -75,13 +75,7 @@ namespace numi {
     virtual ~DistEnergy();
 
     void MakeHists(const std::string& out_file_name,
-		   const Double_t& area_factor,
-		   const Double_t& dm2,
-		   const Double_t& s22theta);
-    
-    Double_t OscProb(const Double_t& LoverE,
-		     const Double_t& dm2,
-		     const Double_t& s22theta);
+		   const Double_t& area_factor);
     
     Double_t BottomArea() const;
     Double_t LengthArea() const;

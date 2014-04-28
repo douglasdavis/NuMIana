@@ -1,7 +1,9 @@
 #include "Utils.hh"
 #include <algorithm>
+#include <cmath>
 
 namespace numi {
+
   namespace utils {
     
     void FillTH1DFromVec(TH1D& histogram, const std::vector<Double_t>& values)
@@ -183,6 +185,18 @@ namespace numi {
       
       }
     }
+
+    // _____________________________________________________________________________________________________
+
+    Double_t OscProb(const Double_t& LoverE,
+		     const Double_t& dm2,
+		     const Double_t& s22theta)
+    {
+      return s22theta*std::sin(1.267*dm2*LoverE);
+    }
+    
+    // _____________________________________________________________________________________________________
+
     
   }
 
