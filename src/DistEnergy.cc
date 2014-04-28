@@ -97,9 +97,21 @@ namespace numi {
 
     for ( UInt_t i = 0; i < fNuMIChain->GetEntries(); ++i ) {
       fNuMIChain->GetEntry(i);
-      if ( fIsNormal ) {
-	if ( fpz < 0 ) {
-	  continue;
+      if ( fpdg == 14 ) {
+	if ( fIsNormal ) {
+	  if ( fpz < 0 ) {
+	    continue;
+	  }
+	  else {
+	    if (fE < .1 ) {
+	      fluxdist_energy->Fill(fE*1000,fdist);
+	      xmx02 = pow((ubx - (fvx/1.0e2)),2);
+	      ymy02 = pow((uby - (fvy/1.0e2)),2);
+	      zmz02 = pow((ubz - (fvz/1.0e2)),2);
+	      distfiller = std::sqrt(xmx02+ymy02+zmz02);
+	      dist_energy->Fill(fE*1000,distfiller);
+	    }
+	  }
 	}
 	else {
 	  if (fE < .1 ) {
@@ -110,16 +122,6 @@ namespace numi {
 	    distfiller = std::sqrt(xmx02+ymy02+zmz02);
 	    dist_energy->Fill(fE*1000,distfiller);
 	  }
-	}
-      }
-      else {
-	if (fE < .1 ) {
-	  fluxdist_energy->Fill(fE*1000,fdist);
-	  xmx02 = pow((ubx - (fvx/1.0e2)),2);
-	  ymy02 = pow((uby - (fvy/1.0e2)),2);
-	  zmz02 = pow((ubz - (fvz/1.0e2)),2);
-	  distfiller = std::sqrt(xmx02+ymy02+zmz02);
-	  dist_energy->Fill(fE*1000,distfiller);
 	}
       }
     }
