@@ -33,19 +33,7 @@ namespace numi {
     fNCxsec_nue       = dynamic_cast<TGraph*>(fGENIEFile->Get("nu_e_Ar40/tot_nc"));
     fCCQExsec_nue     = dynamic_cast<TGraph*>(fGENIEFile->Get("nu_e_Ar40/qel_cc_n"));
     
-    Double_t LowE_energy[74];
-    Double_t LowE_xsec[74];
-    Double_t LowE_efiller;
-    Double_t LowE_xfiller;
-    std::ifstream LowE_file;
-    LowE_file.open("config/lowe_nue_Ar40_xsec.dat");
-    Int_t counterint = 0;
-    while ( LowE_file >> LowE_efiller >> LowE_xfiller ) {
-      LowE_energy[counterint] = LowE_efiller/1.0e3;
-      LowE_xsec[counterint]   = LowE_xfiller/1.0e4;
-    }
-    
-    fLowExsec_nue = new TGraph(74,LowE_energy,LowE_xsec);
+    fLowExsec_nue = new TGraph("config/lowe_nue_Ar40_xsec.dat","%lg %lg");
 
     fNuMIChain->SetBranchAddress("wgt",     &fwgt);
     fNuMIChain->SetBranchAddress("vtxx",    &fvtxx);
