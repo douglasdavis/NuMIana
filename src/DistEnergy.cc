@@ -143,10 +143,10 @@ namespace numi {
 
     fNumuDistEnergy->Write();
     fNumuFluxDistEnergy->Write();
-    fLowExsec_nue->Write();
     fCCxsec_nue->Write();
     fNCxsec_nue->Write();
     fCCQExsec_nue->Write();
+    fLowExsec_nue->Write();
 
     fOutFile->Close();
 

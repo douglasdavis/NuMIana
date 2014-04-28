@@ -26,3 +26,6 @@ target_link_libraries(lna ${ROOT_LIBS} NuMIana)
 
 add_executable(de DEhist.cpp)
 target_link_libraries(de ${ROOT_LIBS} NuMIana)
+
+add_executable(DEnue DEnue.cpp)
+target_link_libraries(DEnue ${ROOT_LIBS} NuMIana)

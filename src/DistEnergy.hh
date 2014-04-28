@@ -56,8 +56,6 @@ namespace numi {
     TFile     *fOutFile;
     TH2D      *fNumuDistEnergy;
     TH2D      *fNumuFluxDistEnergy;
-    TH2D      *fNueDistEnergy;
-    TH2D      *fNueFluxDistEnergy;
     TGraph    *fCCxsec_nue;
     TGraph    *fNCxsec_nue;
     TGraph    *fCCQExsec_nue;
