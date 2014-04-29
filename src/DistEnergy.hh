@@ -54,8 +54,11 @@ namespace numi {
     Double_t   fNormalArea;
 
     TFile     *fOutFile;
+    
     TH2D      *fNumuDistEnergy;
-    TH2D      *fNumuFluxDistEnergy;
+    TH2D      *fNumubarDistEnergy;
+    TH2D      *fNumuNumubarDistEnergy;
+    
     TGraph    *fCCxsec_nue;
     TGraph    *fNCxsec_nue;
     TGraph    *fCCQExsec_nue;
