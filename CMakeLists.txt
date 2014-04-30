@@ -26,6 +26,7 @@ add_library(
   src/LArTree.cc
   src/LNA.cc
   src/DistEnergy.cc
+  src/FullDistEnergy.cc
   )
 
 target_link_libraries(NuMIana ${ROOT_LIBS})
