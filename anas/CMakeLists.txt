@@ -29,10 +29,3 @@ target_link_libraries(DEhist ${ROOT_LIBS} NuMIana)
 
 add_executable(FullDEhist FullDEhist.cpp)
 target_link_libraries(FullDEhist ${ROOT_LIBS} NuMIana)
-
-add_executable(DEnue DEnue.cpp)
-target_link_libraries(DEnue ${ROOT_LIBS} NuMIana)
-
-add_executable(FullDEnue FullDEnue.cpp)
-target_link_libraries(FullDEnue ${ROOT_LIBS} NuMIana)
-
