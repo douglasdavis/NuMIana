@@ -58,6 +58,10 @@ namespace numi {
     TH2D      *fNumuDistEnergy;
     TH2D      *fNumubarDistEnergy;
     TH2D      *fNumuNumubarDistEnergy;
+
+    TH2D      *fNueDistEnergy;
+    TH2D      *fNuebarDistEnergy;
+    TH2D      *fNueNuebarDistEnergy;
     
     TGraph    *fCCxsec_nue;
     TGraph    *fNCxsec_nue;
@@ -76,8 +80,15 @@ namespace numi {
     virtual ~FullDistEnergy();
 
     void MakeHists(const std::string& out_file_name,
-		   const Double_t& area_factor);
+		   const Double_t& area_factor,
+		   const Double_t& dm2,
+		   const Double_t& s22t,
+		   const Double_t& adm2,
+		   const Double_t& as22t);
     
+    double OscProb(const double& LoverE, const double& dm2, const double& s22t);
+    void OscillateHist(TH2D *mu, TH2D *e, const double &dm2, const double& s22t);
+
     Double_t BottomArea() const;
     Double_t LengthArea() const;
     Double_t NormalArea() const;

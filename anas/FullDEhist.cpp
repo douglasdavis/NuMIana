@@ -19,15 +19,15 @@ int main(int argc, char *argv[])
   infiles.close();
 
   numi::FullDistEnergy *bottom = new numi::FullDistEnergy(dir_bottom,genie_file,file_list,true,false,false);
-  bottom->MakeHists("histogram_files/full_de_bottom.root",bottom->BottomArea());
+  bottom->MakeHists("histogram_files/full_de_bottom.root",bottom->BottomArea(),3.14,.002,0.043,0.88);
   delete bottom;
 
   numi::FullDistEnergy *length = new numi::FullDistEnergy(dir_length,genie_file,file_list,false,true,false);
-  length->MakeHists("histogram_files/full_de_length.root",length->LengthArea());
+  length->MakeHists("histogram_files/full_de_length.root",length->LengthArea(),3.14,.002,0.043,0.88);
   delete length;
 
   numi::FullDistEnergy *normal = new numi::FullDistEnergy(dir_normal,genie_file,file_list,true,false,false);
-  normal->MakeHists("histogram_files/full_de_normal.root",normal->NormalArea());
+  normal->MakeHists("histogram_files/full_de_normal.root",normal->NormalArea(),3.14,.002,0.043,0.88);
   delete normal;
 
   return 0;
