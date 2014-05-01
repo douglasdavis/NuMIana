@@ -19,14 +19,20 @@ int main(int argc, char *argv[])
   infiles.close();
 
   numi::DistEnergy *bottom = new numi::DistEnergy(dir_bottom,genie_file,file_list,true,false,false);
+  bottom->SetEnergyCut(.1);
+  bottom->SetBinning(20,0,0.1,120,100,700);
   bottom->MakeHists("histogram_files/de_bottom.root",bottom->BottomArea(),3.14,.002,0.043,0.88);
   delete bottom;
 
   numi::DistEnergy *length = new numi::DistEnergy(dir_length,genie_file,file_list,false,true,false);
+  length->SetEnergyCut(.1);
+  length->SetBinning(20,0,0.1,120,100,700);
   length->MakeHists("histogram_files/de_length.root",length->LengthArea(),3.14,.002,0.043,0.88);
   delete length;
 
   numi::DistEnergy *normal = new numi::DistEnergy(dir_normal,genie_file,file_list,true,false,false);
+  normal->SetEnergyCut(.1);
+  normal->SetBinning(20,0,0.1,120,100,700);
   normal->MakeHists("histogram_files/de_normal.root",normal->NormalArea(),3.14,.002,0.043,0.88);
   delete normal;
 

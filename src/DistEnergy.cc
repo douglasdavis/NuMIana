@@ -71,6 +71,31 @@ namespace numi {
 
   // _____________________________________________________________________________________________________
 
+  void DistEnergy::SetBinning(const Int_t& nx,
+			      const Double_t& xmin,
+			      const Double_t& xmax,
+			      const Int_t& ny,
+			      const Double_t& ymin,
+			      const Double_t& ymax)
+  {
+    fNbinsX = nx;
+    fNbinsY = ny;
+    fXmin   = xmin;
+    fXmax   = xmax;
+    fYmin   = ymin;
+    fYmax   = ymax;
+  }
+
+  
+  // _____________________________________________________________________________________________________
+
+  void DistEnergy::SetEnergyCut(const Double_t& ecut)
+  {
+    fEnergyCut = ecut;
+  }
+
+  // _____________________________________________________________________________________________________
+
   void DistEnergy::MakeHists(const std::string& out_file_name,
 			     const Double_t& area_factor,
 			     const Double_t& dm2,
@@ -81,20 +106,20 @@ namespace numi {
 
     fOutFile               = new TFile(out_file_name.c_str(),"RECREATE");    
     fNumuDistEnergy        = new TH2D("NumuDistEnergy",
-				      ";Energy (MeV);Distance from origin to uB center",
-				      20,0,100,150,0,750);
+				      ";Energy (GeV);Distance from origin to uB center",
+				       fNbinsX,fXmin,fXmax,fNbinsY,fYmin,fYmax);
     fNumubarDistEnergy     = new TH2D("NumubarDistEnergy",
-				      ";Energy (MeV);Distance from origin to uB center",
-				      20,0,100,150,0,750);
+				      ";Energy (GeV);Distance from origin to uB center",
+				       fNbinsX,fXmin,fXmax,fNbinsY,fYmin,fYmax);
     fNumuNumubarDistEnergy = new TH2D("NumuNumubarDistEnergy",
-				      ";Energy (MeV);Distance from origin to uB center",
-				      20,0,100,150,0,750);
+				      ";Energy (GeV);Distance from origin to uB center",
+				       fNbinsX,fXmin,fXmax,fNbinsY,fYmin,fYmax);
     fNueDistEnergy         = new TH2D("NueDistEnergy",
-				     ";Energy (MeV);Distance from origin to uB center",
-				     20,0,100,150,0,750);
+				     ";Energy (GeV);Distance from origin to uB center",
+				      fNbinsX,fXmin,fXmax,fNbinsY,fYmin,fYmax);
     fNuebarDistEnergy      = new TH2D("NuebarDistEnergy",
-				     ";Energy (MeV);Distance from origin to uB center",
-				     20,0,100,150,0,750);
+				     ";Energy (GeV);Distance from origin to uB center",
+				      fNbinsX,fXmin,fXmax,fNbinsY,fYmin,fYmax);
     
     Double_t distfiller;
     Double_t xmx02;
@@ -112,32 +137,32 @@ namespace numi {
 	  continue;
 	}
 	else {
-	  if (fE < .1 ) {
+	  if (fE < fEnergyCut ) {
 	    xmx02 = pow((ubx - (fvx/1.0e2)),2);
 	    ymy02 = pow((uby - (fvy/1.0e2)),2);
 	    zmz02 = pow((ubz - (fvz/1.0e2)),2);
 	    distfiller = std::sqrt(xmx02+ymy02+zmz02);
 	    if ( fpdg == 14 )
-	      fNumuDistEnergy->Fill(fE*1000,distfiller);
+	      fNumuDistEnergy->Fill(fE,distfiller);
 	    if ( fpdg == -14 )
-	      fNumubarDistEnergy->Fill(fE*1000,distfiller);
+	      fNumubarDistEnergy->Fill(fE,distfiller);
 	    if ( fpdg == 14 || fpdg == -14 )
-	      fNumuNumubarDistEnergy->Fill(fE*1000,distfiller);
+	      fNumuNumubarDistEnergy->Fill(fE,distfiller);
 	  }
 	}
       }
       else {
-	if (fE < .1 ) {
+	if (fE < fEnergyCut ) {
 	  xmx02 = pow((ubx - (fvx/1.0e2)),2);
 	  ymy02 = pow((uby - (fvy/1.0e2)),2);
 	  zmz02 = pow((ubz - (fvz/1.0e2)),2);
 	  distfiller = std::sqrt(xmx02+ymy02+zmz02);
 	  if ( fpdg == 14 )
-	    fNumuDistEnergy->Fill(fE*1000,distfiller);
+	    fNumuDistEnergy->Fill(fE,distfiller);
 	  if ( fpdg == -14 )
-	    fNumubarDistEnergy->Fill(fE*1000,distfiller);
+	    fNumubarDistEnergy->Fill(fE,distfiller);
 	  if ( fpdg == 14 || fpdg == -14 )
-	    fNumuNumubarDistEnergy->Fill(fE*1000,distfiller);
+	    fNumuNumubarDistEnergy->Fill(fE,distfiller);
 	}
       }
     }
@@ -175,22 +200,22 @@ namespace numi {
   
   // _____________________________________________________________________________________________________
 
-  double DistEnergy::OscProb(const double& LoverE, const double& dm2, const double& s22t)
+  Double_t DistEnergy::OscProb(const Double_t& LoverE, const Double_t& dm2, const Double_t& s22t)
   {
     // sin^2(2theta)*sin(1.267*dm^2*L/E)
     return s22t*std::sin(1.267*dm2*LoverE);
   }
 
-  void DistEnergy::OscillateHist(TH2D *mu, TH2D *e, const double& dm2, const double& s22t)
+  void DistEnergy::OscillateHist(TH2D *mu, TH2D *e, const Double_t& dm2, const Double_t& s22t)
   {
     for ( int i = 0; i < mu->GetNbinsX(); ++i ) {
       for ( int j = 0; j < mu->GetNbinsY(); ++j ) {
-	double energy_val = mu->GetXaxis()->GetBinCenter(i+1);
-	double dist_val   = mu->GetYaxis()->GetBinCenter(j+1);
-	double LoverE     = dist_val/energy_val;
-	double numu_flux  = mu->GetBinContent(i+1,j+1);
-	double oprob      = OscProb(LoverE,dm2,s22t);
-	double nue_flux   = numu_flux*oprob;
+	Double_t energy_val = mu->GetXaxis()->GetBinCenter(i+1);
+	Double_t dist_val   = mu->GetYaxis()->GetBinCenter(j+1);
+	Double_t LoverE     = (dist_val*.001)/energy_val;
+	Double_t numu_flux  = mu->GetBinContent(i+1,j+1);
+	Double_t oprob      = OscProb(LoverE,dm2,s22t);
+	Double_t nue_flux   = numu_flux*oprob;
 	e->SetBinContent(i+1,j+1,nue_flux);
       }
     }

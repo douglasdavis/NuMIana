@@ -24,18 +24,17 @@ namespace numi {
 
     UInt_t     fNFluxFiles;
     Double_t   fPOTPerFluxFile;
-
+    
     Double_t   fwgt;
     Double_t   fvtxx;
     Double_t   fvtxy;
     Double_t   fvtxz;
-    Double_t   fdist;
     Double_t   fpx;
     Double_t   fpy;
     Double_t   fpz;
     Double_t   fE;
+    Double_t   fdist;
     Int_t      fpdg;
-
     Double_t   ftpx;
     Double_t   ftpy;
     Double_t   ftpz;
@@ -52,6 +51,14 @@ namespace numi {
     Double_t   fBottomArea;
     Double_t   fLengthArea;
     Double_t   fNormalArea;
+
+    Double_t   fEnergyCut;
+    Int_t      fNbinsX;
+    Int_t      fNbinsY;
+    Double_t   fXmin;
+    Double_t   fXmax;
+    Double_t   fYmin;
+    Double_t   fYmax;
 
     TFile     *fOutFile;
     
@@ -79,6 +86,15 @@ namespace numi {
 
     virtual ~DistEnergy();
 
+    void SetEnergyCut(const Double_t& ecut);
+
+    void SetBinning(const Int_t& nx,
+		    const Double_t& xmin,
+		    const Double_t& xmax,
+		    const Int_t& ny,
+		    const Double_t& ymin,
+		    const Double_t& ymax);
+
     void MakeHists(const std::string& out_file_name,
 		   const Double_t& area_factor,
 		   const Double_t& dm2,
@@ -86,8 +102,14 @@ namespace numi {
 		   const Double_t& adm2,
 		   const Double_t& as22t);
     
-    double OscProb(const double& LoverE, const double& dm2, const double& s22t);
-    void OscillateHist(TH2D *mu, TH2D *e, const double &dm2, const double& s22t);
+    Double_t OscProb(const Double_t& LoverE,
+		     const Double_t& dm2,
+		     const Double_t& s22t);
+    
+    void OscillateHist(TH2D *mu,
+		       TH2D *e,
+		       const Double_t& dm2,
+		       const Double_t& s22t);
 
     Double_t BottomArea() const;
     Double_t LengthArea() const;
