@@ -72,7 +72,11 @@ namespace numi {
   // _____________________________________________________________________________________________________
 
   void DistEnergy::MakeHists(const std::string& out_file_name,
-			     const Double_t& area_factor)
+			     const Double_t& area_factor,
+			     const Double_t& dm2,
+			     const Double_t& s22t,
+			     const Double_t& adm2,
+			     const Double_t& as22t)
   {
 
     fOutFile               = new TFile(out_file_name.c_str(),"RECREATE");    
@@ -85,6 +89,12 @@ namespace numi {
     fNumuNumubarDistEnergy = new TH2D("NumuNumubarDistEnergy",
 				      ";Energy (MeV);Distance from origin to uB center",
 				      20,0,100,150,0,750);
+    fNueDistEnergy         = new TH2D("NueDistEnergy",
+				     ";Energy (MeV);Distance from origin to uB center",
+				     20,0,100,150,0,750);
+    fNuebarDistEnergy      = new TH2D("NuebarDistEnergy",
+				     ";Energy (MeV);Distance from origin to uB center",
+				     20,0,100,150,0,750);
     
     Double_t distfiller;
     Double_t xmx02;
@@ -134,19 +144,25 @@ namespace numi {
   
     Double_t desiredPOT = 6e20;
     Double_t totalPOT   = fPOTPerFluxFile*fNFluxFiles;
-    Double_t scaler     = desiredPOT/totalPOT;
+    Double_t pot_scaler = desiredPOT/totalPOT;
 
-    fNumuDistEnergy->Scale(scaler);
-    fNumuDistEnergy->Scale(1/area_factor);
+    fNumuDistEnergy->Scale(pot_scaler);
+    fNumuDistEnergy->Scale(1/(area_factor*3.14159));
     fNumuDistEnergy->Write();
 
-    fNumubarDistEnergy->Scale(scaler);
-    fNumubarDistEnergy->Scale(1/area_factor);
+    fNumubarDistEnergy->Scale(pot_scaler);
+    fNumubarDistEnergy->Scale(1/(area_factor*3.14159));
     fNumubarDistEnergy->Write();
 
-    fNumuNumubarDistEnergy->Scale(scaler);
-    fNumuNumubarDistEnergy->Scale(1/area_factor);
+    fNumuNumubarDistEnergy->Scale(pot_scaler);
+    fNumuNumubarDistEnergy->Scale(1/(area_factor*3.14159));
     fNumuNumubarDistEnergy->Write();
+
+    OscillateHist(fNumuDistEnergy,fNueDistEnergy,dm2,s22t);
+    OscillateHist(fNumubarDistEnergy,fNuebarDistEnergy,adm2,as22t);
+
+    fNueDistEnergy->Write();
+    fNuebarDistEnergy->Write();
 
     fCCxsec_nue->Write();
     fNCxsec_nue->Write();
@@ -157,6 +173,29 @@ namespace numi {
 
   }
   
+  // _____________________________________________________________________________________________________
+
+  double DistEnergy::OscProb(const double& LoverE, const double& dm2, const double& s22t)
+  {
+    // sin^2(2theta)*sin(1.267*dm^2*L/E)
+    return s22t*std::sin(1.267*dm2*LoverE);
+  }
+
+  void DistEnergy::OscillateHist(TH2D *mu, TH2D *e, const double& dm2, const double& s22t)
+  {
+    for ( int i = 0; i < mu->GetNbinsX(); ++i ) {
+      for ( int j = 0; j < mu->GetNbinsY(); ++j ) {
+	double energy_val = mu->GetXaxis()->GetBinCenter(i+1);
+	double dist_val   = mu->GetYaxis()->GetBinCenter(j+1);
+	double LoverE     = dist_val/energy_val;
+	double numu_flux  = mu->GetBinContent(i+1,j+1);
+	double oprob      = OscProb(LoverE,dm2,s22t);
+	double nue_flux   = numu_flux*oprob;
+	e->SetBinContent(i+1,j+1,nue_flux);
+      }
+    }
+  }
+
   // _____________________________________________________________________________________________________
 
 }
