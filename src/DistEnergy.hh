@@ -70,6 +70,11 @@ namespace numi {
     TH2D      *fNuebarDistEnergy;
     TH2D      *fNueNuebarDistEnergy;
     
+    TH1D      *fNumuEnergy;
+    TH1D      *fNueEnergy;
+    TH1D      *fNumubarEnergy;
+    TH1D      *fNuebarEnergy;
+
     TGraph    *fCCxsec_nue;
     TGraph    *fNCxsec_nue;
     TGraph    *fCCQExsec_nue;
@@ -106,10 +111,14 @@ namespace numi {
 		     const Double_t& dm2,
 		     const Double_t& s22t);
     
-    void OscillateHist(TH2D *mu,
-		       TH2D *e,
+    void OscillateHist(const TH2D& mu,
+		       TH2D& e,
 		       const Double_t& dm2,
 		       const Double_t& s22t);
+
+
+    void Make1DFlux(const TH2D& hist2d,
+		    TH1D& hist1d);
 
     Double_t BottomArea() const;
     Double_t LengthArea() const;
